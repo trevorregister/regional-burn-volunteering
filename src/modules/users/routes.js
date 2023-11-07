@@ -10,7 +10,9 @@ const userRoutes = () => {
     const controller = UserController(repository)
 
     router.get('/users',controller.getUsers)
-    router.get('/users/:id', controller.getUserById)
+    router.get('/user/:id', controller.getUserById)
+    router.get('/user', controller.getUserByEmail)
+    router.post('/user', controller.addUser)
     
     return router
 }

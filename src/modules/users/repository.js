@@ -9,7 +9,7 @@ module.exports = class UserRepository {
         return await this.db.find()
     }
     async getUserByEmail(email){
-        return await this.db.findOne({email: email}) || undefined
+        return await this.db.findOne({email: email})
     }
 
     async getUserById(id){
@@ -17,7 +17,7 @@ module.exports = class UserRepository {
     }
 
     async create(user){
-        return await this.db.save()
+        return await this.db.create(user)
     }
     
 

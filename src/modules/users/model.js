@@ -1,13 +1,13 @@
 module.exports = class User {
 
-    constructor(user){
+    constructor(name, email, role, password){
         
-        this.email = user.email
-        this.name = user.name
-        this.role = user.role
-        this.hash = user.hash
-        this.shifts = user.shifts
-        this.teams = user.teams
-        this.events = user.events
+        this.email = email
+        this.name = name
+        this.role = role
+        this.hash = password //hash this
+        this.shifts = []
+        this.teams = []
+        this.events = []
     }
 }
