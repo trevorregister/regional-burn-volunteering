@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const UserSchema = new Schema({
+module.exports = new Schema({
 
     email:{
         type:String,
@@ -42,12 +42,3 @@ const UserSchema = new Schema({
         ref: 'Event'
     }]
 })
-
-UserSchema.methods.generateAuthToken = function() {
-/*     const token = jwt.sign({_id: this._id, role: this.role}, process.env.JWT_SECRET)
-    return token */
-}
-
-var User = mongoose.model('User', UserSchema)
-
-module.exports = User
