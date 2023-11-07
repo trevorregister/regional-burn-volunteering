@@ -3,6 +3,6 @@ const schema = require('./schema')
 
 module.exports = class UserDatabase {
     constructor(){
-        return mongoose.model('Users', schema)
+        return mongoose.model('users', schema)
     }
 }

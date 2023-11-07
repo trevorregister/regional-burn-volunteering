@@ -1,4 +1,5 @@
 const GetUserByEmail = require('./use-cases/GetUserByEmail')
+const GetUserById = require('./use-cases/GetUserById')
 const GetUsers = require('./use-cases/GetUsers')
 
 module.exports = (repository) => {
@@ -7,7 +8,7 @@ module.exports = (repository) => {
         const { email } = req.body
         getUserByEmailCase.execute(email)
             .then(
-                result => {res.json(result)}
+                result => {res.status(201).send(result)}
             )
     }
 
@@ -19,9 +20,19 @@ module.exports = (repository) => {
             )
     }
 
+    const getUserById = (req, res, next) => {
+        const getUserByIdCase = GetUserById(repository)
+        const { id } = req.params
+        getUserByIdCase.execute(id)
+            .then(
+                result => {res.status(201).send(result)}
+            )
+    }
+
     return {
         getUserByEmail,
-        getUsers
+        getUsers,
+        getUserById
     }
 }
 

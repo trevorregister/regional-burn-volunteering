@@ -1,5 +1,3 @@
-const User = require('../model')
-
 module.exports = (repository) => {
     async function execute(){
         return await repository.getUsers()
