@@ -3,7 +3,7 @@ const userRoutes = require('./modules/users/routes')
 
 const Routes =(dependencies) => {
     const router = express.Router()
-    router.use('/users', userRoutes(dependencies))
+    router.use('/', userRoutes())
     return router
 }
 

@@ -17,6 +17,4 @@ app.use(express.urlencoded({extended: false}))
 app.use(morgan('dev'))
 app.use('/', Routes())
 
-app.get('/', ()=>{console.log('init')})
-
 app.listen(process.env.PORT, ()=>console.log(`Listening on port ${process.env.PORT}...`))

@@ -9,8 +9,8 @@ const userRoutes = () => {
     const router = express.Router()
     const controller = UserController(repository)
 
-    router.get('/',controller.getUsers)
-    router.get('/:id', controller.getUserById)
+    router.get('/users',controller.getUsers)
+    router.get('/users/:id', controller.getUserById)
     
     return router
 }
