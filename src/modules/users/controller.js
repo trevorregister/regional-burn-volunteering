@@ -35,7 +35,7 @@ module.exports = (repository) => {
         getUserByEmail,
         getUsers,
         getUserById,
-        addUser
+        addUser,
     }
 }
 

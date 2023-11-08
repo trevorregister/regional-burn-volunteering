@@ -1,4 +1,6 @@
 const { ObjectId } = require('mongodb')
+const bcrypt = require('bcrypt')
+const dotenv = require('dotenv').config()
 
 module.exports = class UserRepository {
     constructor(database){
@@ -17,6 +19,7 @@ module.exports = class UserRepository {
     }
 
     async create(user){
+        user.hash = await bcrypt.hash(user.hash.concat(process.env.PEPPER), 10)
         return await this.db.create(user)
     }
     
