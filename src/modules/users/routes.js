@@ -14,6 +14,7 @@ const userRoutes = () => {
     router.get('/user', controller.getUserByEmail)
     router.post('/user', controller.addUser)
     router.post('/user/login', controller.loginUser)
+    router.post('/user/logout', controller.logoutUser)
     
     return router
 }
