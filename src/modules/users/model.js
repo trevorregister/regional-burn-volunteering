@@ -1,5 +1,3 @@
-const bcrypt = require('bcrypt')
-
 module.exports = class User {
 
     constructor(name, email, role, password){
