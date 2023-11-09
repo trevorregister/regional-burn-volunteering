@@ -35,10 +35,10 @@ module.exports = (repository) => {
     const loginUser = async (req, res, next) => {
         const loginUserCase = LoginUser(repository)
         const { email, password } = req.body
-        const match = await loginUserCase.execute(email, password)
-        match
-            ? res.status(201).send(match)
-            : res.status(401).send(match)
+        const verified = await loginUserCase.execute(email, password)
+        verified
+            ? res.status(201).header('x-auth-token', verified.token).send(verified.user)
+            : res.status(401).send(verified)
     }
 
     return {

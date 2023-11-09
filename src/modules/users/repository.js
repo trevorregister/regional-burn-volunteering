@@ -20,9 +20,4 @@ module.exports = class UserRepository {
         return await this.db.create(user)
     }
 
-    async login(credentials){
-        //do something
-    }
-    
-
 }
