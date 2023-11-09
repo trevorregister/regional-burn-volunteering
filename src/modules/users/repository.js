@@ -13,7 +13,7 @@ module.exports = class UserRepository {
     }
 
     async getUserById(id){
-        return await this.db.findOne({_id: new ObjectId(id) })
+        return await this.db.findById({_id: new ObjectId(id) })
     }
 
     async create(user){
