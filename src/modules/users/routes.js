@@ -13,6 +13,7 @@ const userRoutes = () => {
     router.get('/user/:id', controller.getUserById)
     router.get('/user', controller.getUserByEmail)
     router.post('/user', controller.addUser)
+    router.post('/user/login', controller.loginUser)
     
     return router
 }
