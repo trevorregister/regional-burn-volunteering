@@ -8,7 +8,7 @@ module.exports = (repository) => {
         if(user) { throw new UserError(400,`${user.email}`, 'exists') }
         const hash = await bcrypt.hash(password, 10)
         const newUser = new User(name, email, role, hash) 
-        await repository.create(newUser)
+        return await repository.create(newUser)
     }
     return { execute }
 }
