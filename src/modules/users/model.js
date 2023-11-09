@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt')
+
 module.exports = class User {
 
     constructor(name, email, role, password){
@@ -5,7 +7,7 @@ module.exports = class User {
         this.email = email
         this.name = name
         this.role = role
-        this.hash = password //salt+pepper in the repo
+        this.hash = password
         this.shifts = []
         this.teams = []
         this.events = []
