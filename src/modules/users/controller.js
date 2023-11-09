@@ -37,8 +37,12 @@ module.exports = (repository) => {
         const { email, password } = req.body
         const verified = await loginUserCase.execute(email, password)
         verified
-            ? res.status(201).header('x-auth-token', verified.token).send(verified.user)
+            ? res.status(201).cookie('authcookie', verified.token).send(verified.user)
             : res.status(401).send(verified)
+    }
+
+    const logoutUser = (req, res, next) => {
+        res.clearCookie('authcookie').status(200).send('logged out')
     }
 
     return {
@@ -46,7 +50,8 @@ module.exports = (repository) => {
         getUsers,
         getUserById,
         addUser,
-        loginUser
+        loginUser,
+        logoutUser
     }
 }
 
