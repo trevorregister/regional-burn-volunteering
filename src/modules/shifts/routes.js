@@ -12,7 +12,7 @@ const shiftRoutes = () => {
 
     router.post('/', controller.addShift)
     router.get('/:id', controller.getShiftById)
-    //router.patch('/:id', controller.updateTeam)
+    router.patch('/:id', controller.updateShift)
     
     return router
 }

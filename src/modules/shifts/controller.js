@@ -1,5 +1,6 @@
 const AddShift = require('./use-cases/AddShift')
 const GetShiftById = require('./use-cases/GetShiftById')
+const UpdateShift = require('./use-cases/UpdateShift')
 
 module.exports = (repository) => {
 
@@ -25,10 +26,23 @@ module.exports = (repository) => {
         }
     }
 
+    const updateShift = async (req, res, next) => {
+        try {
+            const updateShiftCase = UpdateShift(repository)
+            const { id } = req.params
+            const update = req.body
+            await updateShiftCase.execute(id, update)
+            res.status(201).send('updated')
+        } catch (err) {
+            next(err)
+        }
+    }
+
 
     return {
         addShift,
-        getShiftById
+        getShiftById,
+        updateShift
     }
 }
 
