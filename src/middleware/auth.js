@@ -8,7 +8,6 @@ module.exports = function (req, res, next) {
 
         const verified = jwt.verify(token, process.env.JWT_SECRET)
         if(!verified) { throw new HttpError(403, 'unauthorized') }
-        console.log(verified)
         next()
 
     }

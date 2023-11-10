@@ -11,11 +11,11 @@ const userRoutes = () => {
     const controller = UserController(repository)
 
     router.get('/users',controller.getUsers)
-    router.get('/user/:id', auth, controller.getUserById)
+    router.get('/:id', auth, controller.getUserById)
     router.get('/user', controller.getUserByEmail)
-    router.post('/user', controller.addUser)
-    router.post('/user/login', controller.loginUser)
-    router.post('/user/logout', controller.logoutUser)
+    router.post('/', controller.addUser)
+    router.post('/login', controller.loginUser)
+    router.post('/logout', controller.logoutUser)
     
     return router
 }
