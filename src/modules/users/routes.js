@@ -12,7 +12,6 @@ const userRoutes = () => {
 
     router.get('/users',controller.getUsers)
     router.get('/:id', auth, controller.getUserById)
-    router.get('/user', controller.getUserByEmail)
     router.post('/', controller.addUser)
     router.post('/login', controller.loginUser)
     router.post('/logout', controller.logoutUser)
