@@ -1,21 +1,9 @@
-const GetUserByEmail = require('./use-cases/GetUserByEmail')
 const GetUserById = require('./use-cases/GetUserById')
 const GetUsers = require('./use-cases/GetUsers')
 const AddUser = require('./use-cases/AddUser')
 const LoginUser = require('./use-cases/LoginUser')
 
 module.exports = (repository) => {
-    const getUserByEmail = async (req, res, next) =>{
-        try {
-            const getUserByEmailCase = GetUserByEmail(repository)
-            const { email } = req.body
-            const user = await getUserByEmailCase.execute(email)
-            res.status(200).send(user)
-        } catch (err) {
-            next(err)
-        }
-    }
-
     const getUsers = async (req, res, next) => {
         try {
             const getUsersCase = GetUsers(repository)
@@ -70,7 +58,6 @@ module.exports = (repository) => {
     }
 
     return {
-        getUserByEmail,
         getUsers,
         getUserById,
         addUser,
