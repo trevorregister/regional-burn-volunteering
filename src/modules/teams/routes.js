@@ -10,7 +10,9 @@ const teamRoutes = () => {
     const router = express.Router()
     const controller = TeamController(repository)
 
-    router.post('/team', controller.addTeam)
+    router.post('/', controller.addTeam)
+    router.get('/:id', controller.getTeamById)
+    router.patch('/:id', controller.updateTeam)
     
     return router
 }
