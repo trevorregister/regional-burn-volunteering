@@ -1,4 +1,3 @@
-//const GetUsers = require('./use-cases/GetUsers')
 const GetTeamById = require('./use-cases/GetTeamById')
 const AddTeam = require('./use-cases/AddTeam')
 const UpdateTeamCase = require('./use-cases/UpdateTeam')
