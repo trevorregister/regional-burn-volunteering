@@ -5,8 +5,8 @@ module.exports = class TeamRepository {
         this.db = database
     }
 
-    async getTeam(){        
-        return await this.db.find()
+    async getTeams(){        
+        return await this.db.find({})
     }
 
     async getTeamById(id){
