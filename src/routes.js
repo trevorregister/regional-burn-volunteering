@@ -4,8 +4,8 @@ const teamRoutes = require('./modules/teams/routes')
 
 const Routes =(dependencies) => {
     const router = express.Router()
-    router.use('/', userRoutes())
-    router.use('/', teamRoutes())
+    router.use('/user', userRoutes())
+    router.use('/team', teamRoutes())
     return router
 }
 
