@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const ShiftSchema = new Schema({
+module.exports = new Schema({
 
     name: {
         type: String,
@@ -52,8 +52,3 @@ const ShiftSchema = new Schema({
     }
 
 })
-
-
-var Shift = mongoose.model('Shift', ShiftSchema)
-
-module.exports = Shift
