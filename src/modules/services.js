@@ -15,8 +15,15 @@ const userRepository = new UserRepository(userDatabase)
 const shiftDatabase = new ShiftDatabase()
 const shiftRepository = new ShiftRepository(shiftDatabase)
 
-class TeamService {
-    constructor(){
+class Service {
+    constructor(repository){
+        this.repository = repository
+    }
+}
+
+class TeamService extends Service {
+    constructor(repository){
+        super(repository)
         this.repository = teamRepository
     }
 
