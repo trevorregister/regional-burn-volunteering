@@ -1,6 +1,6 @@
 const Shift = require('../model')
 const { HttpError } = require('../../../config/errors')
-const { TeamService } = require('../../services')
+const { TeamService, UserService, ShiftService } = require('../../services')
 
 
 const teamService = new TeamService()
