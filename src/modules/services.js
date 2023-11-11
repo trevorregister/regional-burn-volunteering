@@ -40,7 +40,7 @@ class TeamService extends Service {
     }
 }
 
-class UserService {
+class UserService extends Service {
     constructor(){
         this.repository = userRepository 
     }
@@ -62,7 +62,7 @@ class UserService {
     }
 }
 
-class ShiftService {
+class ShiftService extends Service{
     constructor(){
         this.repository = shiftRepository
     }
