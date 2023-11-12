@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const EventSchema = new Schema({
+module.exports = new Schema({
 
     name: {
         type: String,
@@ -42,8 +42,3 @@ const EventSchema = new Schema({
     }
 
 })
-
-
-var Event = mongoose.model('Event', EventSchema)
-
-module.exports = Event
