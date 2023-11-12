@@ -1,15 +1,14 @@
-/* const AddShift = require('./use-cases/AddShift')
-const GetShiftById = require('./use-cases/GetShiftById')
-const UpdateShift = require('./use-cases/UpdateShift') */
+const { AddEvent, UpdateEvent, GetEventById } = require('./use-cases/_index')
+const { HttpError } = require('../../config/errors')
 
 module.exports = (repository) => {
 
     const addEvent = async (req, res, next) => {
         try {
-/*             const addShiftCase = AddShift(repository)
-            const { name, description, teamId, start, end, capacity } = req.body
-            const newShift = await addShiftCase.execute(name, description, teamId, start, end, capacity)
-            res.status(201).send(newShift) */
+            const addEventCase = AddEvent(repository)
+            const { name, description, start, end, capacity } = req.body
+            const newEvent = await addEventCase.execute(name, description, start, end, capacity)
+            res.status(201).send(newEvent)
         } catch (err) {
             next(err)
         }
@@ -17,10 +16,13 @@ module.exports = (repository) => {
 
     const getEventById = async (req, res, next) => {
         try {
-/*             const getShiftByIdCase = GetShiftById(repository)
+            const getEventByIdCase = GetEventById(repository)
             const { id } = req.params
-            const shift = await getShiftByIdCase.execute(id)
-            res.status(200).send(shift) */
+            const event = await getEventByIdCase.execute(id)
+            if(!event){
+                throw new HttpError(404, `${id} event not found`)
+            }
+            res.status(200).send(event)
         } catch (err) {
             next(err)
         }
@@ -28,11 +30,11 @@ module.exports = (repository) => {
 
     const updateEvent = async (req, res, next) => {
         try {
-/*             const updateShiftCase = UpdateShift(repository)
+            const updateEventCase = UpdateEvent(repository)
             const { id } = req.params
             const update = req.body
-            await updateShiftCase.execute(id, update)
-            res.status(201).send('updated') */
+            await updateEventCase.execute(id, update)
+            res.status(201).send('updated')
         } catch (err) {
             next(err)
         }
