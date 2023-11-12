@@ -1,9 +1,9 @@
-/* const AddShift = require('./AddShift')
-const GetShiftById = require('./GetShiftById')
-const UpdateShift = require('./UpdateShift')
+const AddEvent = require('./AddEvent')
+const UpdateEvent = require('./UpdateEvent')
+const GetEventById = require('./GetEventById')
 
 module.exports = {
-    AddShift,
-    GetShiftById,
-    UpdateShift
-} */
+    AddEvent,
+    GetEventById,
+    UpdateEvent
+}

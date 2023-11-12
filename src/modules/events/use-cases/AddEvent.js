@@ -1,19 +1,12 @@
-/* const Shift = require('../model')
-const { HttpError } = require('../../../config/errors')
-const { TeamService } = require('../../services')
-
-
-const teamService = new TeamService()
+const Event = require('../model')
 
 
 module.exports = (repository) => {
-    async function execute(name, description, teamId, start, end, capacity){
-        const team = await teamService.getTeamById(teamId)
-        if (!team) {throw new HttpError(404, `team ${teamId} not found`)}
-        const shift = new Shift(name, description, teamId, start, end, capacity)
-        return await repository.create(shift)
+    async function execute(name, description, start, end, capacity){
+        const event = new Event(name, description, start, end, capacity)
+        return await repository.create(event)
 
     }
 
     return { execute }
-} */
+}

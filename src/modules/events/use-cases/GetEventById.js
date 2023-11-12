@@ -1,11 +1,11 @@
-/* const { HttpError } = require('../../../config/errors')
+const { HttpError } = require('../../../config/errors')
 
 module.exports = (repository) => {
     async function execute(id){
-        const shift = await repository.getShiftById(id)
-        if (!shift) { throw new HttpError(404, `${id} shift not found`) } 
-        return shift
+        const event = await repository.getEventById(id)
+        if (!event) { throw new HttpError(404, `${id} event not found`) } 
+        return event
 
     }
     return { execute }
-} */
+}
