@@ -4,9 +4,12 @@ const UserDatabase = require('./users/data_access/database')
 const UserRepository = require('./users/repository')
 const ShiftDatabase = require('./shifts/data_access/database')
 const ShiftRepository = require('./shifts/repository')
+const EventDatabase = require('./events/data_access/database')
+const EventRepository = require('./events/repository')
 const { GetTeamById, AddTeam, UpdateTeam } = require('./teams/use-cases/_index')
 const { GetUserById, LoginUser, GetUsers } = require('./users/use-cases/_index')
 const { GetShiftById, AddShift, UpdateShift } = require('./shifts/use-cases/_index')
+const { GetEventById, AddEvent, UpdateEvent } = require('./events/use-cases/_index')
 
 const teamDatabase = new TeamDatabase()
 const teamRepository = new TeamRepository(teamDatabase)
@@ -14,6 +17,8 @@ const userDatabase = new UserDatabase()
 const userRepository = new UserRepository(userDatabase)
 const shiftDatabase = new ShiftDatabase()
 const shiftRepository = new ShiftRepository(shiftDatabase)
+const eventDatabase = new EventDatabase()
+const eventRepository = new EventRepository(eventDatabase)
 
 class Service {
     constructor(repository){
@@ -80,9 +85,29 @@ class ShiftService extends Service{
     }
 }
 
+class EventService extends Service{
+    constructor(){
+        this.repository = eventRepository
+    }
+
+    getEventById(id){
+        return GetEventById(this.repository).execute(id)
+    }
+
+    addEvent(name, description, start, end, capacity){
+        return AddEvent(this.repository).execute(name, description, start, end, capacity)
+    }
+
+    updateEvent(id, update){
+        return UpdateEvent(this.repository).execute(id, update)
+    }
+
+}
+
 module.exports = {
     TeamService,
     UserService,
-    ShiftService
+    ShiftService,
+    EventService
 }
 
