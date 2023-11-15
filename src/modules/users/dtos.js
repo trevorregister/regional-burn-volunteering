@@ -1,4 +1,4 @@
-module.exports = class AddUserDTO {
+module.exports = class UserDTO {
 
     static toDb(data){
         return {
