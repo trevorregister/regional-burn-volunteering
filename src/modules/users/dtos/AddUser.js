@@ -1,14 +1,12 @@
-class AddUserDTO{
-    name
-    email
-    role
-    password
+module.exports = class AddUserDTO {
 
-    constructor(data){
-        this.name = data.name
-        this.email = data.email
-        this.role = data.role
-        this.password = data.password
+    static toDb(data){
+        return {
+            name: data.name,
+            email: data.email,
+            role: data.role,
+            password: data.password
+        }
     }
 
 }

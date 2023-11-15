@@ -2,6 +2,7 @@ const GetUserById = require('./use-cases/GetUserById')
 const GetUsers = require('./use-cases/GetUsers')
 const AddUser = require('./use-cases/AddUser')
 const LoginUser = require('./use-cases/LoginUser')
+const AddUserDTO = require('./dtos/AddUser')
 
 module.exports = (repository) => {
     const getUsers = async (req, res, next) => {
@@ -28,8 +29,7 @@ module.exports = (repository) => {
     const addUser = async (req, res, next) =>{
         try {
             const addUserCase = AddUser(repository)
-            const { name, email, role, password } = req.body
-            const newUser = await addUserCase.execute(name, email, role, password)
+            const newUser = await addUserCase.execute(AddUserDTO.toDb(req.body))
             res.status(201).send(newUser)
         } catch (err) {
             next(err)
