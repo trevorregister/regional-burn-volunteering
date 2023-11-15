@@ -16,7 +16,15 @@ class HttpError extends BaseError{
     }
 }
 
+class ValidationError extends HttpError {
+    constructor(code, joiError){
+        super(code)
+        this.message = joiError.details.map(detail => detail.message)
+    }
+}
+
 module.exports = {
     BaseError,
-    HttpError
+    HttpError,
+    ValidationError
 }
