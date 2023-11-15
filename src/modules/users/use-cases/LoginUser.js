@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { UserError } = require('../errors')
+const { HttpError } = require('../../../config/errors')
 
 module.exports = (repository) => {
     async function execute(email, password){
@@ -12,7 +12,7 @@ module.exports = (repository) => {
             return {user: user, token: token}
         }
 
-        else throw new UserError(401, 'no account or bad credentials')
+        else throw new HttpError(401, 'no account or bad credentials')
 
     }
     return { execute }
