@@ -7,9 +7,11 @@ const AddUserDTO = require('./dtos/AddUser')
 module.exports = (repository) => {
     const getUsers = async (req, res, next) => {
         try {
+            const usersData = []
             const getUsersCase = GetUsers(repository)
             const users = await getUsersCase.execute()
-            res.status(200).send(users)
+            users.map(user => usersData.push(AddUserDTO.toWeb(user)))
+            res.status(200).send(usersData)
         } catch (err) {
             next(err)
         }
@@ -20,7 +22,7 @@ module.exports = (repository) => {
             const getUserByIdCase = GetUserById(repository)
             const { id } = req.params
             const user = await getUserByIdCase.execute(id)
-            res.status(200).send(user)
+            res.status(200).send(AddUserDTO.toWeb(user))
         } catch (err) {
             next(err)
         }
@@ -30,7 +32,7 @@ module.exports = (repository) => {
         try {
             const addUserCase = AddUser(repository)
             const newUser = await addUserCase.execute(AddUserDTO.toDb(req.body))
-            res.status(201).send(newUser)
+            res.status(201).send(AddUserDTO.toWeb(newUser))
         } catch (err) {
             next(err)
         }
@@ -42,7 +44,7 @@ module.exports = (repository) => {
             const { email, password } = req.body
             const verified = await loginUserCase.execute(email, password)
             verified
-                ? res.status(201).cookie('authcookie', verified.token, {httpOnly: true, sameSite: 'strict'}).send(verified.user)
+                ? res.status(201).cookie('authcookie', verified.token, {httpOnly: true, sameSite: 'strict'}).send(AddUserDTO.toWeb(verified.user))
                 : res.status(401).send(verified)
         } catch (err) {
             next(err)

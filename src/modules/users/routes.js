@@ -10,7 +10,7 @@ const userRoutes = () => {
     const router = express.Router()
     const controller = UserController(repository)
 
-    router.get('/users',controller.getUsers)
+    router.get('/', controller.getUsers)
     router.get('/:id', auth, controller.getUserById)
     router.post('/', controller.addUser)
     router.post('/login', controller.loginUser)

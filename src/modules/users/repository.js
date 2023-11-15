@@ -6,7 +6,7 @@ module.exports = class UserRepository {
     }
 
     async getUsers(){        
-        return await this.db.find()
+        return await this.db.find({})
     }
     async getUserByEmail(email){
         return await this.db.findOne({email: email})

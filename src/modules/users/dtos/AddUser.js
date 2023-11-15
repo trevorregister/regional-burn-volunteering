@@ -9,4 +9,16 @@ module.exports = class AddUserDTO {
         }
     }
 
+    static toWeb(data){
+        return {
+            id: data._id,
+            name: data.name,
+            email: data.email,
+            role: data.role,
+            shifts: data.shifts,
+            teams: data.teams,
+            events: data.events
+        }
+    }
+
 }
