@@ -6,10 +6,10 @@ const eventRoutes = require('./modules/events/routes')
 
 const Routes =(dependencies) => {
     const router = express.Router()
-    router.use('/user', userRoutes())
-    router.use('/team', teamRoutes())
-    router.use('/shift', shiftRoutes())
-    router.use('/event', eventRoutes())
+    router.use('/users', userRoutes())
+    router.use('/teams', teamRoutes())
+    router.use('/shifts', shiftRoutes())
+    router.use('/events', eventRoutes())
     return router
 }
 
