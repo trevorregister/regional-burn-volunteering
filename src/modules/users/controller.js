@@ -2,7 +2,7 @@ const GetUserById = require('./use-cases/GetUserById')
 const GetUsers = require('./use-cases/GetUsers')
 const AddUser = require('./use-cases/AddUser')
 const LoginUser = require('./use-cases/LoginUser')
-const UserDTO = require('./dtos')
+const UserDTO = require('./dto')
 
 module.exports = (repository) => {
     const getUsers = async (req, res, next) => {
