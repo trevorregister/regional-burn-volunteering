@@ -5,7 +5,6 @@ const UserToDbSchema = Joi.object({
     name: Joi.string()
         .required()
         .trim()
-        .lowercase()
         .min(3)
         .max(20),
     password: Joi.string()
@@ -17,6 +16,7 @@ const UserToDbSchema = Joi.object({
         .trim(),
     email: Joi.string()
         .required()
+        .lowercase()
         .email({minDomainSegments: 2})
 })
 
