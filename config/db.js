@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
-const dotenv = require('dgram').config()
+const dotenv = require('dotenv').config()
 
 async function connect(environment){
     switch (environment){
-        case 'dev':
-            var uri = process.env.MONGO_DEV_URI
+        case 'local':
+            var uri = process.env.MONGO_LOCAL_URI
             break
         case 'production':
             var uri = process.env.MONGO_PRODUCTION_URI
