@@ -7,7 +7,7 @@ const teamService = new TeamService()
 
 
 module.exports = (repository) => {
-    async function execute(name, description, teamId, start, end, capacity){
+    async function execute({name, description, teamId, start, end, capacity}){
         const team = await teamService.getTeamById(teamId)
         if (!team) {throw new HttpError(404, `team ${teamId} not found`)}
         start = new Date(start)
