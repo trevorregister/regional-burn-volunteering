@@ -1,14 +1,14 @@
 const GetTeamById = require('./use-cases/GetTeamById')
 const AddTeam = require('./use-cases/AddTeam')
 const UpdateTeamCase = require('./use-cases/UpdateTeam')
+const TeamDTO = require('./dto')
 
 module.exports = (repository) => {
     const getTeamById = async (req, res, next) => {
         try {
             const getTeamByIdCase = GetTeamById(repository)
-            const { id } =  req.params
-            const team  = await getTeamByIdCase.execute(id)
-            res.status(200).send(team)
+            const team  = await getTeamByIdCase.execute(req.params.id)
+            res.status(200).send(TeamDTO.toWeb(team))
             
         } catch (err) {
             next(err)
@@ -18,9 +18,8 @@ module.exports = (repository) => {
     const addTeam = async (req, res, next) => {
         try {
             const addTeamCase = AddTeam(repository)
-            const { name, description } = req.body
-            const newTeam = await addTeamCase.execute(name, description)
-            res.status(201).send(newTeam)
+            const newTeam = await addTeamCase.execute(TeamDTO.toDb(req.body))
+            res.status(201).send(TeamDTO.toWeb(newTeam))
         } catch (err) {
             next(err)
         }
