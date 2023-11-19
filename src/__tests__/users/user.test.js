@@ -1,5 +1,8 @@
+const dotenv = require('dotenv').config()
+const jwt = require('jsonwebtoken')
+
 const db = require('../../../config/test-db')
-const { AddUser } = require('../../modules/users/use-cases/_index')
+const { AddUser, GetUserById, LoginUser} = require('../../modules/users/use-cases/_index')
 const UserDatabase = require('../../modules/users/data_access/database')
 const UserRepository = require('../../modules/users/repository')
 const userDatabase = new UserDatabase()
@@ -15,6 +18,10 @@ const newUserData = {
 
 beforeAll(async () => {
   await db.setUp()
+})
+
+afterEach(async () => {
+  await db.dropCollections()
 })
 
 afterAll(async () => {
@@ -39,11 +46,37 @@ describe("User model", () => {
   it('create user with duplicate email should return 400', async () => {
     try{
       const addUserCase = AddUser(userRepository)
-      const savedUser = await addUserCase.execute(newUserData)
+      await addUserCase.execute(newUserData)
+      await addUserCase.execute(newUserData)
     }
     catch(err){
       expect(err.code).toBe(400)
     }
+  })
+
+  it('get user by id', async () => {
+    const addUserCase = AddUser(userRepository)
+    const savedUser = await addUserCase.execute(newUserData)
+
+    const getUserCase = GetUserById(userRepository)
+    const retrievedUser = await getUserCase.execute(savedUser._id)
+
+    expect(retrievedUser._id.toHexString()).toBe(savedUser._id.toHexString())
+    expect(retrievedUser.email).toBe(savedUser.email)
+  })
+
+  it('login user with correct password should return a valid token', async () =>{
+    const addUserCase = AddUser(userRepository)
+    const savedUser = await addUserCase.execute(newUserData)
+    const loginCase = LoginUser(userRepository)
+
+    const loginResponse = await loginCase.execute(newUserData.email, newUserData.password)
+    const verified = jwt.verify(loginResponse.token, process.env.JWT_SECRET)
+
+    expect(loginResponse.token).toBeDefined()
+    expect(verified.id).toBe(savedUser._id.toHexString())
+
+
   })
 /* 
   // You shouldn't be able to add in any field that isn't defined in the schema

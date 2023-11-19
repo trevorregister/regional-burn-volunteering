@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest --runInBand ./src/_tests",
+    "test": "jest --runInBand ./src/__tests__",
     "start": "nodemon app.js"
   },
   "keywords": [],
