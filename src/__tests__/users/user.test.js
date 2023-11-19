@@ -2,7 +2,7 @@ const dotenv = require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
 const db = require('../../../config/test-db')
-const { AddUser, GetUserById, LoginUser} = require('../../modules/users/use-cases/_index')
+const { AddUser, GetUserById, LoginUser, GetUsers} = require('../../modules/users/use-cases/_index')
 const UserDatabase = require('../../modules/users/data_access/database')
 const UserRepository = require('../../modules/users/repository')
 const userDatabase = new UserDatabase()
@@ -30,9 +30,9 @@ afterAll(async () => {
 
 
 /**
- * User model
+ * User user cases
  */
-describe("User model", () => {
+describe("User use cases", () => {
   it("create & save user successfully", async () => {
     const addUserCase = AddUser(userRepository)
     const savedUser = await addUserCase.execute(newUserData)
@@ -54,7 +54,7 @@ describe("User model", () => {
     }
   })
 
-  it('get user by id', async () => {
+  it('get user by id should return that user', async () => {
     const addUserCase = AddUser(userRepository)
     const savedUser = await addUserCase.execute(newUserData)
 
@@ -63,6 +63,7 @@ describe("User model", () => {
 
     expect(retrievedUser._id.toHexString()).toBe(savedUser._id.toHexString())
     expect(retrievedUser.email).toBe(savedUser.email)
+    expect(retrievedUser.role).toBe(savedUser.role)
   })
 
   it('login user with correct password should return a valid token', async () =>{
@@ -76,31 +77,5 @@ describe("User model", () => {
     expect(loginResponse.token).toBeDefined()
     expect(verified.id).toBe(savedUser._id.toHexString())
 
-
   })
-/* 
-  // You shouldn't be able to add in any field that isn't defined in the schema
-  it("insert user successfully, but the field not defined in schema should be undefined", async () => {
-    const userWithInvalidField = new User({
-      ...newUserData,
-      nickname: "Handsome TekLoon",
-    })
-    await userWithInvalidField.setPassword(newUserData.password)
-    const savedUserWithInvalidField = await userWithInvalidField.save()
-    expect(savedUserWithInvalidField._id).toBeDefined()
-    expect(savedUserWithInvalidField.nickname).toBeUndefined()
-  })
-
-  // It should us tell us the errors in on email field.
-  it("create user without required field should failed", async () => {
-    const userWithoutRequiredField = new User({ name: "TekLoon" })
-    let err
-    try {
-      const savedUserWithoutRequiredField = await userWithoutRequiredField.save()
-    } catch (error) {
-      err = error
-    }
-    expect(err).toBeInstanceOf(mongoose.Error.ValidationError)
-    expect(err.errors.email).toBeDefined()
-  }) */
 })
