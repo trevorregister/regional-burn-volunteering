@@ -4,7 +4,6 @@ const UserDatabase = require('../../modules/users/data_access/database')
 const UserRepository = require('../../modules/users/repository')
 const userDatabase = new UserDatabase()
 const userRepository = new UserRepository(userDatabase)
-const { HttpError } = require('../../config/errors')
 
 const randomNumber = Math.floor(Math.random()*100)
 const newUserData = {
@@ -16,10 +15,6 @@ const newUserData = {
 
 beforeAll(async () => {
   await db.setUp()
-})
-
-afterEach(async () => {
-  await db.dropCollections()
 })
 
 afterAll(async () => {
@@ -34,19 +29,19 @@ describe("User model", () => {
   it("create & save user successfully", async () => {
     const addUserCase = AddUser(userRepository)
     const savedUser = await addUserCase.execute(newUserData)
+
     expect(savedUser._id).toBeDefined()
     expect(savedUser.email).toBe(newUserData.email)
     expect(savedUser.role).toBe(newUserData.role)
     expect(savedUser.hash).toBeDefined()
   })
-  it('create user with duplicate email should return 404', async () => {
+
+  it('create user with duplicate email should return 400', async () => {
     try{
       const addUserCase = AddUser(userRepository)
       const savedUser = await addUserCase.execute(newUserData)
-      const dupilcateUser = await await addUserCase.execute(newUserData)
     }
     catch(err){
-      console.log(err)
       expect(err.code).toBe(400)
     }
   })
