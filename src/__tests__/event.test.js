@@ -29,7 +29,7 @@ afterAll(async () => {
 
 
 /**
- * Team use cases
+ * Event use cases
  */
 describe("Event use cases", () => {
   it("create & save event successfully", async () => {
