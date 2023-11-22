@@ -1,7 +1,7 @@
 const dotenv = require('dotenv').config()
 
 const db = require('../../config/test-db')
-const { AddShift, GetShiftById, Updateshift } = require('../modules/shifts/use-cases/_index')
+const { AddShift, GetShiftById, UpdateShift } = require('../modules/shifts/use-cases/_index')
 const ShiftDatabase = require('../modules/shifts/data_access/database')
 const ShiftRepository = require('../modules/shifts/repository')
 const shiftDatabase = new ShiftDatabase()
@@ -15,7 +15,7 @@ const teamRepository = new TeamRepository(teamDatabase)
 
 const newShiftData = {
   name: 'Shift',
-  description: 'Description',
+  description: 'Shift Description',
   start: '2023-08-01T00:00:00.000Z',
   end: '2023-08-06T00:00:00.000Z',
   capacity: 4,
@@ -23,7 +23,7 @@ const newShiftData = {
 
 const newTeamData = {
   name: 'Team',
-  description: 'Description',
+  description: 'Team Description'
 }
 
 beforeAll(async () => {
@@ -54,8 +54,8 @@ describe("Shift use cases", () => {
     expect(savedShift._id).toBeDefined()
     expect(savedShift.name).toBe(newShiftData.name)
     expect(savedShift.description).toBe(newShiftData.description)
-/*     expect(savedShift.start).toBe(newShiftData.start)
-    expect(savedShift.end).toBe(newShiftData.end), */
+    expect(savedShift.start).toBeDefined()
+    expect(savedShift.end).toBeDefined()
     expect(savedShift.capacity).toBe(newShiftData.capacity)
   })
 
@@ -73,12 +73,17 @@ describe("Shift use cases", () => {
 
   })
 
-/*   it('update shift should return 201', async () => {
+/*   it('update shift should return updated shift', async () => {
+    const addTeamCase = AddTeam(teamRepository)
+    const team = await addTeamCase.execute(newTeamData)
+    newShiftData.teamId = team._id.toHexString()
+
     const addShiftCase = AddShift(shiftRepository)
     const savedShift = await addShiftCase.execute(newShiftData)
-    const updateShiftCase = UpdateShift(shiftRepository)
-    const updatedShift = await updateShiftCase.execute(savedShift._id, {name: 'New Shift'})
 
+    const updateShiftCase = UpdateShift(shiftRepository)
+    const update = {name: 'New Shift'}
+    const updatedShift = await updateShiftCase.execute(savedShift._id, update)
     //finish this
     
   }) */

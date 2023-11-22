@@ -39,8 +39,8 @@ describe("Event use cases", () => {
     expect(savedEvent._id).toBeDefined()
     expect(savedEvent.name).toBe(newEventData.name)
     expect(savedEvent.description).toBe(newEventData.description)
-/*     expect(savedEvent.start).toBe(newEventData.start)
-    expect(savedEvent.end).toBe(newEventData.end), */
+    expect(savedEvent.start).toBeDefined()
+    expect(savedEvent.end).toBeDefined()
     expect(savedEvent.capacity).toBe(newEventData.capacity)
   })
 
@@ -54,7 +54,7 @@ describe("Event use cases", () => {
 
   })
 
-  it('update event should return 201', async () => {
+/*   it('update event should return 201', async () => {
     const addEventCase = AddEvent(eventRepository)
     const savedEvent = await addEventCase.execute(newEventData)
     const updateEventCase = UpdateEvent(eventRepository)
@@ -62,5 +62,5 @@ describe("Event use cases", () => {
 
     //finish this
     
-  })
+  }) */
 })
