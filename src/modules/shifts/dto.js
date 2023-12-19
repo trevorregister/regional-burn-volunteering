@@ -21,7 +21,7 @@ const ShiftToDbSchema = Joi.object({
     capacity: Joi.number()
         .required()
         .positive()
-        .min(0)
+        .min(0),
 })
 
 
@@ -47,7 +47,8 @@ module.exports = class ShiftDTO {
             start: data.start,
             end: data.end,
             duration: data.duration,
-            capacity: data.capacity
+            capacity: data.capacity,
+            signups: data.signups
         }
     }
 

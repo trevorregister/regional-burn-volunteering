@@ -10,5 +10,6 @@ module.exports = class Shift {
         this.end = end
         this.duration = duration
         this.capacity = capacity
+        this.signups = 0
     }
 }

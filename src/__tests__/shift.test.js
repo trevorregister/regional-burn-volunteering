@@ -57,6 +57,7 @@ describe("Shift use cases", () => {
     expect(savedShift.start).toBeDefined()
     expect(savedShift.end).toBeDefined()
     expect(savedShift.capacity).toBe(newShiftData.capacity)
+    expect(savedShift.signups).toBe(0)
   })
 
   it('get shift by id should return shift', async () => {

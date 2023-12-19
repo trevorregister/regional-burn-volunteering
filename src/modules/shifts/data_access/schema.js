@@ -49,6 +49,11 @@ module.exports = new Schema({
         required: [true, 'Shift capacity required'],
         min: [0, 'Shift capacity must be greater than 0']
 
+    },
+
+    signups: {
+        type: Number,
+        required: [true, 'Shift signups required']
     }
 
 })
