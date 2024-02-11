@@ -1,7 +1,10 @@
-const GetUserById = require('./use-cases/GetUserById')
-const GetUsers = require('./use-cases/GetUsers')
-const AddUser = require('./use-cases/AddUser')
-const LoginUser = require('./use-cases/LoginUser')
+const {
+    GetUserById,
+    GetUsers,
+    AddUser,
+    LoginUser
+} = require('./use-cases/_index')
+
 const UserDTO = require('./dto')
 
 module.exports = (repository) => {

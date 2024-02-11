@@ -1,6 +1,8 @@
-const AddShift = require('./use-cases/AddShift')
-const GetShiftById = require('./use-cases/GetShiftById')
-const UpdateShift = require('./use-cases/UpdateShift')
+const {
+    AddShift,
+    GetShiftById,
+    UpdateShift
+} = require('./use-cases/_index')
 const ShiftDTO = require('./dto')
 
 module.exports = (repository) => {

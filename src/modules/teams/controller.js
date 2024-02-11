@@ -1,6 +1,8 @@
-const GetTeamById = require('./use-cases/GetTeamById')
-const AddTeam = require('./use-cases/AddTeam')
-const UpdateTeamCase = require('./use-cases/UpdateTeam')
+const {
+    GetTeamById,
+    AddTeam,
+    UpdateTeamCase
+} = require('./use-cases/_index')
 const TeamDTO = require('./dto')
 
 module.exports = (repository) => {

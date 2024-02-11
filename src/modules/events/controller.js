@@ -1,4 +1,8 @@
-const { AddEvent, UpdateEvent, GetEventById } = require('./use-cases/_index')
+const { 
+    AddEvent, 
+    UpdateEvent, 
+    GetEventById 
+} = require('./use-cases/_index')
 const { HttpError } = require('../../config/errors')
 const EventDTO = require('./dto')
 
