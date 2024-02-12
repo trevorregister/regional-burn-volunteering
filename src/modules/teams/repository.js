@@ -17,6 +17,10 @@ module.exports = class TeamRepository {
         return await this.db.create(team)
     }
 
+    async addMember(id, userId){
+        return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$addToSet: {members: new ObjectId(userId)}})
+    }
+
     async updateTeam(id, update){
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$set: update})
     }

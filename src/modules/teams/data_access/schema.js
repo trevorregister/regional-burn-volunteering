@@ -13,15 +13,10 @@ module.exports = new Schema({
         required:[true, 'Description required'],
     },
 
-    members: [
-        {
-            user: { 
+    members: [{
                 type: Schema.Types.ObjectId, 
                 ref: 'User'    
-            },
-
-        }
-    ],
+        }],
 
     shifts: [{
         type: Schema.Types.ObjectId,

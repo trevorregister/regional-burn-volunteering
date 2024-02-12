@@ -1,9 +1,10 @@
 const Shift = require('../model')
 const { HttpError } = require('../../../config/errors')
-const { UserService } = require('../../services')
+const { UserService, TeamService } = require('../../services')
 const { ObjectId }= require('mongodb')
 
 const userService = new UserService()
+const teamService = new TeamService()
 
 
 module.exports = (repository) => {
@@ -29,7 +30,8 @@ module.exports = (repository) => {
             await repository.incrementShift(shiftId),
             await repository.addMember(shiftId, userId),
             await userService.addTeam(userId, shift.team),
-            await userService.addShift(userId, shiftId)
+            await userService.addShift(userId, shiftId),
+            await teamService.addMember(shift.team, userId)
         ])
 
     }

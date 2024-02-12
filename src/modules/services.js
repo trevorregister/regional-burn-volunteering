@@ -31,6 +31,10 @@ class TeamService extends Service {
     getTeamById(id) {
         return this.repository.getTeamById(id)
     }
+
+    addMember(id, userId){
+        return this.repository.addMember(id, userId)
+    }
 }
 
 class UserService extends Service {
