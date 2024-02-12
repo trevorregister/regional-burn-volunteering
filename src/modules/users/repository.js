@@ -20,6 +20,10 @@ module.exports = class UserRepository {
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$push: {shifts: new ObjectId(shiftId)}})
     }
 
+    async removeShift(id, shiftId){
+        return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$pull: {shifts: new ObjectId(shiftId)}})
+    }
+
     async addTeam(id, teamId){
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$addToSet: {teams: new ObjectId(teamId)}})
     }

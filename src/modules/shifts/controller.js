@@ -2,7 +2,8 @@ const {
     AddShift,
     GetShiftById,
     UpdateShift,
-    Signup
+    Signup,
+    Unsignup
 } = require('./use-cases/_index')
 const ShiftDTO = require('./dto')
 
@@ -52,12 +53,25 @@ module.exports = (repository) => {
         }
     }
 
+    const unsignup = async (req, res, next) => {
+        try {
+            const unsignupCase = Unsignup(repository)
+            const { id } = req.params
+            const { userId } = req.body
+            await unsignupCase.execute(userId, id)
+            res.status(200).send('unsigned up') 
+        } catch (err) {
+            next(err)
+        }
+    }
+
 
     return {
         addShift,
         getShiftById,
         updateShift,
-        signup
+        signup,
+        unsignup
     }
 }
 
