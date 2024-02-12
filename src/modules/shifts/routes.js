@@ -13,6 +13,7 @@ const shiftRoutes = () => {
     router.post('/', controller.addShift)
     router.get('/:id', controller.getShiftById)
     router.patch('/:id', controller.updateShift)
+    router.patch('/:id/signup', controller.signup)
     
     return router
 }
