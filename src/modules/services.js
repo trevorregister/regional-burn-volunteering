@@ -6,8 +6,6 @@ const ShiftDatabase = require('./shifts/data_access/database')
 const ShiftRepository = require('./shifts/repository')
 const EventDatabase = require('./events/data_access/database')
 const EventRepository = require('./events/repository')
-const { GetTeamById, AddTeam, UpdateTeam } = require('./teams/use-cases/_index')
-const { GetEventById, AddEvent, UpdateEvent } = require('./events/use-cases/_index')
 
 const teamDatabase = new TeamDatabase()
 const teamRepository = new TeamRepository(teamDatabase)
@@ -62,7 +60,7 @@ class EventService extends Service{
     }
 
     getEventById(id){
-        return GetEventById(this.repository).execute(id)
+        return this.repository.getEventById(id)
     }
 
 }
