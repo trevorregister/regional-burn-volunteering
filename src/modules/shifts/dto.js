@@ -43,7 +43,7 @@ module.exports = class ShiftDTO {
             name: data.name,
             description: data.description,
             members: data.members,
-            teamId: data.teamId,
+            team: data.team,
             start: data.start,
             end: data.end,
             duration: data.duration,
