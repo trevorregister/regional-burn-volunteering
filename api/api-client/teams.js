@@ -1,9 +1,11 @@
 const axios = require('axios')
-const HOST = 'http://localhost:3000/api/teams'
 
 module.exports = class Teams {
+    constructor(API_HOST){
+        this.API_HOST = API_HOST
+    }
     getTeamById(id){
-        return axios.get(`${HOST}/${id}`)
+        return axios.get(`${this.API_HOST}/teams/${id}`)
     }
 
     addTeam({name, description}){
@@ -11,6 +13,6 @@ module.exports = class Teams {
             name: name,
             description: description,
         }
-        return axios.post(`${HOST}/`, team) 
+        return axios.post(`${this.API_HOST}/teams`, team) 
     }
 }

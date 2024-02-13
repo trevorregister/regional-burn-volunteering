@@ -1,9 +1,11 @@
 const axios = require('axios')
-const HOST = 'http://localhost:3000/api/events'
 
 module.exports = class Events {
+    constructor(API_HOST){
+        this.API_HOST = API_HOST
+    }
     getEventById(id){
-        return axios.get(`${HOST}/${id}`)
+        return axios.get(`${this.API_HOST}/events/${id}`)
     }
 
     addEvent({name, description, start, end, capacity}){
@@ -14,6 +16,6 @@ module.exports = class Events {
             end: end,
             capacity: capacity
         }
-        return axios.post(`${HOST}/`, event) 
+        return axios.post(`${this.API_HOST}/events`, event) 
     }
 }

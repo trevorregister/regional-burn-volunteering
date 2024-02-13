@@ -1,13 +1,15 @@
 const axios = require('axios')
-const HOST = 'http://localhost:3000/api/users'
 
 module.exports = class Users {
+    constructor(API_HOST){
+        this.API_HOST = API_HOST
+    }
     getUserById(id){
-        return axios.get(`${HOST}/${id}`)
+        return axios.get(`${this.API_HOST}/users/${id}`)
     }
 
     getUsers(){
-        return axios.get(`${HOST}/`)
+        return axios.get(`${this.API_HOST}/users`)
     }
 
     login({email, password}){
@@ -15,7 +17,7 @@ module.exports = class Users {
             email: email,
             password: password
         }
-        return axios.post(`${HOST}/login`, credentials)
+        return axios.post(`${this.API_HOST}/users/login`, credentials)
     }
 
     addUser({email, name, role, password}){
@@ -25,14 +27,14 @@ module.exports = class Users {
             role: role,
             password: password
         }
-        return axios.post(`${HOST}/`,user)
+        return axios.post(`${this.API_HOST}/users`,user)
     }
 
     getShifts(id){
-        return axios.get(`${HOST}/${id}/shifts`)
+        return axios.get(`${this.API_HOST}/users/${id}/shifts`)
     }
 
     logout(){
-        return axios.post(`${HOST}/logout`)
+        return axios.post(`${this.API_HOST}/users/logout`)
     }
 }
