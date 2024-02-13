@@ -11,7 +11,7 @@ const userRoutes = () => {
     const controller = UserController(repository)
 
     router.get('/', controller.getUsers)
-    router.get('/:id', auth, controller.getUserById)
+    router.get('/:id', controller.getUserById)
     router.get('/:id/shifts', controller.getShifts)
     router.post('/', controller.addUser)
     router.post('/login', controller.loginUser)
