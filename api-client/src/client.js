@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config()
 const {
     Users,
     Shifts,
@@ -15,7 +16,7 @@ class Client {
     }
 }
 
-const client = new Client('http://localhost:3000/api')
+const client = new Client(process.env.API_LOCAL_HOST)
 
 module.exports = {
     client
