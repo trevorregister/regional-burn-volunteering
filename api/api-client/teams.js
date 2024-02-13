@@ -1,0 +1,18 @@
+const axios = require('axios')
+
+module.exports = class Teams {
+    constructor(API_HOST){
+        this.API_HOST = API_HOST
+    }
+    getTeamById(id){
+        return axios.get(`${this.API_HOST}/teams/${id}`)
+    }
+
+    addTeam({name, description}){
+        const team = {
+            name: name,
+            description: description,
+        }
+        return axios.post(`${this.API_HOST}/teams`, team) 
+    }
+}
