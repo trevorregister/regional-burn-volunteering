@@ -1,7 +1,8 @@
 const {
     Users,
     Shifts,
-    Teams
+    Teams,
+    Events
 } = require('./_index')
 
 class Client {
@@ -9,6 +10,7 @@ class Client {
         this.users = new Users()
         this.shifts = new Shifts()
         this.teams = new Teams()
+        this.events = new Events()
     }
 }
 
