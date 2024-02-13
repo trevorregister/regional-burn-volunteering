@@ -1,4 +1,4 @@
-const dotenv = require('dotenv').config()
+const { API_LOCAL_HOST } = require('../config.json')
 const {
     Users,
     Shifts,
@@ -16,7 +16,7 @@ class Client {
     }
 }
 
-const client = new Client(process.env.API_LOCAL_HOST)
+const client = new Client(API_LOCAL_HOST)
 
 module.exports = {
     client
