@@ -18,8 +18,16 @@ module.exports = class ShiftRepository {
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)},{$inc: {signups: 1}})
     }
 
+    async decrementShift(id){
+        return await this.db.findOneAndUpdate({_id: new ObjectId(id)},{$inc: {signups: -1}})
+    }
+
     async addMember(id, userId){
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$push: {members: new ObjectId(userId)}})
+    }
+
+    async removeMember(id, userId){
+        return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$pull: {members: new ObjectId(userId)}})
     }
 
     async updateShift(id, update){

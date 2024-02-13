@@ -51,6 +51,11 @@ class UserService extends Service {
         return this.repository.addShift(id, shiftId)
     }
 
+    removeShift(id, shiftId){
+        return this.repository.removeShift(id, shiftId)
+
+    }
+
     addTeam(id, teamId){
         return this.repository.addTeam(id, teamId)
     }
