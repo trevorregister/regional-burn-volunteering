@@ -1,14 +1,10 @@
-const  Users  = require('./users')
-
-/* module.exports = class Client {
-    constructor(){
-        this.users = new Users()
-    }
-} */
+const Users  = require('./users')
+const Shifts = require('./shifts')
 
 class Client {
     constructor(){
         this.users = new Users()
+        this.shifts = new Shifts()
     }
 }
 

@@ -10,7 +10,7 @@ module.exports = class Users {
         return axios.get(`${HOST}/`)
     }
 
-    login(email, password){
+    login({email, password}){
         const credentials = {
             email: email,
             password: password
@@ -18,7 +18,7 @@ module.exports = class Users {
         return axios.post(`${HOST}/login`, credentials)
     }
 
-    addUser(email, name, role, password){
+    addUser({email, name, role, password}){
         const user = {
             email: email,
             name: name,
