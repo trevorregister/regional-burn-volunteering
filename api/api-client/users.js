@@ -1,11 +1,4 @@
 const axios = require('axios')
-const {
-    AddUser,
-    GetShifts,
-    GetUserById,
-    GetUsers,
-    LoginUser
-} = require('../src/modules/users/use-cases/_index')
 const HOST = 'http://localhost:3000/api/users'
 
 module.exports = class Users {
@@ -17,7 +10,29 @@ module.exports = class Users {
         return axios.get(`${HOST}/`)
     }
 
-    loginUser(email, password){
-        return axios.post(`${HOST}/login`, {email: email, password: password})
+    login(email, password){
+        const credentials = {
+            email: email,
+            password: password
+        }
+        return axios.post(`${HOST}/login`, credentials)
+    }
+
+    addUser(email, name, role, password){
+        const user = {
+            email: email,
+            name: name,
+            role: role,
+            password: password
+        }
+        return axios.post(`${HOST}/`,user)
+    }
+
+    getShifts(id){
+        return axios.get(`${HOST}/${id}/shifts`)
+    }
+
+    logout(){
+        return axios.post(`${HOST}/logout`)
     }
 }

@@ -12,3 +12,4 @@ https://miro.com/app/board/uXjVNS-_818=/
 ## To-do
 * refactor user schema to remove teams
 * refactor team schema to remove members
+* mongoose transactions to preserve atomicity with signups/unsignups
