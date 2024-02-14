@@ -29,7 +29,6 @@ module.exports = class UserRepository {
     }
 
     async updateRole(id, role){
-        console.log(id, role)
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {role: role})
     }
 
