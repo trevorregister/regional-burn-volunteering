@@ -16,3 +16,4 @@ https://miro.com/app/board/uXjVNS-_818=/
 * refactor controller -> use-case -> repo object destructuring to be consistent across the app. Look at AddLead use case as example.
 * some kind of ABAC
 * refactor update use-cases to patch only text fields (name, description, etc)
+* clients to allow for use of cross-module use-cases
