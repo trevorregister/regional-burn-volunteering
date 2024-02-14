@@ -1,4 +1,3 @@
-const Team = require('../model')
 const { HttpError } = require('../../../config/errors')
 const { UserService } = require('../../services')
 const userService = new UserService()
