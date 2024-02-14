@@ -5,11 +5,15 @@ const userService = new UserService()
 
 module.exports = (repository) => {
     async function execute(id, userId){
-        const user = await userService.getUserById(id)
+        const user = await userService.getUserById(userId)
         if(!user) {
             throw new HttpError(404, `user ${id} not found`)
         }
-        return await repository.addLead(id, userId)
+
+        return Promise.all([
+            await repository.addLead(id, userId),
+            await userService.updateRole(userId, 'lead')
+        ])
     }
 
     return { execute }

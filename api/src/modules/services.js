@@ -59,6 +59,10 @@ class UserService extends Service {
     addTeam(id, teamId){
         return this.repository.addTeam(id, teamId)
     }
+
+    updateRole(id, role){
+        return this.repository.updateRole(id, role)
+    }
 }
 
 class ShiftService extends Service{

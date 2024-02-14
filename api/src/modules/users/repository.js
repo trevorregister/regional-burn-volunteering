@@ -28,6 +28,11 @@ module.exports = class UserRepository {
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$addToSet: {teams: new ObjectId(teamId)}})
     }
 
+    async updateRole(id, role){
+        console.log(id, role)
+        return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {role: role})
+    }
+
     async create(user){
         return await this.db.create(user)
     }

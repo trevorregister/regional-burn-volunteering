@@ -19,7 +19,7 @@ module.exports = new Schema({
         required: [true, 'Team required']
     }],
 
-    leadership: [{
+    lead: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
     }],
