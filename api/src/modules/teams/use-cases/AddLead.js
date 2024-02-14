@@ -11,6 +11,7 @@ module.exports = (repository) => {
 
         return Promise.all([
             await repository.addLead(id, userId),
+            await userService.addTeam(userId, id),
             await userService.updateRole(userId, 'lead')
         ])
     }
