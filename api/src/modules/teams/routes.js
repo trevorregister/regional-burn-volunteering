@@ -13,6 +13,7 @@ const teamRoutes = () => {
     router.post('/', controller.addTeam)
     router.get('/:id', controller.getTeamById)
     router.patch('/:id', controller.updateTeam)
+    router.patch('/:id/addlead', controller.addLead)
     
     return router
 }
