@@ -2,7 +2,8 @@ const {
     GetTeamById,
     AddTeam,
     UpdateTeam,
-    AddLead
+    AddLead,
+    RemoveLead
 } = require('./use-cases/_index')
 const TeamDTO = require('./dto')
 
@@ -52,11 +53,24 @@ module.exports = (repository) => {
         }
     }
 
+    const removeLead = async (req, res, next) => {
+        try {
+            const removeLeadCase = RemoveLead(repository)
+            const { id } = req.params
+            const { userId } = req.body
+            await removeLeadCase.execute(id, userId)
+            res.status(201).send('lead removed')
+        } catch (err) {
+            next(err)
+        }
+    }
+
     return {
         getTeamById,
         addTeam,
         updateTeam,
-        addLead
+        addLead,
+        removeLead
     }
 }
 

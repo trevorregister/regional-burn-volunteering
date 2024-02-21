@@ -14,6 +14,7 @@ const teamRoutes = () => {
     router.get('/:id', controller.getTeamById)
     router.patch('/:id', controller.updateTeam)
     router.patch('/:id/addlead', controller.addLead)
+    router.patch('/:id/removelead', controller.removeLead)
     
     return router
 }
