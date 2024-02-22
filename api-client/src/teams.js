@@ -19,4 +19,9 @@ module.exports = class Teams {
     addLead({id, userId}){
         return axios.patch(`${this.API_HOST}/teams/${id}/addlead`, {userId: userId})
     }
+
+    removeLead({id, userId}){
+        return axios.patch(`${this.API_HOST}/teams/${id}/removelead`, {userId: userId})
+
+    }
 }
