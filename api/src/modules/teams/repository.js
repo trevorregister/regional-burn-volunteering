@@ -25,4 +25,18 @@ module.exports = class TeamRepository {
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$set: update})
     }
 
+    async addLead(id, userId){
+        return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$addToSet: {leads: new ObjectId(userId)}})
+    }
+
+    async removeLead(id, userId){
+        await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$pull: {leads: new ObjectId(userId)}})
+    }
+
+    async isLeadingAnyTeam(userId){
+        return await this.db.findOne({leads: new ObjectId(userId)})
+        ? true
+        : false
+    }
+
 }

@@ -10,6 +10,8 @@ const TeamToDbSchema = Joi.object({
     description: Joi.string()
         .required()
         .trim(),
+    leads: Joi.array()
+        .required()
 })
 
 

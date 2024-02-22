@@ -17,8 +17,8 @@ module.exports = new Schema({
         type:String,
         required:[true, 'Role required'],
         enum: {
-            values: ['user', 'admin', 'leadership'],
-            message: `role must be 'user', 'leadership', or 'platform-admin'`
+            values: ['user', 'admin', 'lead'],
+            message: `role must be 'user', 'lead', or 'platform-admin'`
         }
     },
 
