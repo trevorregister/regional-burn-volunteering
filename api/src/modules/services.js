@@ -63,6 +63,10 @@ class UserService extends Service {
     updateRole(id, role){
         return this.repository.updateRole(id, role)
     }
+
+    getShifts(id){
+        return this.repository.getShifts(id)
+    }
 }
 
 class ShiftService extends Service{

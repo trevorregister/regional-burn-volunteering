@@ -15,11 +15,11 @@ module.exports = class ShiftRepository {
     }
 
     async incrementShift(id){
-        return await this.db.findOneAndUpdate({_id: new ObjectId(id)},{$inc: {signups: 1}})
+        return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$inc: {signups: 1}})
     }
 
     async decrementShift(id){
-        return await this.db.findOneAndUpdate({_id: new ObjectId(id)},{$inc: {signups: -1}})
+        return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$inc: {signups: -1}})
     }
 
     async addMember(id, userId){
@@ -28,6 +28,17 @@ module.exports = class ShiftRepository {
 
     async removeMember(id, userId){
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$pull: {members: new ObjectId(userId)}})
+    }
+
+    async isShiftConflict(userId, start, end){
+        return await this.db.findOne({
+            $and: [
+                {members: new ObjectId(userId)}, 
+                {start: {$gt: new Date(start)}}, 
+                {end: {$lt: new Date(end)}}
+            ]})
+        ? true
+        : false
     }
 
     async updateShift(id, update){
