@@ -64,4 +64,32 @@ module.exports = class UserRepository {
         return shifts
     }
 
+    async getTeams(id){
+        id = new ObjectId(id)
+        const teams = await this.db.aggregate([
+            {
+              $match:
+                {
+                  _id: id,
+                },
+            },
+            {
+                $lookup: {
+                    from: 'teams',
+                    localField: 'teams',
+                    foreignField: '_id',
+                    as: 'teams'
+                }
+            },
+
+          ])
+          .project(
+            {
+                teams: 1,
+                _id: 0,
+            }
+          )
+        return teams
+    }
+
 }

@@ -34,6 +34,10 @@ module.exports = class Users {
         return axios.get(`${this.API_HOST}/users/${id}/shifts`)
     }
 
+    getTeams(id){
+        return axios.get(`${this.API_HOST}/users/${id}/shifts`)
+    }
+
     logout(){
         return axios.post(`${this.API_HOST}/users/logout`)
     }

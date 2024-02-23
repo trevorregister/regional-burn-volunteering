@@ -3,7 +3,8 @@ const {
     GetUsers,
     AddUser,
     LoginUser,
-    GetShifts
+    GetShifts,
+    GetTeams
 } = require('./use-cases/_index')
 
 const UserDTO = require('./dto')
@@ -74,13 +75,25 @@ module.exports = (repository) => {
         }
     }
 
+    const getTeams = async (req, res, next) => {
+        try {
+            const getTeamsCase = GetTeams(repository)
+            const { id } = req.params
+            const teams = await getTeamsCase.execute(id)
+            res.status(201).send(teams)
+        } catch (err) {
+            next(err)
+        }
+    }
+
     return {
         getUsers,
         getUserById,
         addUser,
         loginUser,
         logoutUser,
-        getShifts
+        getShifts,
+        getTeams
     }
 }
 
