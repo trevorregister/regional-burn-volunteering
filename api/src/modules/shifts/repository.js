@@ -30,6 +30,17 @@ module.exports = class ShiftRepository {
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$pull: {members: new ObjectId(userId)}})
     }
 
+    async isShiftConflict(userId, start, end){
+        return await this.db.findOne({
+            $and: [
+                {members: new ObjectId(userId)}, 
+                {start: {$gte: new Date(start)}}, 
+                {end: {$lte: new Date(end)}}
+            ]})
+        ? true
+        : false
+    }
+
     async updateShift(id, update){
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$set: update})
     }
