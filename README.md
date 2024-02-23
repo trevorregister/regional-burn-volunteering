@@ -17,3 +17,4 @@ https://miro.com/app/board/uXjVNS-_818=/
 * some kind of ABAC
 * refactor update use-cases to patch only text fields (name, description, etc)
 * clients to allow for use of cross-module use-cases
+* refactor getTeams/getShifts user service calls to match what corresponding use case returns
