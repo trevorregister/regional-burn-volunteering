@@ -61,7 +61,7 @@ module.exports = class UserRepository {
                 _id: 0,
             }
           )
-        return shifts
+        return shifts[0].shifts
     }
 
     async getTeams(id){
@@ -89,7 +89,7 @@ module.exports = class UserRepository {
                 _id: 0,
             }
           )
-        return teams
+        return teams[0].teams
     }
 
 }
