@@ -5,9 +5,9 @@ Volunteer sign up app for regional burning man events.
 https://miro.com/app/board/uXjVNS-_818=/
 
 ## Setup
-1. npm i
-2. npm start 
-2. use post man to send calls to the api
+1. Run `npm i` in a terminal from /api, /api-client, and /web.
+2. `npm start` in one terminal from /api
+3. `npm run dev` in another terminal from /web
 
 ## To-do
 * refactor user schema to remove teams
