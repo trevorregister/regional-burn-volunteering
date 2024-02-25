@@ -1,11 +1,3 @@
-/* const { API_LOCAL_HOST } = require('../config.json')
-const {
-    Users,
-    Shifts,
-    Teams,
-    Events
-} = require('./_index') */
-
 import {
     Users,
     Teams,
@@ -22,7 +14,3 @@ export default class Client {
         this.events = new Events(API_HOST)
     }
 }
-
-/* const client = new Client(API_LOCAL_HOST)
-
-module.exports = { client } */
