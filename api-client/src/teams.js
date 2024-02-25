@@ -1,6 +1,6 @@
-const axios = require('axios')
+import axios from 'axios'
 
-module.exports = class Teams {
+export default class Teams {
     constructor(API_HOST){
         this.API_HOST = API_HOST
     }
