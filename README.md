@@ -10,6 +10,7 @@ https://miro.com/app/board/uXjVNS-_818=/
 3. `npm run dev` in another terminal from /web
 
 ## To-do
+# API
 * refactor user schema to remove teams
 * refactor team schema to remove members
 * mongoose transactions to preserve atomicity with signups/unsignups
@@ -17,3 +18,6 @@ https://miro.com/app/board/uXjVNS-_818=/
 * some kind of ABAC
 * refactor update use-cases to patch only text fields (name, description, etc)
 * clients to allow for use of cross-module use-cases
+
+# Web
+* form validation
