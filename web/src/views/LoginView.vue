@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { client } from '../../api-client/client'
+import { client } from '@client'
 
 export default {
   name: 'LoginView',
