@@ -4,6 +4,9 @@ Volunteer sign up app for regional burning man events.
 ## Domain mapping
 https://miro.com/app/board/uXjVNS-_818=/
 
+## Wireframing
+https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=0-1&mode=design&t=y8NArxcAoQL9WEcW-0
+
 ## Setup
 1. Run `npm i` in a terminal from /api, /api-client, and /web.
 2. `npm start` in one terminal from /api
