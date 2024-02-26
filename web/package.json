@@ -12,9 +12,13 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
     "pinia": "^2.1.7",
+    "sass": "^1.71.1",
     "vue": "^3.4.15",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vuetify": "^3.5.6"
   },
   "devDependencies": {
     "@playwright/test": "^1.41.1",
