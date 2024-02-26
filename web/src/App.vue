@@ -1,19 +1,23 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
+import  TopNavBar  from './components/global/TopNavBar.vue'
 </script>
 
 <template>
   <header>
     <div class="wrapper">
-      <nav>
-        <RouterLink to="/login">Login</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+      <TopNavBar />
     </div>
   </header>
   <RouterView />
 </template>
-
+<script>
+  export default {
+    components: {
+      TopNavBar
+    }
+  }
+</script>
 <style lang="scss" scoped>
 header {
   line-height: 1.5;
