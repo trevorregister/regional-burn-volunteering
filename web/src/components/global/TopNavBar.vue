@@ -1,12 +1,15 @@
 <template>
             <v-app-bar title="Alchemy Volunteering" color="primary">
-                <v-btn color="black-lighten-3">
+                <v-btn color="secondary">
                     <RouterLink to="/login">Login</RouterLink>
                 </v-btn>
-                <v-btn color="black-lighten-3">
+                <v-btn color="secondary">
                     <RouterLink to="/about">About</RouterLink>
                 </v-btn>
-                <v-btn @click="logout" color="black-lighten-3">Logout</v-btn>
+                <v-btn color="secondary">
+                    <RouterLink to="/teams">Teams</RouterLink>
+                </v-btn>
+                <v-btn @click="logout" color="secondary">Logout</v-btn>
             </v-app-bar>
 </template>
 <script>
