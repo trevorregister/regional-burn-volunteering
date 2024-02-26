@@ -31,6 +31,7 @@ module.exports = class TeamDTO {
         return {
             id: data._id,
             name: data.name,
+            description: data.description,
             members: data.members,
             shifts: data.shifts,
             leads: data.leads

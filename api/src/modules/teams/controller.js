@@ -3,11 +3,25 @@ const {
     AddTeam,
     UpdateTeam,
     AddLead,
-    RemoveLead
+    RemoveLead,
+    GetTeams
 } = require('./use-cases/_index')
 const TeamDTO = require('./dto')
 
 module.exports = (repository) => {
+    const getTeams = async (req, res, next) => {
+        try {
+            const getTeamsCase = GetTeams(repository)
+            const teams = []
+            const teamsResponse = await getTeamsCase.execute()
+            for await (const teamResponse of teamsResponse) {
+                teams.push(TeamDTO.toWeb(teamResponse))
+            }
+            res.status(200).send(teams)
+        } catch (err) {
+            next(err)
+        }
+    }
     const getTeamById = async (req, res, next) => {
         try {
             const getTeamByIdCase = GetTeamById(repository)
@@ -70,7 +84,8 @@ module.exports = (repository) => {
         addTeam,
         updateTeam,
         addLead,
-        removeLead
+        removeLead,
+        getTeams
     }
 }
 

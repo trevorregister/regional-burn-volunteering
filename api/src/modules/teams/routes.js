@@ -11,6 +11,7 @@ const teamRoutes = () => {
     const controller = TeamController(repository)
 
     router.post('/', controller.addTeam)
+    router.get('/', controller.getTeams)
     router.get('/:id', controller.getTeamById)
     router.patch('/:id', controller.updateTeam)
     router.patch('/:id/addlead', controller.addLead)
