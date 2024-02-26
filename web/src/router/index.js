@@ -37,7 +37,7 @@ const router = createRouter({
       component: TeamsView
     },
     {
-      path: '/teams/:id',
+      path: '/teams/:teamId',
       name: 'team',
       component: TeamView,
       props: true

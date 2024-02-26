@@ -1,26 +1,27 @@
 <template>
     <div>
-        {{ team }}
+        <h1>{{ team.name }}</h1>
+        <p>{{ team.description }}</p>
     </div>
 </template>
 <script>
 import { client } from '../../../api-client/client'
 
 export default {
-    props: ['id'],
+    props: ['teamId'],
     data() {
         return {
             team: {},
         }
     },
     methods: {
-        async getTeamById(id){
-            const team = await client.teams.getTeamById(id)
+        async getTeamById(teamId){
+            const team = await client.teams.getTeamById(teamId)
             this.team = team.data
         }
     },
     async created() {
-        this.getTeamById(this.id)
+        this.getTeamById(this.teamId)
     }
 }
 </script>

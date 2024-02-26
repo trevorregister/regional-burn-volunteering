@@ -4,7 +4,7 @@
         :to="{
             name: 'team',
             params: {
-                id: team.id
+                teamId: team.id
             }
         }"
         >
