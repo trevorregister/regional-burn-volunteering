@@ -5,22 +5,34 @@
     </div>
     <div>
         <h1>Shifts</h1>
-        <div v-for="shift in shifts" :key="shift">
-            <h2>{{ shift.name }}</h2>
-            <p>Description: {{ shift.description }}</p>
-            <p>Start: {{ shift.start }}</p>
-            <p>End: {{ shift.end }}</p>
-            <p>Length: {{ shift.duration }} hours</p>
-            <p>Signups: {{ getSignupCount(shift.members ?? []) }}</p>
-            <p>Capacity: {{ shift.capacity }}</p>
-        </div>
+        <v-sheet>
+            <div v-for="shift in shifts" :key="shift">
+                <ShiftCard 
+                    :name="shift.name"
+                    :description="shift.description"
+                    :start="shift.start"
+                    :end="shift.end"
+                    :duration="shift.duration"
+                    :signups="shift.signups ?? 0"
+                    :capacity="shift.capacity"
+                    />
+                <v-btn :disabled="isShiftFull(shift)" @click="signup(shift.id, userId)">
+                    <p v-if="isShiftFull(shift)">Filled</p>
+                    <p v-else>Signup</p>
+                </v-btn>
+            </div>
+        </v-sheet>
     </div>
 </template>
 <script>
 import { client } from '../../../api-client/client'
+import ShiftCard from '../../components/shifts/ShiftCard.vue'
 
 export default {
     props: ['teamId'],
+    components: {
+        ShiftCard}
+        ,
     data() {
         return {
             team: {},
@@ -36,6 +48,18 @@ export default {
             const shifts = await client.teams.getShifts(teamId)
             this.shifts = shifts.data
         },
+        getSignupCount(shiftMembers){
+            return shiftMembers.length
+        },
+        isShiftFull(shift){
+            return shift.signups >= shift.capacity 
+        },
+        async signup(shiftId, userId){
+            await client.shifts.signup({
+                id: shiftId,
+                userId: userId
+            })
+        },
         async load() {
             await Promise.all([
                 await this.getTeamById(this.teamId),
@@ -43,9 +67,6 @@ export default {
             ])
 
         },
-        getSignupCount(shiftMembers){
-            return shiftMembers.length
-        }
     },
     async created() {
         this.load()
