@@ -5,7 +5,7 @@ const { HttpError } = require('../../../config/errors')
 module.exports = (repository) => {
     async function execute(email, password){
         const user = await repository.getUserByEmail(email)
-        const match = await bcrypt.compare(password, user.hash)
+        const match = await bcrypt.compare(password, user?.hash ?? '')
 
         if(user && match){
             const token = jwt.sign({id: user._id, role: user.role}, process.env.JWT_SECRET)
