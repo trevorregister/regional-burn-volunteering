@@ -1,31 +1,32 @@
 <template>
-  <v-container justify-content="center">
-    <v-sheet width="300" elevation="2">
-        <v-form @submit.prevent="login">
-          <v-text-field
-             v-model="email"
-            label="Email"
-          >
+  <v-container>
+    <v-row align="center" justify="center">
+      <v-sheet width="300" elevation="2">
+          <v-form @submit.prevent="login">
+            <v-text-field
+               v-model="email"
+              label="Email"
+            >
+            </v-text-field>
+            <v-text-field
+              v-model="password"
+              label="Password"
+              type="password"
+            >
           </v-text-field>
-          <v-text-field
-            v-model="password"
-            label="Password"
-            type="password"
-          >
-        </v-text-field>
-        <v-btn type="submit">
-          Submit
+          <v-btn block class="mt-2" color="green-lighten-3" type="submit">
+            Submit
+          </v-btn>
+          </v-form>
+      </v-sheet>
+    </v-row>
+    <v-row align="center" justify="center">
+      <v-btn variant="text" @click="toCreateAccount">
+          Create Account
         </v-btn>
-        {{ isAuthenticated }}
-        </v-form>
-      <v-btn @click="logout">
-        Logout
-      </v-btn>
-    </v-sheet>
+    </v-row>
   </v-container>
-  <v-btn @click="toCreateAccount">
-    Create Account
-  </v-btn>
+
 </template>
 
 <script>
@@ -49,10 +50,7 @@ export default {
       })
       this.user = user.data
       this.isAuthenticated = true
-    },
-    async logout(){
-      await client.users.logout()
-      this.isAuthenticated = false
+      this.$router.push({path: '/dashboard'})
     },
     toCreateAccount(){
       this.$router.push({path: '/create-account'})

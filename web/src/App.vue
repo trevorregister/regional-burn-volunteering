@@ -4,12 +4,12 @@ import  TopNavBar  from './components/global/TopNavBar.vue'
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <TopNavBar />
-    </div>
-  </header>
-  <RouterView />
+  <v-app>
+    <TopNavBar />
+      <v-main>
+          <RouterView />
+      </v-main>
+  </v-app>
 </template>
 <script>
   export default {

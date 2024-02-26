@@ -1,28 +1,30 @@
 <template>
   <v-container>
-    <v-sheet width="300" elevation="2">
-        <v-form @submit.prevent="createUser">
-          <v-text-field
-             v-model="name"
-            label="Name"
-          >
+    <v-row align="center" justify="center">
+      <v-sheet width="300" elevation="2">
+          <v-form @submit.prevent="createUser">
+            <v-text-field
+               v-model="name"
+              label="Name"
+            >
+            </v-text-field>
+            <v-text-field
+               v-model="email"
+              label="Email"
+            >
+            </v-text-field>
+            <v-text-field
+              v-model="password"
+              label="Password"
+              type="password"
+            >
           </v-text-field>
-          <v-text-field
-             v-model="email"
-            label="Email"
-          >
-          </v-text-field>
-          <v-text-field
-            v-model="password"
-            label="Password"
-            type="password"
-          >
-        </v-text-field>
-        <v-btn type="submit">
-          Submit
-        </v-btn>
-        </v-form>
-    </v-sheet>
+          <v-btn block class="mt-2" color="green-lighten-3" type="submit">
+            Submit
+          </v-btn>
+          </v-form>
+      </v-sheet>
+    </v-row>
   </v-container>
 </template>
 
@@ -48,7 +50,7 @@ export default {
         password: this.password
       })
 
-      this.$router.push({path: '/login'})
+      this.$router.push({path: '/dashboard'})
     }
   }
 }
