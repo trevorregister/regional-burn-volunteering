@@ -2,7 +2,12 @@
   <v-container>
     <v-row align="center" justify="center">
       <v-sheet width="300" elevation="2">
-          <v-form @submit.prevent="login">
+          <v-form @submit.prevent="createUser">
+            <v-text-field
+               v-model="name"
+              label="Name"
+            >
+            </v-text-field>
             <v-text-field
                v-model="email"
               label="Email"
@@ -20,40 +25,32 @@
           </v-form>
       </v-sheet>
     </v-row>
-    <v-row align="center" justify="center">
-      <v-btn variant="text" @click="toCreateAccount">
-          Create Account
-        </v-btn>
-    </v-row>
   </v-container>
-
 </template>
 
 <script>
-import { client } from '@client'
+import { client } from '../../api-client/client'
 
 export default {
-  name: 'LoginView',
+  name: 'CreateAccountView',
   data() {
     return {
-      email: 'user45@email.com',
-      password: 'password',
-      user: {},
-      isAuthenticated: false
+      email: '',
+      password: '',
+      name: '',
+      role: 'user'
     }
   },
   methods: {
-    async login(){
-      const user = await client.users.login({
+    async createUser(){
+      await client.users.addUser({
         email: this.email,
+        name: this.name,
+        role: this.role,
         password: this.password
       })
-      this.user = user.data
-      this.isAuthenticated = true
+
       this.$router.push({path: '/dashboard'})
-    },
-    toCreateAccount(){
-      this.$router.push({path: '/create-account'})
     }
   }
 }
