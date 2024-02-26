@@ -1,5 +1,5 @@
 <template>
-            <v-app-bar title="Alchemy Volunteering" color="blue-lighten-2">
+            <v-app-bar title="Alchemy Volunteering" color="primary">
                 <v-btn color="black-lighten-3">
                     <RouterLink to="/login">Login</RouterLink>
                 </v-btn>
