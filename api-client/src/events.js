@@ -1,6 +1,6 @@
-const axios = require('axios')
+import axios from 'axios'
 
-module.exports = class Events {
+export default class Events {
     constructor(API_HOST){
         this.API_HOST = API_HOST
     }

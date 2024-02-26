@@ -1,6 +1,6 @@
-const axios = require('axios')
+import axios from 'axios'
 
-module.exports = class Shifts {
+export default class Shifts {
     constructor(API_HOST){
         this.API_HOST = API_HOST
     }

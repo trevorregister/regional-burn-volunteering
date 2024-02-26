@@ -1,12 +1,11 @@
-const { API_LOCAL_HOST } = require('../config.json')
-const {
+import {
     Users,
-    Shifts,
     Teams,
-    Events
-} = require('./_index')
+    Events,
+    Shifts
+} from './_index'
 
-class Client {
+export default class Client {
     constructor(API_HOST){
         this.API_HOST = API_HOST
         this.users = new Users(API_HOST)
@@ -14,10 +13,4 @@ class Client {
         this.teams = new Teams(API_HOST)
         this.events = new Events(API_HOST)
     }
-}
-
-const client = new Client(API_LOCAL_HOST)
-
-module.exports = {
-    client
 }
