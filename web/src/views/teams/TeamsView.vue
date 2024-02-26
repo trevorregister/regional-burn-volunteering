@@ -1,8 +1,18 @@
 <template>
     <div v-for="team in teams" :key="team">
-        <TeamCard
-        :name="team.name"
-        :description="team.description" />
+        <RouterLink
+        :to="{
+            name: 'team',
+            params: {
+                id: team.id
+            }
+        }"
+        >
+            <TeamCard
+                :name="team.name"
+                :description="team.description"
+            />
+        </RouterLink>
     </div>
 </template>
 <script>
