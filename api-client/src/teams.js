@@ -12,6 +12,10 @@ export default class Teams {
         return axios.get(`${this.API_HOST}/teams`)
     }
 
+    getShifts(id){
+        return axios.get(`${this.API_HOST}/teams/${id}/shifts`)
+    }
+
     addTeam({name, description}){
         const team = {
             name: name,

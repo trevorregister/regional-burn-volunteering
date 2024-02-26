@@ -4,6 +4,7 @@ const UpdateTeam = require('./UpdateTeam')
 const AddLead = require('./AddLead')
 const RemoveLead = require('./RemoveLead')
 const GetTeams = require('./GetTeams')
+const GetShifts = require('./GetShifts')
 
 module.exports = {
     AddTeam,
@@ -11,5 +12,6 @@ module.exports = {
     UpdateTeam,
     AddLead,
     RemoveLead,
-    GetTeams
+    GetTeams,
+    GetShifts
 }

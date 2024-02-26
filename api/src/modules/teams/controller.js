@@ -4,9 +4,11 @@ const {
     UpdateTeam,
     AddLead,
     RemoveLead,
-    GetTeams
+    GetTeams,
+    GetShifts
 } = require('./use-cases/_index')
 const TeamDTO = require('./dto')
+const ShiftDTO = require('../shifts/dto')
 
 module.exports = (repository) => {
     const getTeams = async (req, res, next) => {
@@ -28,6 +30,20 @@ module.exports = (repository) => {
             const team  = await getTeamByIdCase.execute(req.params.id)
             res.status(200).send(TeamDTO.toWeb(team))
             
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    const getShifts = async (req, res, next) => {
+        try {
+            const getShiftsCase = GetShifts(repository)
+            const shifts = []
+            const shiftsResponse = await getShiftsCase.execute(req.params.id)
+            for await (const shiftResponse of shiftsResponse) {
+                shifts.push(ShiftDTO.toWeb(shiftResponse))
+            }
+            res.status(200).send(shifts)
         } catch (err) {
             next(err)
         }
@@ -85,7 +101,8 @@ module.exports = (repository) => {
         updateTeam,
         addLead,
         removeLead,
-        getTeams
+        getTeams,
+        getShifts
     }
 }
 
