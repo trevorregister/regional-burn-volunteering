@@ -5,23 +5,21 @@
     </div>
     <div>
         <h1>Shifts</h1>
-        <v-sheet>
+        <v-row>
             <div v-for="shift in shifts" :key="shift">
-                <ShiftCard 
-                    :name="shift.name"
-                    :description="shift.description"
-                    :start="shift.start"
-                    :end="shift.end"
-                    :duration="shift.duration"
-                    :signups="shift.signups ?? 0"
-                    :capacity="shift.capacity"
-                    />
-                <v-btn :disabled="isShiftFull(shift)" @click="signup(shift.id, userId)">
-                    <p v-if="isShiftFull(shift)">Filled</p>
-                    <p v-else>Signup</p>
-                </v-btn>
+                <v-col>
+                    <ShiftCard
+                        :name="shift.name"
+                        :description="shift.description"
+                        :start="shift.start"
+                        :end="shift.end"
+                        :duration="shift.duration"
+                        :signups="shift.signups ?? 0"
+                        :capacity="shift.capacity"
+                        />
+                </v-col>
             </div>
-        </v-sheet>
+        </v-row>
     </div>
 </template>
 <script>
@@ -48,12 +46,7 @@ export default {
             const shifts = await client.teams.getShifts(teamId)
             this.shifts = shifts.data
         },
-        getSignupCount(shiftMembers){
-            return shiftMembers.length
-        },
-        isShiftFull(shift){
-            return shift.signups >= shift.capacity 
-        },
+
         async signup(shiftId, userId){
             await client.shifts.signup({
                 id: shiftId,

@@ -4,6 +4,7 @@
         max-height="265"    
         elevation="2"
         color="primary"
+        class="ma-2 pa-2"
     >
     <v-card-title>{{ name }}</v-card-title>
     <v-card-text>{{ description }}</v-card-text>

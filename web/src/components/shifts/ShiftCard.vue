@@ -1,9 +1,10 @@
 <template>
     <v-card
-        max-width="230"
+        max-width="300"
         max-height="265"    
         elevation="2"
         color="primary"
+        class="ma-2 pa-2"
     >
     <v-card-title>{{ name }}</v-card-title>
     <v-card-subtitle>{{ description }}</v-card-subtitle>
@@ -14,11 +15,20 @@
         <p>Signups: {{ signups }}</p>
         <p>Capacity: {{ capacity }}</p>
     </v-card-text>
+    <v-btn :disabled="isFilled">
+        <p v-if="isFilled">Filled</p>
+        <p v-else>Signup</p>
+    </v-btn>
     </v-card>
 </template>
 <script>
 export default {
     name: 'ShiftCard',
+    data (){
+        return{
+            isFilled: this.signups >= this.capacity
+        }
+    },
     props: {
         name: {
             type: String
