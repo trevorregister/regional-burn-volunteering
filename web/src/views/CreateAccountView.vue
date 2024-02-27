@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { initUserStore } from '@/stores/user'
 import { client } from '../../api-client/client'
 
 export default {
@@ -38,17 +39,28 @@ export default {
       email: '',
       password: '',
       name: '',
-      role: 'user'
+      role: 'user',
+      userStore: initUserStore()
     }
   },
   methods: {
     async createUser(){
-      await client.users.addUser({
+      const newUserRes = await client.users.addUser({
         email: this.email,
         name: this.name,
         role: this.role,
         password: this.password
       })
+
+      const newUser = newUserRes.data
+
+      const login = await client.users.login({
+        email: newUser.email,
+        password: this.password
+      })
+
+      this.userStore.setToken(login.data.token)
+      this.userStore.setId(login.data.user.id)
 
       this.$router.push({path: '/dashboard'})
     }
