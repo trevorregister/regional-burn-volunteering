@@ -86,6 +86,7 @@ export default {
                 id: this.shiftId,
                 userId: this.userId
             })
+            alert(`Signed up for ${this.name}`)
             this.shiftSignups++
         },
         async unsignup(){
