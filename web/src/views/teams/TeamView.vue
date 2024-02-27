@@ -1,0 +1,66 @@
+<template>
+    <div>
+        <h1>{{ team.name }}</h1>
+        <p>{{ team.description }}</p>
+    </div>
+    <div>
+        <h1>Shifts</h1>
+        <v-row>
+            <div v-for="shift in shifts" :key="shift">
+                <v-col>
+                    <ShiftSignupCard
+                        :name="shift.name"
+                        :description="shift.description"
+                        :start="shift.start"
+                        :end="shift.end"
+                        :duration="shift.duration"
+                        :signups="shift.signups ?? 0"
+                        :capacity="shift.capacity"
+                        :id="shift.id"
+                        />
+                </v-col>
+            </div>
+        </v-row>
+    </div>
+</template>
+<script>
+import { client } from '../../../api-client/client'
+import ShiftSignupCard from '../../components/shifts/ShiftSignupCard.vue'
+
+export default {
+    props: ['teamId'],
+    components: {
+        ShiftSignupCard
+    }
+        ,
+    data() {
+        return {
+            team: {},
+            shifts: []
+        }
+    },
+    methods: {
+        async getTeamById(teamId){
+            const team = await client.teams.getTeamById(teamId)
+            this.team = team.data
+        },
+        async getShifts(teamId){
+            const shifts = await client.teams.getShifts(teamId)
+            this.shifts = shifts.data
+        },
+        async load() {
+            await Promise.all([
+                await this.getTeamById(this.teamId),
+                await this.getShifts(this.teamId)
+            ])
+
+        },
+    },
+    async created() {
+        this.load()
+    }
+}
+</script>
+<style>
+    
+</style>

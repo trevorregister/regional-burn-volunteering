@@ -45,4 +45,8 @@ module.exports = class ShiftRepository {
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$set: update})
     }
 
+    async getShiftsByTeam(teamId){
+        return await this.db.find({team: new ObjectId(teamId)})
+    }
+
 }

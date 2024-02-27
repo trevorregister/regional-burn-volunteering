@@ -35,6 +35,10 @@ class TeamService extends Service {
     addMember(id, userId){
         return this.repository.addMember(id, userId)
     }
+
+    getTeams() {
+        return this.repository.getTeams()
+    }
 }
 
 class UserService extends Service {
@@ -74,17 +78,23 @@ class UserService extends Service {
 }
 
 class ShiftService extends Service{
-    constructor(){
+    constructor(repository){
+        super(repository)
         this.repository = shiftRepository
     }
 
     getShiftById(id){
         return this.repository.getShiftById(id)
     }
+
+    getShiftsByTeam(teamId){
+        return this.repository.getShiftsByTeam(teamId)
+    }
 }
 
 class EventService extends Service{
-    constructor(){
+    constructor(repository){
+        super(repository)
         this.repository = eventRepository
     }
 
