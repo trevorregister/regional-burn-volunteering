@@ -15,8 +15,8 @@
         <p>Signups: {{ signups }}</p>
         <p>Capacity: {{ capacity }}</p>
     </v-card-text>
-    <v-btn :disabled="isFilled">
-        <p v-if="isFilled">Filled</p>
+    <v-btn :disabled="isFull">
+        <p v-if="isFull">Full</p>
         <p v-else>Signup</p>
     </v-btn>
     </v-card>
@@ -26,7 +26,7 @@ export default {
     name: 'ShiftCard',
     data (){
         return{
-            isFilled: this.signups >= this.capacity
+            isFull: this.signups >= this.capacity
         }
     },
     props: {
