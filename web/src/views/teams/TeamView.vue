@@ -17,7 +17,7 @@
                         :signups="shift.signups ?? 0"
                         :capacity="shift.capacity"
                         :id="shift.id"
-                        :showButton="true"
+                        :showSignupButton="true"
                         :isUserSignedUp="isUserSignedUp(shift.id)"
                         />
                 </v-col>

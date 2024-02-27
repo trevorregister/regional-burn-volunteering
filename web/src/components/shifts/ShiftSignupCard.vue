@@ -16,7 +16,7 @@
         <p>Capacity: {{ capacity }}</p>
     </v-card-text>
         <div align="center" class="ma-1 pa-1">
-            <v-btn v-if="showButton"
+            <v-btn v-if="showSignupButton"
                 class="ma-1 pa-1" 
                 :disabled="isFull || isUserSignedUp"
                 @click="signup"
@@ -73,7 +73,7 @@ export default {
         capacity: {
             type: Number
         },
-        showButton: {
+        showSignupButton: {
             type: Boolean
         },
         isUserSignedUp: {
