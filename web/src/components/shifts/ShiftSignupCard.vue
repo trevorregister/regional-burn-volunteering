@@ -95,6 +95,7 @@ export default {
                 userId: this.userId
             })
             this.shiftSignups--
+            alert(`Unsignedup for ${this.name}`)
             await this.$emit('unsignup', this.shiftId)
         }
     },
