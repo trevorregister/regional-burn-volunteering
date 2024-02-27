@@ -12,24 +12,31 @@
         <p>Start: {{ start }}</p>
         <p>End: {{ end }}</p>
         <p>Length: {{ duration }} hours</p>
-        <p>Signups: {{ signups }}</p>
+        <p>Signups: {{ shiftSignups }}</p>
         <p>Capacity: {{ capacity }}</p>
     </v-card-text>
-    <v-btn :disabled="isFull">
+    <v-btn :disabled="isFull" @click="signup">
         <p v-if="isFull">Full</p>
         <p v-else>Signup</p>
     </v-btn>
     </v-card>
 </template>
 <script>
+import { client } from '../../../api-client/client'
+
 export default {
     name: 'ShiftSignupCard',
     data (){
         return{
-            isFull: this.signups >= this.capacity
+            isFull: this.signups >= this.capacity,
+            shiftId: this.id,
+            shiftSignups: this.signups
         }
     },
     props: {
+        id: {
+            type: String
+        },
         name: {
             type: String
         },
@@ -50,6 +57,24 @@ export default {
         },
         capacity: {
             type: Number
+        }
+    },
+    methods: {
+        async signup(){
+            await client.shifts.signup({
+                id: this.shiftId,
+                userId: '654bcfa97deb4b3708732f34'
+            })
+            this.shiftSignups++
+        }
+    },
+    watch: {
+        isFull() {
+            return this.shiftSignups >= this.capacity
+        },
+        shiftSignups() {
+                return this.shiftSignups
+
         }
     }
 }

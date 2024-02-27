@@ -16,6 +16,7 @@
                         :duration="shift.duration"
                         :signups="shift.signups ?? 0"
                         :capacity="shift.capacity"
+                        :id="shift.id"
                         />
                 </v-col>
             </div>
@@ -46,13 +47,6 @@ export default {
         async getShifts(teamId){
             const shifts = await client.teams.getShifts(teamId)
             this.shifts = shifts.data
-        },
-
-        async signup(shiftId, userId){
-            await client.shifts.signup({
-                id: shiftId,
-                userId: userId
-            })
         },
         async load() {
             await Promise.all([
