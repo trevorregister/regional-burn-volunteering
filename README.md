@@ -25,3 +25,4 @@ https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=
 
 ### Web
 * form validation
+* shift signup buttons change dynamically on teams view
