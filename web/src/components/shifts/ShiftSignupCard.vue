@@ -23,6 +23,7 @@
 </template>
 <script>
 import { client } from '../../../api-client/client'
+import { initUserStore } from '../../stores/user'
 
 export default {
     name: 'ShiftSignupCard',
@@ -30,7 +31,8 @@ export default {
         return{
             isFull: this.signups >= this.capacity,
             shiftId: this.id,
-            shiftSignups: this.signups
+            shiftSignups: this.signups,
+            userStore: initUserStore()
         }
     },
     props: {
@@ -63,9 +65,14 @@ export default {
         async signup(){
             await client.shifts.signup({
                 id: this.shiftId,
-                userId: ''
+                userId: this.userId
             })
             this.shiftSignups++
+        }
+    },
+    computed: {
+        userId() {
+            return this.userStore.userId
         }
     },
     watch: {

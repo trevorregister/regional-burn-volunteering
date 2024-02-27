@@ -24,7 +24,7 @@
     </div>
 </template>
 <script>
-import { client } from '../../../api-client/client'
+import { client } from '@client'
 import ShiftSignupCard from '../../components/shifts/ShiftSignupCard.vue'
 
 export default {
@@ -36,7 +36,7 @@ export default {
     data() {
         return {
             team: {},
-            shifts: []
+            shifts: [],
         }
     },
     methods: {
