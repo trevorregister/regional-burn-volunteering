@@ -63,7 +63,7 @@ export default {
         async signup(){
             await client.shifts.signup({
                 id: this.shiftId,
-                userId: '654bcfa97deb4b3708732f34'
+                userId: ''
             })
             this.shiftSignups++
         }
