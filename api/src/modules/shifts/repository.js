@@ -32,11 +32,12 @@ module.exports = class ShiftRepository {
 
     async isShiftConflict(userId, start, end){
         return await this.db.findOne({
-            $and: [
-                {members: new ObjectId(userId)}, 
-                {start: {$gt: new Date(start)}}, 
-                {end: {$lt: new Date(end)}}
-            ]})
+            "members": new ObjectId(userId),
+            $and: [{
+                start: {$gte: start},
+                end: {$lte: end}
+            }]
+        })
         ? true
         : false
     }
