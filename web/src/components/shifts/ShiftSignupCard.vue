@@ -15,10 +15,23 @@
         <p>Signups: {{ shiftSignups }}</p>
         <p>Capacity: {{ capacity }}</p>
     </v-card-text>
-    <v-btn :disabled="isFull" @click="signup">
-        <p v-if="isFull">Full</p>
-        <p v-else>Signup</p>
-    </v-btn>
+        <div align="center" class="ma-1 pa-1">
+            <v-btn v-if="showButton"
+                class="ma-1 pa-1" 
+                :disabled="isFull || isUserSignedUp"
+                @click="signup"
+                >
+                <p v-if="isFull">Full</p>
+                <p v-else-if="isUserSignedUp">Signed Up</p>
+                <p v-else>Signup</p>
+            </v-btn>
+            <v-btn v-if="isUserSignedUp"
+                class="ma-1 pa-1"
+                @click="unsignup"
+                >
+                Unsignup
+            </v-btn>
+        </div>
     </v-card>
 </template>
 <script>
@@ -32,8 +45,8 @@ export default {
             isFull: this.signups >= this.capacity,
             shiftId: this.id,
             shiftSignups: this.signups,
-            userStore: initUserStore()
-        }
+            userStore: initUserStore(),
+                }
     },
     props: {
         id: {
@@ -59,6 +72,12 @@ export default {
         },
         capacity: {
             type: Number
+        },
+        showButton: {
+            type: Boolean
+        },
+        isUserSignedUp: {
+            type: Boolean
         }
     },
     methods: {
@@ -68,21 +87,30 @@ export default {
                 userId: this.userId
             })
             this.shiftSignups++
+        },
+        async unsignup(){
+            await client.shifts.unsignup({
+                id: this.shiftId,
+                userId: this.userId
+            })
+            this.shiftSignups--
+            console.log('child', this.shiftId)
+            await this.$emit('unsignup', this.shiftId)
         }
     },
     computed: {
         userId() {
             return this.userStore.userId
-        }
+        },
     },
     watch: {
         isFull() {
             return this.shiftSignups >= this.capacity
         },
         shiftSignups() {
-                return this.shiftSignups
+            return this.shiftSignups
+        },
 
-        }
     }
 }
 </script>

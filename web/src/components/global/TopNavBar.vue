@@ -4,6 +4,9 @@
                     <RouterLink to="/login">Login</RouterLink>
                 </v-btn>
                 <v-btn color="secondary">
+                    <RouterLink to="/dashboard">Dashboard</RouterLink>
+                </v-btn>
+                <v-btn color="secondary">
                     <RouterLink to="/about">About</RouterLink>
                 </v-btn>
                 <v-btn color="secondary">
