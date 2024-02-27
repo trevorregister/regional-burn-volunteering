@@ -23,7 +23,7 @@
 </template>
 <script>
 export default {
-    name: 'ShiftCard',
+    name: 'ShiftSignupCard',
     data (){
         return{
             isFull: this.signups >= this.capacity
