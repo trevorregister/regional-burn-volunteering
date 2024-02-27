@@ -94,7 +94,6 @@ export default {
                 userId: this.userId
             })
             this.shiftSignups--
-            console.log('child', this.shiftId)
             await this.$emit('unsignup', this.shiftId)
         }
     },

@@ -13,7 +13,6 @@ module.exports = class UserRepository {
     }
 
     async getUserById(id){
-        console.log(id)
         return await this.db.findById({_id: new ObjectId(id) })
     }
 
