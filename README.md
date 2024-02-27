@@ -13,7 +13,7 @@ https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=
 3. `npm run dev` in another terminal from /web
 
 ## To-do
-# API
+### API
 * refactor user schema to remove teams
 * refactor team schema to remove members
 * mongoose transactions to preserve atomicity with signups/unsignups
@@ -23,5 +23,5 @@ https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=
 * clients to allow for use of cross-module use-cases
 * leadership signup via unique code (like pivot bookstore codes)
 
-# Web
+### Web
 * form validation
