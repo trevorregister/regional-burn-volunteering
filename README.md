@@ -21,6 +21,7 @@ https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=
 * some kind of ABAC
 * refactor update use-cases to patch only text fields (name, description, etc)
 * clients to allow for use of cross-module use-cases
+* leadership signup via unique code (like pivot bookstore codes)
 
 # Web
 * form validation
