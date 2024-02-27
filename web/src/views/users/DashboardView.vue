@@ -17,6 +17,7 @@ export default {
     methods: {
         async load() {
             if(this.userId === ''){
+                alert('You need to log in first.')
                 this.$router.push({path: '/login'})
             }
             const userResponse = await client.users.getUserById(this.userId)
