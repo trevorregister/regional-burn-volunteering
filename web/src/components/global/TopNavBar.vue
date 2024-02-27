@@ -14,14 +14,17 @@
 </template>
 <script>
 import { client } from '../../../api-client/client'
+import { initUserStore } from '@/stores/user'
 export default {
     name: 'TopNavBar',
     data() {
         return {
+            userStore: initUserStore()
         }
     },
     methods: {
         async logout(){
+            this.userStore.clearUser()
             await client.users.logout()
             this.$router.push({path: '/login'})
         }
