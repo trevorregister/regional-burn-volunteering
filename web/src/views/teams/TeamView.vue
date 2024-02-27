@@ -8,7 +8,7 @@
         <v-row>
             <div v-for="shift in shifts" :key="shift">
                 <v-col>
-                    <ShiftSignupCard
+                    <ShiftCard
                         :name="shift.name"
                         :description="shift.description"
                         :start="shift.start"
@@ -27,13 +27,13 @@
 </template>
 <script>
 import { client } from '@client'
-import ShiftSignupCard from '../../components/shifts/ShiftSignupCard.vue'
+import ShiftCard from '../../components/shifts/ShiftCard.vue'
 import { initUserStore } from '@/stores/user'
 
 export default {
     props: ['teamId'],
     components: {
-        ShiftSignupCard
+        ShiftCard
     }
         ,
     data() {

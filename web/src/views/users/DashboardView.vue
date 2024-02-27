@@ -9,7 +9,7 @@
     <v-row>
         <div v-for="shift in shifts" :key="shift">
             <v-col>
-                <ShiftSignupCard @unsignup="removeShift"
+                <ShiftCard @unsignup="removeShift"
                         :name="shift.name"
                         :description="shift.description"
                         :start="shift.start"
@@ -29,12 +29,12 @@
 <script>
 import { initUserStore } from '../../stores/user'
 import { client } from '@client'
-import ShiftSignupCard from '../../components/shifts/ShiftSignupCard.vue'
+import ShiftCard from '../../components/shifts/ShiftCard.vue'
 
 export default {
     name: 'DashboardView',
     components: {
-        ShiftSignupCard
+        ShiftCard
     },
     data() {
         return {
