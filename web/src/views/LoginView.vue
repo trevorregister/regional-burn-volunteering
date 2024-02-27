@@ -31,26 +31,28 @@
 
 <script>
 import { client } from '@client'
+import { initUserStore } from '../stores/user'
 
 export default {
   name: 'LoginView',
-  data() {
+  data(){
     return {
       email: 'user45@email.com',
-      password: 'password',
-      user: {},
-      isAuthenticated: false
+      password: 'password'
     }
   },
   methods: {
     async login(){
-      const user = await client.users.login({
+      const userStore = initUserStore()
+      const login = await client.users.login({
         email: this.email,
         password: this.password
       })
-      this.user = user.data
-      this.isAuthenticated = true
+      
+      userStore.setToken(login.data.token)
+      userStore.setId(login.data.user.id)
       this.$router.push({path: '/dashboard'})
+
     },
     toCreateAccount(){
       this.$router.push({path: '/create-account'})

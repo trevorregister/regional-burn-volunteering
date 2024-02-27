@@ -17,6 +17,8 @@
                         :signups="shift.signups ?? 0"
                         :capacity="shift.capacity"
                         :id="shift.id"
+                        :showButton="true"
+                        :isUserSignedUp="isUserSignedUp(shift.id)"
                         />
                 </v-col>
             </div>
@@ -24,8 +26,9 @@
     </div>
 </template>
 <script>
-import { client } from '../../../api-client/client'
+import { client } from '@client'
 import ShiftSignupCard from '../../components/shifts/ShiftSignupCard.vue'
+import { initUserStore } from '@/stores/user'
 
 export default {
     props: ['teamId'],
@@ -36,7 +39,9 @@ export default {
     data() {
         return {
             team: {},
-            shifts: []
+            shifts: [],
+            userShiftIds: [],
+            userStore: initUserStore()
         }
     },
     methods: {
@@ -44,14 +49,25 @@ export default {
             const team = await client.teams.getTeamById(teamId)
             this.team = team.data
         },
-        async getShifts(teamId){
+        async getTeamShifts(teamId){
             const shifts = await client.teams.getShifts(teamId)
             this.shifts = shifts.data
+        },
+        async getUserShiftIds(){
+            const userShiftIds = []
+            const shifts = await client.users.getShifts(this.userStore.userId)
+            shifts.data.map(shift => userShiftIds.push(shift.id))
+            this.userShiftIds = userShiftIds
+
+        },
+        isUserSignedUp(shiftId){
+            return this.userShiftIds.includes(shiftId)
         },
         async load() {
             await Promise.all([
                 await this.getTeamById(this.teamId),
-                await this.getShifts(this.teamId)
+                await this.getTeamShifts(this.teamId),
+                await this.getUserShiftIds()
             ])
 
         },
