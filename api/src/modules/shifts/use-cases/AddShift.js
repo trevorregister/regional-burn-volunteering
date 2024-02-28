@@ -12,7 +12,8 @@ module.exports = (repository) => {
         if (!team) {throw new HttpError(404, `team ${teamId} not found`)}
         start = new Date(start)
         end = new Date(end)
-        const duration = (end - start)/3600000 //converts to hours
+        const duration = Math.floor(Math.abs(end - start))/ 3600000//converts to hours
+        console.log(duration)
         const shift = new Shift(name, description, teamId, start, end, duration, capacity)
         return await repository.create(shift)
 
