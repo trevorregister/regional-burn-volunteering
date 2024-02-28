@@ -53,6 +53,11 @@ module.exports = class UserRepository {
                     as: 'shifts'
                 }
             },
+            {
+                $sort: {
+                    start: 1
+                }
+            }
 
           ])
           .project(
