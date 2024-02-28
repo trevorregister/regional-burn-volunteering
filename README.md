@@ -13,16 +13,30 @@ https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=
 3. `npm run dev` in another terminal from /web
 
 ## To-do
+
 ### API
-* refactor user schema to remove teams
-* refactor team schema to remove members
-* mongoose transactions to preserve atomicity with signups/unsignups
-* refactor controller -> use-case -> repo object destructuring to be consistent across the app. Look at AddLead use case as example.
+
+#### Features 
 * some kind of ABAC
-* refactor update use-cases to patch only text fields (name, description, etc)
 * clients to allow for use of cross-module use-cases
 * leadership signup via unique code (like pivot bookstore codes)
 
+#### Refactors
+* user schema to remove teams
+* team schema to remove members
+* mongoose transactions to preserve atomicity with signups/unsignups
+* controller -> use-case -> repo object destructuring to be consistent across the app. Look at AddLead use case as example.
+* update use-cases to patch only text fields (name, description, etc)
+
 ### Web
+
+#### Features
 * form validation
 * shift signup buttons change dynamically on teams view
+
+#### Refactors
+
+### API-Client
+
+### Refactors
+* return `.data` so that you don't have to do it for every call within web. Example: `users = client.users.getUsers()` requires to then to `users.data`. 
