@@ -52,13 +52,7 @@ module.exports = class UserRepository {
                     foreignField: '_id',
                     as: 'shifts'
                 }
-            },
-            {
-                $sort: {
-                    start: 1
-                }
             }
-
           ])
           .project(
             {
@@ -66,6 +60,7 @@ module.exports = class UserRepository {
                 _id: 0,
             }
           )
+        shifts[0].shifts.sort( (i, j) => i.start > j.start ? 1 : -1)
         return shifts[0].shifts
     }
 
