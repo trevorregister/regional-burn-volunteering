@@ -1,10 +1,8 @@
 <template>
-    <v-card
-        max-width="230"
-        max-height="265"    
+    <v-card   
         elevation="2"
         color="primary"
-        class="ma-2 pa-2"
+        class="ma-1 pa-1"
     >
     <v-card-title>{{ name }}</v-card-title>
     <v-card-text>{{ description }}</v-card-text>

@@ -1,19 +1,21 @@
 <template>
-    <div v-for="team in teams" :key="team">
-        <RouterLink
-        :to="{
-            name: 'team',
-            params: {
-                teamId: team.id
-            }
-        }"
-        >
-            <TeamCard
-                :name="team.name"
-                :description="team.description"
-            />
-        </RouterLink>
-    </div>
+    <v-row>
+        <v-col v-for="team in teams" :key="team">
+            <RouterLink
+            :to="{
+                name: 'team',
+                params: {
+                    teamId: team.id
+                }
+            }"
+            >
+                <TeamCard
+                    :name="team.name"
+                    :description="team.description"
+                />
+            </RouterLink>
+        </v-col>
+    </v-row>
 </template>
 <script>
 import { initUserStore } from '@/stores/user'
