@@ -5,8 +5,14 @@
         <td>{{ day }}</td>
         <td>{{ start }} - {{ end }}</td>
         <td>{{ duration }} hours</td>
-        <td>{{  signups }}/{{ capacity }}</td>
-        <td><v-btn variant="text"><b>...</b></v-btn></td>
+        <td>{{  shiftSignups }}/{{ capacity }}</td>
+        <td>
+            <v-btn v-for="button in buttons" :key="button" 
+                @click="actionButton(button)"
+                >
+                {{button.label}}
+            </v-btn>
+        </td>
     </tr>
 
 <!--         <div align="center" class="ma-1 pa-1">
@@ -39,7 +45,10 @@ export default {
             shiftId: this.id,
             shiftSignups: this.signups,
             userStore: initUserStore(),
-                }
+            buttons: [
+                {action: 'signup', label:'signup', isDisabled: false},
+            ]
+        }
     },
     props: {
         id: {
@@ -69,41 +78,68 @@ export default {
         capacity: {
             type: Number
         },
-        showSignupButton: {
-            type: Boolean
-        },
-        isUserSignedUp: {
-            type: Boolean
+        actions: {
+            type: String
         }
     },
     methods: {
         async signup(){
-            await client.shifts.signup({
-                id: this.shiftId,
-                userId: this.userId
-            })
-            //alert(`Signed up for ${this.name}`)
-            this.shiftSignups++
-            !this.isUserSignedUp
-            await this.$emit('signup', this.shiftId)
+            try{
+                await client.shifts.signup({
+                    id: this.shiftId,
+                    userId: this.userId
+                })
+                this.shiftSignups++
+                !this.isUserSignedUp
+                this.toggleButton('signup')
+                await this.$emit('signup', this.shiftId)
+            }
+            catch(err){
+                return null
+            }
         },
         async unsignup(){
-            await client.shifts.unsignup({
-                id: this.shiftId,
-                userId: this.userId
+            try{
+                await client.shifts.unsignup({
+                    id: this.shiftId,
+                    userId: this.userId
+                })
+                this.shiftSignups--
+                this.toggleButton('unsignup')
+                await this.$emit('unsignup', this.shiftId)
+            }
+            catch(err){
+                return null
+            }
+        },
+        async actionButton(button){
+            switch(button.action){
+                case 'signup' :
+                    await this.signup()
+                    break
+                case 'unsignup':
+                    await this.unsignup()
+                    break
+            }
+        },
+        async toggleButton(action){
+            this.buttons = this.buttons.filter(button => {
+                return action !== button.action
             })
-            this.shiftSignups--
-            //alert(`Unsignedup for ${this.name}`)
-            await this.$emit('unsignup', this.shiftId)
+            if(action === 'signup'){
+                this.buttons.push({action: 'unsignup', label: 'Unsignup', isDisabled: false})
+            }
+            if(action === 'unsignup'){
+                this.buttons.push({action: 'signup', label: 'Signup', isDisabled: false})
+            }
         }
+
+        
     },
     computed: {
         userId() {
             return this.userStore.userId
         },
-        justSignedUp(){
-            return '!this.isUserSignedUp'
-        }
     },
     watch: {
         isFull() {
@@ -112,6 +148,9 @@ export default {
         shiftSignups() {
             return this.shiftSignups
         },
+        buttons(){
+            return this.buttons
+        }
 
     }
 }
