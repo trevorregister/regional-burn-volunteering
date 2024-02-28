@@ -8,7 +8,7 @@
         <v-row>
             <div v-for="shift in shifts" :key="shift">
                 <v-col>
-                    <ShiftCard
+                    <ShiftCard @signup="signup"
                         :name="shift.name"
                         :description="shift.description"
                         :start="shift.start"
@@ -41,6 +41,8 @@ export default {
             team: {},
             shifts: [],
             userShiftIds: [],
+            userShiftConflicts: [],
+            userShifts: [],
             userStore: initUserStore()
         }
     },
@@ -53,27 +55,40 @@ export default {
             const shifts = await client.teams.getShifts(teamId)
             this.shifts = shifts.data
         },
-        async getUserShiftIds(){
+        async getUserShifts(){
             const userShiftIds = []
             const shifts = await client.users.getShifts(this.userStore.userId)
             shifts.data.map(shift => userShiftIds.push(shift.id))
+
             this.userShiftIds = userShiftIds
+            this.userShifts = shifts.data
 
         },
         isUserSignedUp(shiftId){
             return this.userShiftIds.includes(shiftId)
         },
+        signup: function(shiftId){
+            console.log('emit')
+            return this.isUserSignedUp(shiftId)
+        },
         async load() {
             await Promise.all([
                 await this.getTeamById(this.teamId),
                 await this.getTeamShifts(this.teamId),
-                await this.getUserShiftIds()
+                await this.getUserShifts()
             ])
 
         },
     },
+    computed: {
+        conflicts(){
+            const conflicts = []
+            this.userShifts.map(userShift => conflicts.push({start: userShift.start, end: userShift.end}))
+            return conflicts
+        },
+    },
     async created() {
-        this.load()
+        await this.load()
     }
 }
 </script>

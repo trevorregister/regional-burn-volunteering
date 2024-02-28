@@ -20,9 +20,22 @@
         <h1>Shifts</h1>
     </div>
     <v-row class="ma-2 pa-2">
-        <div v-for="shift in shifts" :key="shift">
-            <v-col>
-                <ShiftCard @unsignup="removeShift"
+        <v-table>
+            <thead>
+                <tr class="text-left">
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Length</th>
+                    <th>Signups</th>
+                    <th>Capacity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+                <tbody>
+                    <!-- <ShiftCard @unsignup="removeShift" -->
+                    <ShiftCard v-for="shift in shifts" :key="shift"
                         :name="shift.name"
                         :description="shift.description"
                         :start="shift.start"
@@ -34,8 +47,8 @@
                         :showSignupButton="false"
                         :isUserSignedUp="true"
                         />
-            </v-col>
-        </div>
+                </tbody>
+        </v-table>
     </v-row>
 </template>
 <script>
@@ -69,11 +82,11 @@ export default {
             const teamsResponse = await client.users.getTeams(this.userId)
             this.teams = teamsResponse.data
         },
-        removeShift: function(shiftId){
+/*         removeShift: function(shiftId){
             this.shifts = this.shifts.filter(shift => {
                 return shift.id != shiftId
             })
-        }
+        } */
         
     },
     computed: {

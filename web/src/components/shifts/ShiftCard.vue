@@ -1,5 +1,14 @@
 <template>
-    <v-card
+    <tr>
+        <td>{{ name }}</td>
+        <td>{{ description }}</td>
+        <td>{{ start }}</td>
+        <td>{{ end }}</td>
+        <td>{{ duration }}</td>
+        <td>{{  signups }}</td>
+        <td>{{ capacity }}</td>
+    </tr>
+<!--     <v-card
         max-width="300"
         max-height="265"    
         elevation="2"
@@ -7,13 +16,14 @@
         class="ma-2 pa-2"
     >
     <v-card-title>{{ name }}</v-card-title>
-    <v-card-subtitle>{{ description }}</v-card-subtitle>
+    <v-card-subtitle>{{ description }} {{ 'inConflict' }}</v-card-subtitle>
     <v-card-text>
         <p>Start: {{ start }}</p>
         <p>End: {{ end }}</p>
         <p>Length: {{ duration }} hours</p>
         <p>Signups: {{ shiftSignups }}</p>
         <p>Capacity: {{ capacity }}</p>
+        <p>{{ isUserSignedUp }}</p>
     </v-card-text>
         <div align="center" class="ma-1 pa-1">
             <v-btn v-if="showSignupButton"
@@ -32,7 +42,7 @@
                 Unsignup
             </v-btn>
         </div>
-    </v-card>
+    </v-card> -->
 </template>
 <script>
 import { client } from '../../../api-client/client'
@@ -86,8 +96,10 @@ export default {
                 id: this.shiftId,
                 userId: this.userId
             })
-            alert(`Signed up for ${this.name}`)
+            //alert(`Signed up for ${this.name}`)
             this.shiftSignups++
+            !this.isUserSignedUp
+            await this.$emit('signup', this.shiftId)
         },
         async unsignup(){
             await client.shifts.unsignup({
@@ -95,7 +107,7 @@ export default {
                 userId: this.userId
             })
             this.shiftSignups--
-            alert(`Unsignedup for ${this.name}`)
+            //alert(`Unsignedup for ${this.name}`)
             await this.$emit('unsignup', this.shiftId)
         }
     },
@@ -103,6 +115,9 @@ export default {
         userId() {
             return this.userStore.userId
         },
+        justSignedUp(){
+            return '!this.isUserSignedUp'
+        }
     },
     watch: {
         isFull() {
