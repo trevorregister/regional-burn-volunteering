@@ -16,6 +16,7 @@
     </div>
 </template>
 <script>
+import { initUserStore } from '@/stores/user'
 import { client } from '../../../api-client/client'
 import TeamCard from '../../components/teams/TeamCard.vue'
 export default {
@@ -25,18 +26,28 @@ export default {
     },
     data() {
         return {
-            teams: []
+            teams: [],
+            userStore: initUserStore(),
+            userShifts: []
         }
     },
     methods: {
         async getTeams() {
             const teams = await client.teams.getTeams()
             this.teams = teams.data
+        },
+        async load(){
+            await this.getTeams()
+        }
+    },
+    computed: {
+        userId(){
+            return this.userStore.userId
         }
     },
 
     async created() {
-        await this.getTeams()
+        await this.load()
     }
 }
 </script>

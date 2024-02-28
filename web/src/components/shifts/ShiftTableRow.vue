@@ -1,21 +1,16 @@
 <template>
-    <v-card
-        max-width="300"
-        max-height="265"    
-        elevation="2"
-        color="primary"
-        class="ma-2 pa-2"
-    >
-    <v-card-title>{{ name }}</v-card-title>
-    <v-card-subtitle>{{ description }}</v-card-subtitle>
-    <v-card-text>
-        <p>Start: {{ start }}</p>
-        <p>End: {{ end }}</p>
-        <p>Length: {{ duration }} hours</p>
-        <p>Signups: {{ shiftSignups }}</p>
-        <p>Capacity: {{ capacity }}</p>
-    </v-card-text>
-        <div align="center" class="ma-1 pa-1">
+    <tr>
+        <td>{{ name }}</td>
+        <td>{{ description }}</td>
+        <td>{{ start }}</td>
+        <td>{{ end }}</td>
+        <td>{{ duration }} hours</td>
+        <td>{{  signups }}</td>
+        <td>{{ capacity }}</td>
+        <td><v-btn variant="text"><b>...</b></v-btn></td>
+    </tr>
+
+<!--         <div align="center" class="ma-1 pa-1">
             <v-btn v-if="showSignupButton"
                 class="ma-1 pa-1" 
                 :disabled="isFull || isUserSignedUp"
@@ -31,15 +26,14 @@
                 >
                 Unsignup
             </v-btn>
-        </div>
-    </v-card>
+        </div> -->
 </template>
 <script>
 import { client } from '../../../api-client/client'
 import { initUserStore } from '../../stores/user'
 
 export default {
-    name: 'ShiftCard',
+    name: 'ShiftTableRow',
     data (){
         return{
             isFull: this.signups >= this.capacity,
@@ -86,8 +80,10 @@ export default {
                 id: this.shiftId,
                 userId: this.userId
             })
-            alert(`Signed up for ${this.name}`)
+            //alert(`Signed up for ${this.name}`)
             this.shiftSignups++
+            !this.isUserSignedUp
+            await this.$emit('signup', this.shiftId)
         },
         async unsignup(){
             await client.shifts.unsignup({
@@ -95,7 +91,7 @@ export default {
                 userId: this.userId
             })
             this.shiftSignups--
-            alert(`Unsignedup for ${this.name}`)
+            //alert(`Unsignedup for ${this.name}`)
             await this.$emit('unsignup', this.shiftId)
         }
     },
@@ -103,6 +99,9 @@ export default {
         userId() {
             return this.userStore.userId
         },
+        justSignedUp(){
+            return '!this.isUserSignedUp'
+        }
     },
     watch: {
         isFull() {

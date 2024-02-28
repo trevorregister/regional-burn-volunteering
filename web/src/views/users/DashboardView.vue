@@ -1,15 +1,41 @@
 <template>
     <div>
         <h1>Dashboard</h1>
-        {{ user }}
+        <p>{{ user.name }}</p>
+        <div class="ma-2 pa-2">
+            <h3>Totals</h3>
+            <p>Shifts: {{ totalShiftCount }}</p>
+            <p>Hours: {{ totalHours }}</p>
+        </div>
     </div>
+    <div>
+        <h1>Teams</h1>
+    </div>
+    <v-row class="ma-2 pa-1">
+        <v-list v-for="team in teams" :key="team">
+            <h2>{{ team.name }}</h2>
+        </v-list>
+    </v-row>
     <div>
         <h1>Shifts</h1>
     </div>
-    <v-row>
-        <div v-for="shift in shifts" :key="shift">
-            <v-col>
-                <ShiftCard @unsignup="removeShift"
+    <v-row class="ma-2 pa-2">
+        <v-table>
+            <thead>
+                <tr class="text-left">
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Length</th>
+                    <th>Signups</th>
+                    <th>Capacity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+                <tbody>
+                    <!-- <ShiftTableRow @unsignup="removeShift" -->
+                    <ShiftTableRow v-for="shift in shifts" :key="shift"
                         :name="shift.name"
                         :description="shift.description"
                         :start="shift.start"
@@ -21,26 +47,26 @@
                         :showSignupButton="false"
                         :isUserSignedUp="true"
                         />
-            </v-col>
-        
-        </div>
+                </tbody>
+        </v-table>
     </v-row>
 </template>
 <script>
 import { initUserStore } from '../../stores/user'
 import { client } from '@client'
-import ShiftCard from '../../components/shifts/ShiftCard.vue'
+import ShiftTableRow from '../../components/shifts/ShiftTableRow.vue'
 
 export default {
     name: 'DashboardView',
     components: {
-        ShiftCard
+        ShiftTableRow
     },
     data() {
         return {
             user: {},
             userStore: initUserStore(),
             shifts: [],
+            teams: [],
         }
     },
     methods: {
@@ -53,12 +79,14 @@ export default {
             this.user = userResponse.data
             const shiftsResponse = await client.users.getShifts(this.userId)
             this.shifts = shiftsResponse.data
+            const teamsResponse = await client.users.getTeams(this.userId)
+            this.teams = teamsResponse.data
         },
-        removeShift: function(shiftId){
+/*         removeShift: function(shiftId){
             this.shifts = this.shifts.filter(shift => {
                 return shift.id != shiftId
             })
-        }
+        } */
         
     },
     computed: {
@@ -68,6 +96,14 @@ export default {
         token() {
             return this.userStore.token
         },
+        totalShiftCount(){
+            return this.shifts.length
+        },
+        totalHours(){
+            return this.shifts.reduce( (total, shift) => {
+                return total + shift.duration
+             }, 0)
+        }
     },
     async created(){
         await this.load()
