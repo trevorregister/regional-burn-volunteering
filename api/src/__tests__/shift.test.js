@@ -1,15 +1,15 @@
 const dotenv = require('dotenv').config()
 
 const db = require('../../config/test-db')
-const { AddShift, GetShiftById, UpdateShift } = require('../modules/shifts/use-cases/_index')
-const ShiftDatabase = require('../modules/shifts/data_access/database')
-const ShiftRepository = require('../modules/shifts/repository')
+const { AddShift, GetShiftById, UpdateShift } = require('../domains/shifts/use-cases/_index')
+const ShiftDatabase = require('../domains/shifts/data_access/database')
+const ShiftRepository = require('../domains/shifts/repository')
 const shiftDatabase = new ShiftDatabase()
 const shiftRepository = new ShiftRepository(shiftDatabase)
 
-const { AddTeam } = require('../modules/teams/use-cases/_index')
-const TeamDatabase = require('../modules/teams/data_access/database')
-const TeamRepository = require('../modules/teams/repository')
+const { AddTeam } = require('../domains/teams/use-cases/_index')
+const TeamDatabase = require('../domains/teams/data_access/database')
+const TeamRepository = require('../domains/teams/repository')
 const teamDatabase = new TeamDatabase()
 const teamRepository = new TeamRepository(teamDatabase)
 

@@ -1,9 +1,9 @@
 const dotenv = require('dotenv').config()
 
 const db = require('../../config/test-db')
-const { AddEvent, GetEventById, UpdateEvent } = require('../modules/events/use-cases/_index')
-const EventDatabase = require('../modules/events/data_access/database')
-const EventRepository = require('../modules/events/repository')
+const { AddEvent, GetEventById, UpdateEvent } = require('../domains/events/use-cases/_index')
+const EventDatabase = require('../domains/events/data_access/database')
+const EventRepository = require('../domains/events/repository')
 const eventDatabase = new EventDatabase()
 const eventRepository = new EventRepository(eventDatabase)
 

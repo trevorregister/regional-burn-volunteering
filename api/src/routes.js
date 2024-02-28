@@ -1,8 +1,8 @@
 const express = require('express')
-const userRoutes = require('./modules/users/routes')
-const teamRoutes = require('./modules/teams/routes')
-const shiftRoutes = require('./modules/shifts/routes')
-const eventRoutes = require('./modules/events/routes')
+const userRoutes = require('./domains/users/routes')
+const teamRoutes = require('./domains/teams/routes')
+const shiftRoutes = require('./domains/shifts/routes')
+const eventRoutes = require('./domains/events/routes')
 
 const Routes =(dependencies) => {
     const router = express.Router()

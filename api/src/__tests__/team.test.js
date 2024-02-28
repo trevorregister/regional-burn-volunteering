@@ -1,9 +1,9 @@
 const dotenv = require('dotenv').config()
 
 const db = require('../../config/test-db')
-const { AddTeam, GetTeamById, UpdateTeam} = require('../modules/teams/use-cases/_index')
-const TeamDatabase = require('../modules/teams/data_access/database')
-const TeamRepository = require('../modules/teams/repository')
+const { AddTeam, GetTeamById, UpdateTeam} = require('../domains/teams/use-cases/_index')
+const TeamDatabase = require('../domains/teams/data_access/database')
+const TeamRepository = require('../domains/teams/repository')
 const teamDatabase = new TeamDatabase()
 const teamRepository = new TeamRepository(teamDatabase)
 

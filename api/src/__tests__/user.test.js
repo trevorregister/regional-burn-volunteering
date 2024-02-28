@@ -2,9 +2,9 @@ const dotenv = require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
 const db = require('../../config/test-db')
-const { AddUser, GetUserById, LoginUser, GetUsers} = require('../modules/users/use-cases/_index')
-const UserDatabase = require('../modules/users/data_access/database')
-const UserRepository = require('../modules/users/repository')
+const { AddUser, GetUserById, LoginUser, GetUsers} = require('../domains/users/use-cases/_index')
+const UserDatabase = require('../domains/users/data_access/database')
+const UserRepository = require('../domains/users/repository')
 const userDatabase = new UserDatabase()
 const userRepository = new UserRepository(userDatabase)
 
