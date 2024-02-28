@@ -44,7 +44,7 @@
                         :capacity="shift.capacity"
                         :id="shift.id"
                         :day="shift.day"
-                        :actions="'unsignup'"
+                        :actions="['unsignup']"
                         />
                 </tbody>
         </v-table>

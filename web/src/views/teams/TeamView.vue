@@ -30,7 +30,8 @@
                         :id="shift.id"
                         :day="shift.day"
                         :showSignupButton="false"
-                        :isUserSignedUp="true"
+                        :isUserSignedUp="isUserSignedUp(shift.id)"
+                        :actions="['signup', 'unsignup']"
                         />
                 </tbody>
         </v-table>

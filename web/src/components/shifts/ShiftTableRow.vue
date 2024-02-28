@@ -1,5 +1,6 @@
 <template>
     <tr>
+        {{ isUserSignedUp }}
         <td>{{ name }}</td>
         <td>{{ description }}</td>
         <td>{{ day }}</td>
@@ -45,9 +46,7 @@ export default {
             shiftId: this.id,
             shiftSignups: this.signups,
             userStore: initUserStore(),
-            buttons: [
-                {action: 'signup', label:'signup', isDisabled: false},
-            ]
+            buttons: this.buildButtons()
         }
     },
     props: {
@@ -79,7 +78,10 @@ export default {
             type: Number
         },
         actions: {
-            type: String
+            type: Array
+        },
+        isUserSignedUp: {
+            Boolean
         }
     },
     methods: {
@@ -127,14 +129,21 @@ export default {
                 return action !== button.action
             })
             if(action === 'signup'){
-                this.buttons.push({action: 'unsignup', label: 'Unsignup', isDisabled: false})
+                this.buttons.push({action: 'unsignup', label: 'UNSIGNUP', isDisabled: false})
             }
             if(action === 'unsignup'){
-                this.buttons.push({action: 'signup', label: 'Signup', isDisabled: false})
+                this.buttons.push({action: 'signup', label: 'SIGNUP', isDisabled: false})
             }
+        },
+        buildButtons(){
+            console.log(this.isUserSignedUp)
+            if(this.isUserSignedUp){
+                return [{action: 'unsignup', label: 'UNSIGNUP', isDisabled: false}]
+            }
+            const buttons = []
+            this.actions.map(action => buttons.push({action: action, label: action.toUpperCase(), isDisabled: false}))
+            return buttons
         }
-
-        
     },
     computed: {
         userId() {
