@@ -49,7 +49,7 @@ import { client } from '../../../api-client/client'
 import { initUserStore } from '../../stores/user'
 
 export default {
-    name: 'ShiftCard',
+    name: 'ShiftTableRow',
     data (){
         return{
             isFull: this.signups >= this.capacity,

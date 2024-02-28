@@ -34,8 +34,8 @@
                 </tr>
             </thead>
                 <tbody>
-                    <!-- <ShiftCard @unsignup="removeShift" -->
-                    <ShiftCard v-for="shift in shifts" :key="shift"
+                    <!-- <ShiftTableRow @unsignup="removeShift" -->
+                    <ShiftTableRow v-for="shift in shifts" :key="shift"
                         :name="shift.name"
                         :description="shift.description"
                         :start="shift.start"
@@ -54,12 +54,12 @@
 <script>
 import { initUserStore } from '../../stores/user'
 import { client } from '@client'
-import ShiftCard from '../../components/shifts/ShiftCard.vue'
+import ShiftTableRow from '../../components/shifts/ShiftTableRow.vue'
 
 export default {
     name: 'DashboardView',
     components: {
-        ShiftCard
+        ShiftTableRow
     },
     data() {
         return {
