@@ -2,11 +2,10 @@
     <tr>
         <td>{{ name }}</td>
         <td>{{ description }}</td>
-        <td>{{ start }}</td>
-        <td>{{ end }}</td>
+        <td>{{ day }}</td>
+        <td>{{ start }} - {{ end }}</td>
         <td>{{ duration }} hours</td>
-        <td>{{  signups }}</td>
-        <td>{{ capacity }}</td>
+        <td>{{  signups }}/{{ capacity }}</td>
         <td><v-btn variant="text"><b>...</b></v-btn></td>
     </tr>
 
@@ -56,6 +55,9 @@ export default {
             type: String
         },
         end: {
+            type: String
+        },
+        day: {
             type: String
         },
         duration: {

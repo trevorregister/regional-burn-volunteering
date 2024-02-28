@@ -11,11 +11,10 @@
                 <tr class="text-left">
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Start</th>
-                    <th>End</th>
+                    <th>Day</th>
+                    <th>Time</th>
                     <th>Length</th>
                     <th>Signups</th>
-                    <th>Capacity</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -29,6 +28,7 @@
                         :signups="shift.signups ?? 0"
                         :capacity="shift.capacity"
                         :id="shift.id"
+                        :day="shift.day"
                         :showSignupButton="false"
                         :isUserSignedUp="true"
                         />
