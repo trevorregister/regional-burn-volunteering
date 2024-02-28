@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const { ValidationError } = require('../../config/errors') 
-const dateOptions = { dateStyle: "medium", timeStyle: "short"}
+const dateOptions = { dateStyle: "short", timeStyle: "short"}
 
 const ShiftToDbSchema = Joi.object({
     name: Joi.string()
