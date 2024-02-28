@@ -6,9 +6,21 @@
     <div>
         <h1>Shifts</h1>
         <v-row>
-            <div v-for="shift in shifts" :key="shift">
-                <v-col>
-                    <ShiftTableRow @signup="signup"
+            <v-table>
+            <thead>
+                <tr class="text-left">
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Length</th>
+                    <th>Signups</th>
+                    <th>Capacity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+                <tbody>
+                    <ShiftTableRow v-for="shift in shifts" :key="shift"
                         :name="shift.name"
                         :description="shift.description"
                         :start="shift.start"
@@ -17,11 +29,11 @@
                         :signups="shift.signups ?? 0"
                         :capacity="shift.capacity"
                         :id="shift.id"
-                        :showSignupButton="true"
-                        :isUserSignedUp="isUserSignedUp(shift.id)"
+                        :showSignupButton="false"
+                        :isUserSignedUp="true"
                         />
-                </v-col>
-            </div>
+                </tbody>
+        </v-table>
         </v-row>
     </div>
 </template>
