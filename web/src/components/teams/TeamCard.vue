@@ -1,5 +1,7 @@
 <template>
-    <v-card   
+    <v-card 
+        min-width="235"
+        max-width="235"  
         elevation="2"
         color="primary"
         class="ma-1 pa-1"
