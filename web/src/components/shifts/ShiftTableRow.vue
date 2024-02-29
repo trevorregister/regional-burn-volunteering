@@ -20,7 +20,7 @@ import { initUserStore } from '../../stores/user'
 
 export default {
     name: 'ShiftTableRow',
-    emits: ['unsignup'],
+    emits: ['unsignup', 'signup-fail'],
     data (){
         return{
             shiftId: this.id,

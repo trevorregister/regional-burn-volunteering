@@ -20,7 +20,7 @@
         <h1>Shifts</h1>
     </div>
     <v-row class="ma-2 pa-2">
-        <v-table>
+        <v-table v-if="shifts.length > 0">
             <thead>
                 <tr class="text-left">
                     <th>Name</th>
@@ -33,7 +33,6 @@
                 </tr>
             </thead>
                 <tbody>
-                    <!-- <ShiftTableRow @unsignup="removeShift" -->
                     <ShiftTableRow v-for="shift in shifts" :key="shift"
                         :name="shift.name"
                         :description="shift.description"
@@ -44,10 +43,12 @@
                         :capacity="shift.capacity"
                         :id="shift.id"
                         :day="shift.day"
-                        :actions="['unsignup']"
+                        :button="sendButton(shift)"
+                        @unsignup="unsignup"
                         />
                 </tbody>
         </v-table>
+        <h2 v-else>Signup for some shifts ya slacker</h2>
     </v-row>
 </template>
 <script>
@@ -66,9 +67,28 @@ export default {
             userStore: initUserStore(),
             shifts: [],
             teams: [],
+            buttons: []
         }
     },
     methods: {
+        buildButtons(){
+            this.shifts.map(shift => {
+                this.buttons.push({
+                    shiftId: shift.id,
+                    isFull: false,
+                    isConflict: false,
+                    isSignedUp: true
+                })
+            })
+        },
+        sendButton(shift){
+            const buttonToSend = this.buttons.find( (button) => {
+                if(button.shiftId === shift.id){
+                    return {...button, id: button.id, isSignedUp: button.isSignedUp}
+                }    
+            })
+            return buttonToSend
+        },
         async load() {
             if(this.userId === ''){
                 alert('You need to log in first.')
@@ -80,12 +100,14 @@ export default {
             this.shifts = shiftsResponse.data
             const teamsResponse = await client.users.getTeams(this.userId)
             this.teams = teamsResponse.data
+
+            this.buildButtons()
         },
-/*         removeShift: function(shiftId){
+        unsignup: function(shiftId){
             this.shifts = this.shifts.filter(shift => {
                 return shift.id != shiftId
             })
-        } */
+        }
         
     },
     computed: {
