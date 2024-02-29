@@ -8,19 +8,20 @@ const teamService = new TeamService()
 
 
 module.exports = (repository) => {
+    //disabling conflict checking until it can be refactored. See to-do for more.
     async function execute(userId, shiftId,){
         const shift = await repository.getShiftById(shiftId)
         const user = await userService.getUserById(userId)
-        const isShiftConflict = await repository.isShiftConflict(userId, shift.start, shift.end)
+        //const isShiftConflict = await repository.isShiftConflict(userId, shift.start, shift.end)
         if(!user) {
             throw new HttpError(404, 'user not found')
         }
         if(!shift) {
             throw new HttpError(404, 'shift not found')
         }
-        if(isShiftConflict){
+/*         if(isShiftConflict){
             throw new HttpError(400, 'shift conflict')
-        }
+        } */
         if(shift.signups + 1 > shift.capacity) { 
             throw new HttpError(400, `signups at capacity, ${shift.signups}/${shift.capacity}`)
         }

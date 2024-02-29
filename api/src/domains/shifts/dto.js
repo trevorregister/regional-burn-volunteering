@@ -1,6 +1,5 @@
 const Joi = require('joi')
 const { ValidationError } = require('../../config/errors') 
-const dateOptions = { dateStyle: "medium", timeStyle: "short"}
 
 const ShiftToDbSchema = Joi.object({
     name: Joi.string()
@@ -45,8 +44,9 @@ module.exports = class ShiftDTO {
             description: data.description,
             members: data.members,
             team: data.team,
-            start: data.start.toLocaleString('en-US', dateOptions),
-            end: data.end.toLocaleString('en-US', dateOptions),
+            start: data.start.toLocaleTimeString('en-US', {timeStyle: 'short'}),
+            end: data.end.toLocaleTimeString('en-US', {timeStyle: 'short'}),
+            day: data.start.toLocaleDateString('en-US', {dateStyle: 'short'}),
             duration: data.duration,
             capacity: data.capacity,
             signups: data.signups

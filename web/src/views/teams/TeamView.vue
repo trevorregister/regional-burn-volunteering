@@ -11,12 +11,11 @@
                 <tr class="text-left">
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Start</th>
-                    <th>End</th>
+                    <th>Day</th>
+                    <th>Time</th>
                     <th>Length</th>
                     <th>Signups</th>
-                    <th>Capacity</th>
-                    <th>Actions</th>
+                    <th>Action</th>
                 </tr>
             </thead>
                 <tbody>
@@ -29,8 +28,9 @@
                         :signups="shift.signups ?? 0"
                         :capacity="shift.capacity"
                         :id="shift.id"
-                        :showSignupButton="false"
-                        :isUserSignedUp="true"
+                        :day="shift.day"
+                        @click="shiftAction(shift)"
+                        :button="sendButton(shift)"
                         />
                 </tbody>
         </v-table>
@@ -53,9 +53,9 @@ export default {
             team: {},
             shifts: [],
             userShiftIds: [],
-            userShiftConflicts: [],
             userShifts: [],
-            userStore: initUserStore()
+            userStore: initUserStore(),
+            buttons: []
         }
     },
     methods: {
@@ -79,9 +79,33 @@ export default {
         isUserSignedUp(shiftId){
             return this.userShiftIds.includes(shiftId)
         },
-        signup: function(shiftId){
-            console.log('emit')
-            return this.isUserSignedUp(shiftId)
+        buildButtons(){
+            this.shifts.map(shift => {
+                this.buttons.push({
+                    shiftId: shift.id,
+                    isFull: this.signups >= this.capacity,
+                    isConflict: false,
+                    isSignedUp: this.isUserSignedUp(shift.id)
+                })
+            })
+            
+        },
+        shiftAction(shift){
+            let foundButton = this.buttons.find( (button) => {
+                if(button.shiftId === shift.id){
+                    return {...button, id: button.id, isSignedUp: button.isSignedUp}
+                }    
+            })
+
+            foundButton.isSignedUp = !foundButton.isSignedUp
+        },
+        sendButton(shift){
+            const buttonToSend = this.buttons.find( (button) => {
+                if(button.shiftId === shift.id){
+                    return {...button, id: button.id, isSignedUp: button.isSignedUp}
+                }    
+            })
+            return buttonToSend
         },
         async load() {
             await Promise.all([
@@ -89,14 +113,7 @@ export default {
                 await this.getTeamShifts(this.teamId),
                 await this.getUserShifts()
             ])
-
-        },
-    },
-    computed: {
-        conflicts(){
-            const conflicts = []
-            this.userShifts.map(userShift => conflicts.push({start: userShift.start, end: userShift.end}))
-            return conflicts
+            this.buildButtons()
         },
     },
     async created() {

@@ -27,12 +27,12 @@ https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=
 * mongoose transactions to preserve atomicity with signups/unsignups
 * controller -> use-case -> repo object destructuring to be consistent across the app. Look at AddLead use case as example.
 * update use-cases to patch only text fields (name, description, etc)
+* remove shift conflict from preventing signup. move function to individual route?
 
 ### Web
 
 #### Features
 * form validation
-* shift signup buttons change dynamically on teams view
 
 #### Refactors
 
@@ -40,3 +40,4 @@ https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=
 
 ### Refactors
 * return `.data` so that you don't have to do it for every call within web. Example: `users = client.users.getUsers()` requires to then to `users.data`. 
+* after refactoring shift conflict in api, only give warning when conflict occurrs.

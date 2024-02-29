@@ -2,31 +2,17 @@
     <tr>
         <td>{{ name }}</td>
         <td>{{ description }}</td>
-        <td>{{ start }}</td>
-        <td>{{ end }}</td>
+        <td>{{ day }}</td>
+        <td>{{ start }} - {{ end }}</td>
         <td>{{ duration }} hours</td>
-        <td>{{  signups }}</td>
-        <td>{{ capacity }}</td>
-        <td><v-btn variant="text"><b>...</b></v-btn></td>
-    </tr>
+        <td>{{  shiftSignups }}/{{ capacity }}</td>
+        <td>
+            <v-btn v-if="userButton.isSignedUp" @click="unsignup">Unsignup</v-btn>
+            <v-btn v-else-if="shiftSignups >= capacity" :disabled="true">Full</v-btn>
+            <v-btn v-else-if="!userButton.isSignedUp" @click="signup">Signup</v-btn>
 
-<!--         <div align="center" class="ma-1 pa-1">
-            <v-btn v-if="showSignupButton"
-                class="ma-1 pa-1" 
-                :disabled="isFull || isUserSignedUp"
-                @click="signup"
-                >
-                <p v-if="isFull">Full</p>
-                <p v-else-if="isUserSignedUp">Signed Up</p>
-                <p v-else>Signup</p>
-            </v-btn>
-            <v-btn v-if="isUserSignedUp"
-                class="ma-1 pa-1"
-                @click="unsignup"
-                >
-                Unsignup
-            </v-btn>
-        </div> -->
+        </td>
+    </tr>
 </template>
 <script>
 import { client } from '../../../api-client/client'
@@ -34,13 +20,13 @@ import { initUserStore } from '../../stores/user'
 
 export default {
     name: 'ShiftTableRow',
+    emits: ['unsignup', 'signup-fail'],
     data (){
         return{
-            isFull: this.signups >= this.capacity,
             shiftId: this.id,
             shiftSignups: this.signups,
             userStore: initUserStore(),
-                }
+        }
     },
     props: {
         id: {
@@ -58,6 +44,9 @@ export default {
         end: {
             type: String
         },
+        day: {
+            type: String
+        },
         duration: {
             type: Number
         },
@@ -67,50 +56,53 @@ export default {
         capacity: {
             type: Number
         },
-        showSignupButton: {
-            type: Boolean
-        },
-        isUserSignedUp: {
-            type: Boolean
+        button: {
+            Object
         }
     },
     methods: {
         async signup(){
-            await client.shifts.signup({
-                id: this.shiftId,
-                userId: this.userId
-            })
-            //alert(`Signed up for ${this.name}`)
-            this.shiftSignups++
-            !this.isUserSignedUp
-            await this.$emit('signup', this.shiftId)
+            try{
+                await client.shifts.signup({
+                    id: this.shiftId,
+                    userId: this.userId
+                })
+                this.shiftSignups++
+                !this.isUserSignedUp
+            }
+            catch(err){
+                return null
+            }
         },
         async unsignup(){
-            await client.shifts.unsignup({
-                id: this.shiftId,
-                userId: this.userId
-            })
-            this.shiftSignups--
-            //alert(`Unsignedup for ${this.name}`)
-            await this.$emit('unsignup', this.shiftId)
+            try{
+                await client.shifts.unsignup({
+                    id: this.shiftId,
+                    userId: this.userId
+                })
+                this.shiftSignups--
+                await this.$emit('unsignup', this.shiftId)
+            }
+            catch(err){
+                return null
+            }
         }
     },
     computed: {
         userId() {
             return this.userStore.userId
         },
-        justSignedUp(){
-            return '!this.isUserSignedUp'
-        }
+        userButton(){
+            return this.button ? this.button : 'no'
+        },
+        isFull() {
+            return this.signups >= this.capacity
+        },
     },
     watch: {
-        isFull() {
-            return this.shiftSignups >= this.capacity
-        },
         shiftSignups() {
-            return this.shiftSignups
+            return this.signups
         },
-
     }
 }
 </script>
