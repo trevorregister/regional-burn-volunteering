@@ -20,7 +20,6 @@ import { initUserStore } from '../../stores/user'
 
 export default {
     name: 'ShiftTableRow',
-    emits: ['signup', 'unsignup'],
     data (){
         return{
             shiftId: this.id,
@@ -69,7 +68,6 @@ export default {
                 })
                 this.shiftSignups++
                 !this.isUserSignedUp
-                await this.$emit('signup', this.shiftId)
             }
             catch(err){
                 return null
@@ -82,7 +80,6 @@ export default {
                     userId: this.userId
                 })
                 this.shiftSignups--
-                await this.$emit('unsignup', this.shiftId)
             }
             catch(err){
                 return null
