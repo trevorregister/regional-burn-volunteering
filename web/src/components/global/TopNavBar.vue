@@ -1,5 +1,5 @@
 <template>
-            <v-app-bar title="Alchemy Volunteering" color="primary">
+            <v-app-bar title="Regional Burn Volunteering" color="primary">
                 <v-btn v-if="userId==''" color="secondary">
                     <RouterLink to="/login">Login</RouterLink>
                 </v-btn>
