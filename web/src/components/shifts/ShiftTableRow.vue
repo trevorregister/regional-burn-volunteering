@@ -6,11 +6,15 @@
         <td>{{ start }} - {{ end }}</td>
         <td>{{ duration }} hours</td>
         <td>{{  shiftSignups }}/{{ capacity }}</td>
-        <td>
+        <td v-if="userId !== ''">
             <v-btn v-if="userButton.isSignedUp" @click="unsignup">Unsignup</v-btn>
             <v-btn v-else-if="shiftSignups >= capacity" :disabled="true">Full</v-btn>
             <v-btn v-else-if="!userButton.isSignedUp" @click="signup">Signup</v-btn>
-
+        </td>
+        <td v-else>
+            <v-btn>
+                <RouterLink to="/login">Login</RouterLink>
+            </v-btn>
         </td>
     </tr>
 </template>
@@ -20,7 +24,7 @@ import { initUserStore } from '../../stores/user'
 
 export default {
     name: 'ShiftTableRow',
-    emits: ['unsignup', 'signup-fail'],
+    emits: ['unsignup'],
     data (){
         return{
             shiftId: this.id,

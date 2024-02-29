@@ -37,20 +37,20 @@ export default {
   name: 'LoginView',
   data(){
     return {
-      email: 'user45@email.com',
-      password: 'password'
+      email: 'user2112@email.com',
+      password: 'password',
+      userStore: initUserStore()
     }
   },
   methods: {
     async login(){
-      const userStore = initUserStore()
       const login = await client.users.login({
         email: this.email,
         password: this.password
       })
       
-      userStore.setToken(login.data.token)
-      userStore.setId(login.data.user.id)
+      this.userStore.setToken(login.data.token)
+      this.userStore.setId(login.data.user.id)
       this.$router.push({path: '/dashboard'})
 
     },
