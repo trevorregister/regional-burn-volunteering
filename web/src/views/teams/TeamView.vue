@@ -15,7 +15,7 @@
                     <th>Time</th>
                     <th>Length</th>
                     <th>Signups</th>
-                    <th>Actions</th>
+                    <th>Action</th>
                 </tr>
             </thead>
                 <tbody>
@@ -29,8 +29,8 @@
                         :capacity="shift.capacity"
                         :id="shift.id"
                         :day="shift.day"
-                        :button="button"
-                        @signup="signup"
+                        @click="shiftAction(shift)"
+                        :button="sendButton(shift)"
                         />
                 </tbody>
         </v-table>
@@ -55,7 +55,7 @@ export default {
             userShiftIds: [],
             userShifts: [],
             userStore: initUserStore(),
-            button: 'signup'
+            buttons: []
         }
     },
     methods: {
@@ -79,13 +79,33 @@ export default {
         isUserSignedUp(shiftId){
             return this.userShiftIds.includes(shiftId)
         },
-        signup: function(shiftId){
+        buildButtons(){
             this.shifts.map(shift => {
-                if(shift.id === shiftId){
-                    this.button = 'unsignup'
-                }
+                this.buttons.push({
+                    shiftId: shift.id,
+                    isFull: this.signups >= this.capacity,
+                    isConflict: false,
+                    isSignedUp: this.isUserSignedUp(shift.id)
+                })
             })
-            //return this.isUserSignedUp(shiftId)
+            
+        },
+        shiftAction(shift){
+            let foundButton = this.buttons.find( (button) => {
+                if(button.shiftId === shift.id){
+                    return {...button, id: button.id, isSignedUp: button.isSignedUp}
+                }    
+            })
+
+            foundButton.isSignedUp = !foundButton.isSignedUp
+        },
+        sendButton(shift){
+            const buttonToSend = this.buttons.find( (button) => {
+                if(button.shiftId === shift.id){
+                    return {...button, id: button.id, isSignedUp: button.isSignedUp}
+                }    
+            })
+            return buttonToSend
         },
         async load() {
             await Promise.all([
@@ -93,7 +113,7 @@ export default {
                 await this.getTeamShifts(this.teamId),
                 await this.getUserShifts()
             ])
-
+            this.buildButtons()
         },
     },
     async created() {

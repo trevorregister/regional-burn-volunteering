@@ -1,6 +1,5 @@
 <template>
     <tr>
-        {{ isUserSignedUp }}
         <td>{{ name }}</td>
         <td>{{ description }}</td>
         <td>{{ day }}</td>
@@ -8,7 +7,10 @@
         <td>{{ duration }} hours</td>
         <td>{{  shiftSignups }}/{{ capacity }}</td>
         <td>
-            <v-btn @click="signup">{{ button }}</v-btn>
+            <v-btn v-if="userButton.isSignedUp" @click="unsignup">Unsignup</v-btn>
+            <v-btn v-else-if="shiftSignups >= capacity" :disabled="true">Full</v-btn>
+            <v-btn v-else-if="!userButton.isSignedUp" @click="signup">Signup</v-btn>
+
         </td>
     </tr>
 </template>
@@ -18,10 +20,9 @@ import { initUserStore } from '../../stores/user'
 
 export default {
     name: 'ShiftTableRow',
-    emits: ['signup'],
+    emits: ['signup', 'unsignup'],
     data (){
         return{
-            isFull: this.signups >= this.capacity,
             shiftId: this.id,
             shiftSignups: this.signups,
             userStore: initUserStore(),
@@ -55,22 +56,19 @@ export default {
         capacity: {
             type: Number
         },
-        isUserSignedUp: {
-            Boolean
-        },
         button: {
-            type: String
+            Object
         }
     },
     methods: {
         async signup(){
             try{
-/*                 await client.shifts.signup({
+                await client.shifts.signup({
                     id: this.shiftId,
                     userId: this.userId
                 })
                 this.shiftSignups++
-                !this.isUserSignedUp */
+                !this.isUserSignedUp
                 await this.$emit('signup', this.shiftId)
             }
             catch(err){
@@ -84,7 +82,6 @@ export default {
                     userId: this.userId
                 })
                 this.shiftSignups--
-                this.toggleButton('unsignup')
                 await this.$emit('unsignup', this.shiftId)
             }
             catch(err){
@@ -96,15 +93,17 @@ export default {
         userId() {
             return this.userStore.userId
         },
+        userButton(){
+            return this.button ? this.button : 'no'
+        },
+        isFull() {
+            return this.signups >= this.capacity
+        },
     },
     watch: {
-        isFull() {
-            return this.shiftSignups >= this.capacity
-        },
         shiftSignups() {
-            return this.shiftSignups
+            return this.signups
         },
-
     }
 }
 </script>
