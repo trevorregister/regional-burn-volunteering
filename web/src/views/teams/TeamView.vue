@@ -29,9 +29,8 @@
                         :capacity="shift.capacity"
                         :id="shift.id"
                         :day="shift.day"
-                        :showSignupButton="false"
-                        :isUserSignedUp="isUserSignedUp(shift.id)"
-                        :actions="['signup', 'unsignup']"
+                        :button="button"
+                        @signup="signup"
                         />
                 </tbody>
         </v-table>
@@ -54,9 +53,9 @@ export default {
             team: {},
             shifts: [],
             userShiftIds: [],
-            userShiftConflicts: [],
             userShifts: [],
-            userStore: initUserStore()
+            userStore: initUserStore(),
+            button: 'signup'
         }
     },
     methods: {
@@ -81,8 +80,12 @@ export default {
             return this.userShiftIds.includes(shiftId)
         },
         signup: function(shiftId){
-            console.log('emit')
-            return this.isUserSignedUp(shiftId)
+            this.shifts.map(shift => {
+                if(shift.id === shiftId){
+                    this.button = 'unsignup'
+                }
+            })
+            //return this.isUserSignedUp(shiftId)
         },
         async load() {
             await Promise.all([
@@ -91,13 +94,6 @@ export default {
                 await this.getUserShifts()
             ])
 
-        },
-    },
-    computed: {
-        conflicts(){
-            const conflicts = []
-            this.userShifts.map(userShift => conflicts.push({start: userShift.start, end: userShift.end}))
-            return conflicts
         },
     },
     async created() {

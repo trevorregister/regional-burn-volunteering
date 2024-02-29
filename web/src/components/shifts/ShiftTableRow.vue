@@ -8,31 +8,9 @@
         <td>{{ duration }} hours</td>
         <td>{{  shiftSignups }}/{{ capacity }}</td>
         <td>
-            <v-btn v-for="button in buttons" :key="button" 
-                @click="actionButton(button)"
-                >
-                {{button.label}}
-            </v-btn>
+            <v-btn @click="signup">{{ button }}</v-btn>
         </td>
     </tr>
-
-<!--         <div align="center" class="ma-1 pa-1">
-            <v-btn v-if="showSignupButton"
-                class="ma-1 pa-1" 
-                :disabled="isFull || isUserSignedUp"
-                @click="signup"
-                >
-                <p v-if="isFull">Full</p>
-                <p v-else-if="isUserSignedUp">Signed Up</p>
-                <p v-else>Signup</p>
-            </v-btn>
-            <v-btn v-if="isUserSignedUp"
-                class="ma-1 pa-1"
-                @click="unsignup"
-                >
-                Unsignup
-            </v-btn>
-        </div> -->
 </template>
 <script>
 import { client } from '../../../api-client/client'
@@ -40,13 +18,13 @@ import { initUserStore } from '../../stores/user'
 
 export default {
     name: 'ShiftTableRow',
+    emits: ['signup'],
     data (){
         return{
             isFull: this.signups >= this.capacity,
             shiftId: this.id,
             shiftSignups: this.signups,
             userStore: initUserStore(),
-            buttons: this.buildButtons()
         }
     },
     props: {
@@ -77,23 +55,22 @@ export default {
         capacity: {
             type: Number
         },
-        actions: {
-            type: Array
-        },
         isUserSignedUp: {
             Boolean
+        },
+        button: {
+            type: String
         }
     },
     methods: {
         async signup(){
             try{
-                await client.shifts.signup({
+/*                 await client.shifts.signup({
                     id: this.shiftId,
                     userId: this.userId
                 })
                 this.shiftSignups++
-                !this.isUserSignedUp
-                this.toggleButton('signup')
+                !this.isUserSignedUp */
                 await this.$emit('signup', this.shiftId)
             }
             catch(err){
@@ -113,36 +90,6 @@ export default {
             catch(err){
                 return null
             }
-        },
-        async actionButton(button){
-            switch(button.action){
-                case 'signup' :
-                    await this.signup()
-                    break
-                case 'unsignup':
-                    await this.unsignup()
-                    break
-            }
-        },
-        async toggleButton(action){
-            this.buttons = this.buttons.filter(button => {
-                return action !== button.action
-            })
-            if(action === 'signup'){
-                this.buttons.push({action: 'unsignup', label: 'UNSIGNUP', isDisabled: false})
-            }
-            if(action === 'unsignup'){
-                this.buttons.push({action: 'signup', label: 'SIGNUP', isDisabled: false})
-            }
-        },
-        buildButtons(){
-            console.log(this.isUserSignedUp)
-            if(this.isUserSignedUp){
-                return [{action: 'unsignup', label: 'UNSIGNUP', isDisabled: false}]
-            }
-            const buttons = []
-            this.actions.map(action => buttons.push({action: action, label: action.toUpperCase(), isDisabled: false}))
-            return buttons
         }
     },
     computed: {
@@ -157,9 +104,6 @@ export default {
         shiftSignups() {
             return this.shiftSignups
         },
-        buttons(){
-            return this.buttons
-        }
 
     }
 }
