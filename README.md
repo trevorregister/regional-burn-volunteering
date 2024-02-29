@@ -33,7 +33,6 @@ https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=
 
 #### Features
 * form validation
-* shift signup buttons change dynamically on teams view
 
 #### Refactors
 
