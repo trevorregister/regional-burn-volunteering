@@ -35,7 +35,6 @@ module.exports = (repository) => {
         return await Promise.all([
             await repository.incrementShift(shiftId),
             await repository.addMember(shiftId, userId),
-            await userService.addTeam(userId, shift.team),
             await userService.addShift(userId, shiftId),
             await teamService.addMember(shift.team, userId)
         ])

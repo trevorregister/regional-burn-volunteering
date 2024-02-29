@@ -7,7 +7,6 @@ module.exports = class User {
         this.role = role
         this.hash = password
         this.shifts = []
-        this.teams = []
         this.events = []
     }
 }
