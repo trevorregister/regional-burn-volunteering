@@ -1,4 +1,3 @@
-const Team = require('../model')
 const crypto = require('crypto')
 
 module.exports = (repository) => {
