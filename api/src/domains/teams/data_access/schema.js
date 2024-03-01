@@ -41,7 +41,8 @@ module.exports = new Schema({
             type: Schema.Types.ObjectId,
             required: false,
             ref: 'User'
-        }
+        },
+        _id: false
 }]
 
 })

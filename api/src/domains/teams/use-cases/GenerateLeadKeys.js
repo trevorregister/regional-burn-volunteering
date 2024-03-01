@@ -1,10 +1,11 @@
 const crypto = require('crypto')
+const { HttpError } = require('../../../config/errors')
 
 module.exports = (repository) => {
     async function execute(id, quantity){
-        const codes = []
+        const leadershipKeys = []
         for (let i = 0; i < quantity; i++){
-            codes.push(
+            leadershipKeys.push(
                 {
                    value:  crypto.randomBytes(4).toString('hex'),
                    isRedeemed: false,
@@ -12,10 +13,8 @@ module.exports = (repository) => {
                 }
             )
         }
-        return {
-            teamId: id,
-            codes: codes
-        }
+
+        await repository.addLeadershipCodes(id, leadershipKeys)
     }
 
     return { execute }

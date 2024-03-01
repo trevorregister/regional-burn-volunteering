@@ -39,4 +39,8 @@ module.exports = class TeamRepository {
         : false
     }
 
+    async addLeadershipCodes(id, leadershipKeys){
+        await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$push: {leadershipKeys: leadershipKeys}})
+    }
+
 }
