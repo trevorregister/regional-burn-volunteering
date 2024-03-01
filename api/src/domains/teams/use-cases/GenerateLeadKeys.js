@@ -14,7 +14,8 @@ module.exports = (repository) => {
             )
         }
 
-        await repository.addLeadershipCodes(id, leadershipKeys)
+        await repository.addLeadershipKeys(id, leadershipKeys)
+        return leadershipKeys
     }
 
     return { execute }

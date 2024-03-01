@@ -6,6 +6,7 @@ const RemoveLead = require('./RemoveLead')
 const GetTeams = require('./GetTeams')
 const GetShifts = require('./GetShifts')
 const GenerateLeadKeys = require('./GenerateLeadKeys')
+const DeleteLeadKey = require('./DeleteLeadKey')
 
 module.exports = {
     AddTeam,
@@ -15,5 +16,6 @@ module.exports = {
     RemoveLead,
     GetTeams,
     GetShifts,
-    GenerateLeadKeys
+    GenerateLeadKeys,
+    DeleteLeadKey
 }

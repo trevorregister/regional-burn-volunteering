@@ -12,6 +12,7 @@ const teamRoutes = () => {
 
     router.post('/', controller.addTeam)
     router.post('/:id/generate-lead-keys', controller.generateLeadKeys)
+    router.post('/delete-lead-key', controller.deleteLeadKey)
     router.get('/', controller.getTeams)
     router.get('/:id', controller.getTeamById)
     router.get('/:id/shifts', controller.getShifts)
