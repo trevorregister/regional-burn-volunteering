@@ -8,7 +8,8 @@ module.exports = (repository) => {
             codes.push(
                 {
                    value:  crypto.randomBytes(4).toString('hex'),
-                   isRedeemed: false
+                   isRedeemed: false,
+                   redeemedBy: null
                 }
             )
         }
