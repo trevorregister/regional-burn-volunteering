@@ -5,7 +5,8 @@ const {
     AddLead,
     RemoveLead,
     GetTeams,
-    GetShifts
+    GetShifts,
+    GenerateLeadCodes
 } = require('./use-cases/_index')
 const TeamDTO = require('./dto')
 const ShiftDTO = require('../shifts/dto')
@@ -95,6 +96,19 @@ module.exports = (repository) => {
         }
     }
 
+    const generateLeadCodes = async (req, res, next) => {
+        try{
+            const generateLeadCodesCase = GenerateLeadCodes(repository)
+            const { id } = req.body
+            const { quantity } = req.body
+            const codes = await generateLeadCodesCase.execute(id, quantity)
+            res.status(201).send(codes)
+        }
+        catch(err){
+            next(err)
+        }
+    }
+
     return {
         getTeamById,
         addTeam,
@@ -102,7 +116,8 @@ module.exports = (repository) => {
         addLead,
         removeLead,
         getTeams,
-        getShifts
+        getShifts,
+        generateLeadCodes
     }
 }
 
