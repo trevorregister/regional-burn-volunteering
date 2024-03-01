@@ -99,7 +99,7 @@ module.exports = (repository) => {
     const generateLeadKeys = async (req, res, next) => {
         try{
             const generateLeadKeysCase = GenerateLeadKeys(repository)
-            const { id } = req.body
+            const { id } = req.params
             const { quantity } = req.body
             const codes = await generateLeadKeysCase.execute(id, quantity)
             res.status(201).send(codes)

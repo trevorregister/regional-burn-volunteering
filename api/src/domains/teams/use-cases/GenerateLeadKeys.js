@@ -5,9 +5,17 @@ module.exports = (repository) => {
     async function execute(id, quantity){
         const codes = []
         for (let i = 0; i < quantity; i++){
-            codes.push(crypto.randomBytes(4).toString('hex'))
+            codes.push(
+                {
+                   value:  crypto.randomBytes(4).toString('hex'),
+                   isRedeemed: false
+                }
+            )
         }
-        return codes
+        return {
+            teamId: id,
+            codes: codes
+        }
     }
 
     return { execute }
