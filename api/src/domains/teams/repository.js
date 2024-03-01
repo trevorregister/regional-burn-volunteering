@@ -44,7 +44,11 @@ module.exports = class TeamRepository {
     }
 
     async deleteLeadershipKey(leadershipKeyValue){
-        await this.db.findOneAndUpdate({"leadershipKeys.value": leadershipKeyValue}, {$pull: {"leadershipKeys.value": {"leadershipKeyValue": leadershipKeyValue}}})
+        const team = await this.db.findOne({"leadershipKeys.value": leadershipKeyValue})
+        team.leadershipKeys = team.leadershipKeys.filter(leadershipKey => {
+            return leadershipKey.value !== leadershipKeyValue 
+            })
+        await team.save()
     }
 
 }
