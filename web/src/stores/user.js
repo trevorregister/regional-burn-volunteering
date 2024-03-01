@@ -14,12 +14,17 @@ export const initUserStore = defineStore('user', {
       this.userId = userId
       localStorage.setItem('userId', userId)
     },
+    setRole(role) {
+      this.role = role
+      localStorage.setItem('role', role)
+    },
     clearUser() {
       this.token = ''
       this.userId = ''
 
       localStorage.removeItem('token')
       localStorage.removeItem('userId')
+      localStorage.removeItem('role')
     }
   }
 });
