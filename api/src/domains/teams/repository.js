@@ -54,4 +54,28 @@ module.exports = class TeamRepository {
         return await team.save()
     }
 
+    async redeemLeadershipKey(leadershipKeyValue, userId){
+        const team = await this.db.findOne({"leadershipKeys.value": leadershipKeyValue})
+        if(!team) {
+            return false
+        }
+
+        const isRedeemedCheck = team.leadershipKeys.filter(leadershipKey => {
+            return leadershipKey.value === leadershipKey && leadershipKey.isRedeemed === false
+        })
+
+        if(isRedeemedCheck.length === 0){
+            return false
+        }
+
+        team.leadershipKeys.map(leadershipKey => {
+            if(leadershipKey.value === leadershipKeyValue){
+                leadershipKey.isRedeemed = true
+                leadershipKey.redeemedBy = new ObjectId(userId)
+            }
+        })
+
+        return await team.save()
+    }
+
 }

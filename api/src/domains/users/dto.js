@@ -40,7 +40,8 @@ module.exports = class UserDTO {
             email: data.email,
             role: data.role,
             shifts: data.shifts,
-            events: data.events
+            events: data.events,
+            leadershipKeyValue: data.leadershipKeyValue ?? null
         }
     }
 
