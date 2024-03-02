@@ -20,12 +20,12 @@ export default class Users {
         return axios.post(`${this.API_HOST}/users/login`, credentials)
     }
 
-    addUser({email, name, role, password}){
+    addUser({email, name, password, leadershipKeyValue}){
         const user = {
             email: email,
             name: name,
-            role: role,
-            password: password
+            password: password,
+            leadershipKeyValue: leadershipKeyValue
         }
         return axios.post(`${this.API_HOST}/users`,user)
     }
