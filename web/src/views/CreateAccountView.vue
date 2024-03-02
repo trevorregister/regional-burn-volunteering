@@ -23,6 +23,11 @@
               v-model="leadershipKeyValue"
               label="Leadership code (optional)"
             >
+            <v-tooltip
+              activator="parent"
+              location="end"
+            >Only for members of leadership.
+            </v-tooltip>
           </v-text-field>
           <v-btn block class="mt-2" color="secondary" type="submit">
             Submit

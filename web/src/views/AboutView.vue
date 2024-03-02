@@ -1,15 +1,26 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <v-row
+    v-for="n in 4"
+    :key="n">
+    <v-col cols="6">
+      <v-card 
+      color="red"
+      class="pa-2 ma-2"
+      >
+        col 1
+      </v-card>
+    </v-col>
+    <v-col cols="3">
+      <v-card 
+      color="red"
+      class="pa-2 ma-2"
+      >
+        col 1
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
+
 </style>
