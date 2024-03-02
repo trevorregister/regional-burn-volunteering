@@ -11,13 +11,16 @@ const UserToDbSchema = Joi.object({
         .required()
         .trim()
         .min(8),
-    role: Joi.string()
-        .required()
-        .trim(),
     email: Joi.string()
         .required()
         .lowercase()
-        .email({minDomainSegments: 2})
+        .email({minDomainSegments: 2}),
+    leadershipKeyValue: Joi.string()
+        .optional(),
+    role: Joi.string()
+        .required()
+        
+
 })
 
 

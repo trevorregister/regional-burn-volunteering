@@ -43,6 +43,10 @@ class TeamService extends Service {
     redeemLeadershipKey(leadershipKeyValue, userId){
         return this.repository.redeemLeadershipKey(leadershipKeyValue, userId)
     }
+
+    addLead(id, userId){
+        return this.repository.addLead(id, userId)
+    }
 }
 
 class UserService extends Service {

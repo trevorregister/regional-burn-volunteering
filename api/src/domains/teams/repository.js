@@ -59,10 +59,12 @@ module.exports = class TeamRepository {
         if(!team) {
             return false
         }
-
+        console.log('team', team)
         const isRedeemedCheck = team.leadershipKeys.filter(leadershipKey => {
             return leadershipKey.value === leadershipKey && leadershipKey.isRedeemed === false
         })
+
+        console.log('redeem check', isRedeemedCheck)
 
         if(isRedeemedCheck.length === 0){
             return false
