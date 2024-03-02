@@ -4,6 +4,7 @@ const GetUsers = require('./GetUsers')
 const LoginUser = require('./LoginUser')
 const GetShifts = require('./GetShifts')
 const GetTeams = require('./GetTeams')
+const PromoteUserToLead = require('./PromoteUserToLead')
 
 module.exports = {
     AddUser,
@@ -11,5 +12,6 @@ module.exports = {
     GetUsers,
     LoginUser,
     GetShifts,
-    GetTeams
+    GetTeams,
+    PromoteUserToLead
 }

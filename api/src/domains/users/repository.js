@@ -36,6 +36,10 @@ module.exports = class UserRepository {
         return await this.db.create(user)
     }
 
+    async promoteUserToLead(id){
+        return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$set: {role: 'lead'}})
+    }
+
     async getShifts(id){
         id = new ObjectId(id)
         const shifts = await this.db.aggregate([

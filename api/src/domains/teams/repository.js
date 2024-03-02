@@ -28,9 +28,10 @@ module.exports = class TeamRepository {
     async addLead(id, userId){
         id = new ObjectId(id)
         userId = new ObjectId(userId)
+        console.log('id', id, 'userId', userId)
         return await this.db.updateOne(
             {
-                _id: new ObjectId(id)
+                _id: id
             },
             {
                 $addToSet: {
