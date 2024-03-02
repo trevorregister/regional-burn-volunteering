@@ -2,6 +2,7 @@
     <div>
         <h1>Dashboard</h1>
         <p>{{ user.name }}</p>
+        <p>{{  user.role  }}</p>
         <div class="ma-2 pa-2">
             <h3>Totals</h3>
             <p>Shifts: {{ totalShiftCount }}</p>

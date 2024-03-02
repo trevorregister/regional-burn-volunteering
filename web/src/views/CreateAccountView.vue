@@ -19,6 +19,11 @@
               type="password"
             >
           </v-text-field>
+          <v-text-field
+              v-model="leadershipKeyValue"
+              label="Leadership code (optional)"
+            >
+          </v-text-field>
           <v-btn block class="mt-2" color="secondary" type="submit">
             Submit
           </v-btn>
@@ -39,7 +44,7 @@ export default {
       email: '',
       password: '',
       name: '',
-      role: 'user',
+      leadershipKeyValue: null,
       userStore: initUserStore()
     }
   },
@@ -48,8 +53,8 @@ export default {
       const newUserRes = await client.users.addUser({
         email: this.email,
         name: this.name,
-        role: this.role,
-        password: this.password
+        password: this.password,
+        leadershipKeyValue: this.leadershipKeyValue
       })
 
       const newUser = newUserRes.data
@@ -61,6 +66,7 @@ export default {
 
       this.userStore.setToken(login.data.token)
       this.userStore.setId(login.data.user.id)
+      this.userStore.setRole(login.data.user.role)
 
       this.$router.push({path: '/dashboard'})
     }
