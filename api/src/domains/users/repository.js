@@ -28,6 +28,10 @@ module.exports = class UserRepository {
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {role: role})
     }
 
+    async deleteUser(id){
+        return await this.db.findByIdAndDelete(id) //findByIdAndDelete assumes an ObjectId is being passed. id here doesn't come from a string like it does in other repo calls.
+    }
+
     async create(user){
         return await this.db.create(user)
     }

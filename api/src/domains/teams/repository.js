@@ -26,7 +26,19 @@ module.exports = class TeamRepository {
     }
 
     async addLead(id, userId){
-        return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$addToSet: {leads: new ObjectId(userId)}})
+        id = new ObjectId(id)
+        userId = new ObjectId(userId)
+        return await this.db.updateOne(
+            {
+                _id: new ObjectId(id)
+            },
+            {
+                $addToSet: {
+                    leads: userId,
+                    members: userId
+                },
+            } 
+        )
     }
 
     async removeLead(id, userId){
@@ -59,12 +71,10 @@ module.exports = class TeamRepository {
         if(!team) {
             return false
         }
-        console.log('team', team)
-        const isRedeemedCheck = team.leadershipKeys.filter(leadershipKey => {
-            return leadershipKey.value === leadershipKey && leadershipKey.isRedeemed === false
-        })
 
-        console.log('redeem check', isRedeemedCheck)
+        const isRedeemedCheck = team.leadershipKeys.filter(key => {
+            return (key.value === leadershipKeyValue) && (key.isRedeemed) === false
+        })
 
         if(isRedeemedCheck.length === 0){
             return false
@@ -76,7 +86,6 @@ module.exports = class TeamRepository {
                 leadershipKey.redeemedBy = new ObjectId(userId)
             }
         })
-
         return await team.save()
     }
 
