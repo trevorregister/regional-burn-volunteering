@@ -19,7 +19,6 @@ https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=
 #### Features 
 * some kind of ABAC
 * clients to allow for use of cross-module use-cases
-* leadership signup via unique code (like pivot bookstore codes)
 
 #### Refactors
 * user schema to remove teams
