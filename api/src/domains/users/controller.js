@@ -4,7 +4,8 @@ const {
     AddUser,
     LoginUser,
     GetShifts,
-    GetTeams
+    GetTeams,
+    PromoteUserToLead
 } = require('./use-cases/_index')
 
 const UserDTO = require('./dto')
@@ -86,6 +87,20 @@ module.exports = (repository) => {
         }
     }
 
+    const promoteUserToLead = async (req, res, next) => {
+        try {
+            const promoteUserToLeadCase = PromoteUserToLead(repository)
+            const { id } = req.params
+            console.log('req.body', req.body)
+            const { teamId }   = req.body
+            console.log(id, 'params', teamId, 'body')
+            await promoteUserToLeadCase.execute(id, teamId)
+            res.status(201).send('user promoted to team lead')
+        } catch (err) {
+            next(err)
+        }
+    }
+
     return {
         getUsers,
         getUserById,
@@ -93,7 +108,8 @@ module.exports = (repository) => {
         loginUser,
         logoutUser,
         getShifts,
-        getTeams
+        getTeams,
+        promoteUserToLead
     }
 }
 

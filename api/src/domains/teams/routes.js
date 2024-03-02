@@ -11,6 +11,8 @@ const teamRoutes = () => {
     const controller = TeamController(repository)
 
     router.post('/', controller.addTeam)
+    router.post('/:id/generate-leadership-keys', controller.generateLeadershipKeys)
+    router.post('/delete-leadership-key', controller.deleteLeadershipKey)
     router.get('/', controller.getTeams)
     router.get('/:id', controller.getTeamById)
     router.get('/:id/shifts', controller.getShifts)

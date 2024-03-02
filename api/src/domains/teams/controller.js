@@ -5,7 +5,9 @@ const {
     AddLead,
     RemoveLead,
     GetTeams,
-    GetShifts
+    GetShifts,
+    GenerateLeadershipKeys,
+    DeleteLeadershipKey
 } = require('./use-cases/_index')
 const TeamDTO = require('./dto')
 const ShiftDTO = require('../shifts/dto')
@@ -95,6 +97,31 @@ module.exports = (repository) => {
         }
     }
 
+    const generateLeadershipKeys = async (req, res, next) => {
+        try{
+            const generateLeadershipKeysCase = GenerateLeadershipKeys(repository)
+            const { id } = req.params
+            const { quantity } = req.body
+            const leadershipKeys = await generateLeadershipKeysCase.execute(id, quantity)
+            res.status(201).send(leadershipKeys)
+        }
+        catch(err){
+            next(err)
+        }
+    }
+
+    const deleteLeadershipKey = async (req, res, next) => {
+        try{
+            const deleteLeadershipKeyCase = DeleteLeadershipKey(repository)
+            const { leadershipKeyValue } = req.body
+            await deleteLeadershipKeyCase.execute(leadershipKeyValue)
+            res.status(201).send(`leadership key ${leadershipKeyValue} deleted`)
+        }
+        catch(err){
+            next(err)
+        }
+    }
+
     return {
         getTeamById,
         addTeam,
@@ -102,7 +129,9 @@ module.exports = (repository) => {
         addLead,
         removeLead,
         getTeams,
-        getShifts
+        getShifts,
+        generateLeadershipKeys,
+        deleteLeadershipKey
     }
 }
 

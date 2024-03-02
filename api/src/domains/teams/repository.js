@@ -26,7 +26,20 @@ module.exports = class TeamRepository {
     }
 
     async addLead(id, userId){
-        return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$addToSet: {leads: new ObjectId(userId)}})
+        id = new ObjectId(id)
+        userId = new ObjectId(userId)
+        console.log('id', id, 'userId', userId)
+        return await this.db.updateOne(
+            {
+                _id: id
+            },
+            {
+                $addToSet: {
+                    leads: userId,
+                    members: userId
+                },
+            } 
+        )
     }
 
     async removeLead(id, userId){
@@ -37,6 +50,44 @@ module.exports = class TeamRepository {
         return await this.db.findOne({leads: new ObjectId(userId)})
         ? true
         : false
+    }
+
+    async addLeadershipKeys(id, leadershipKeys){
+        await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$push: {leadershipKeys: leadershipKeys}})
+    }
+
+    async deleteLeadershipKey(leadershipKeyValue){
+        const team = await this.db.findOne({"leadershipKeys.value": leadershipKeyValue})
+        if(!team) {
+            return false
+        }
+        team.leadershipKeys = team.leadershipKeys.filter(leadershipKey => {
+            return leadershipKey.value !== leadershipKeyValue 
+            })
+        return await team.save()
+    }
+
+    async redeemLeadershipKey(leadershipKeyValue, userId){
+        const team = await this.db.findOne({"leadershipKeys.value": leadershipKeyValue})
+        if(!team) {
+            return false
+        }
+
+        const isRedeemedCheck = team.leadershipKeys.filter(key => {
+            return (key.value === leadershipKeyValue) && (key.isRedeemed) === false
+        })
+
+        if(isRedeemedCheck.length === 0){
+            return false
+        }
+
+        team.leadershipKeys.map(leadershipKey => {
+            if(leadershipKey.value === leadershipKeyValue){
+                leadershipKey.isRedeemed = true
+                leadershipKey.redeemedBy = new ObjectId(userId)
+            }
+        })
+        return await team.save()
     }
 
 }

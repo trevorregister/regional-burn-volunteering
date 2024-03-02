@@ -25,8 +25,24 @@ module.exports = new Schema({
 
     leads: [{
         type: Schema.Types.ObjectId,
-        require: [true, 'At least 1 lead required'],
         ref: 'User'
-    }]
+    }],
+    
+    leadershipKeys: [{
+        value: {
+            type: String,
+            required: false
+        },
+        isRedeemed: {
+            type: Boolean,
+            required: false
+        },
+        redeemedBy: {
+            type: Schema.Types.ObjectId,
+            required: false,
+            ref: 'User'
+        },
+        _id: false
+}]
 
 })

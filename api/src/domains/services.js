@@ -39,6 +39,14 @@ class TeamService extends Service {
     getTeams() {
         return this.repository.getTeams()
     }
+
+    redeemLeadershipKey(leadershipKeyValue, userId){
+        return this.repository.redeemLeadershipKey(leadershipKeyValue, userId)
+    }
+
+    addLead(id, userId){
+        return this.repository.addLead(id, userId)
+    }
 }
 
 class UserService extends Service {

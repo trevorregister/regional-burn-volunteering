@@ -4,7 +4,7 @@ module.exports = class User {
         
         this.email = email
         this.name = name
-        this.role = role
+        this.role = 'user'
         this.hash = password
         this.shifts = []
         this.events = []

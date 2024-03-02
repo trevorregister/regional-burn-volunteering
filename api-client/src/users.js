@@ -20,12 +20,12 @@ export default class Users {
         return axios.post(`${this.API_HOST}/users/login`, credentials)
     }
 
-    addUser({email, name, role, password}){
+    addUser({email, name, password, leadershipKeyValue}){
         const user = {
             email: email,
             name: name,
-            role: role,
-            password: password
+            password: password,
+            leadershipKeyValue: leadershipKeyValue
         }
         return axios.post(`${this.API_HOST}/users`,user)
     }
@@ -40,5 +40,9 @@ export default class Users {
 
     logout(){
         return axios.post(`${this.API_HOST}/users/logout`)
+    }
+
+    promoteUserToLead({id, teamId}){
+        return axios.patch(`${this.API_HOST}/users/${id}/promote-user-to-lead`, {teamId: teamId})
     }
 }

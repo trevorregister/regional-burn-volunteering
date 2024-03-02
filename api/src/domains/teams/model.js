@@ -7,5 +7,6 @@ module.exports = class Team {
         this.members = []
         this.shifts = []
         this.leads = leads
+        this.leadershipKeys = []
     }
 }

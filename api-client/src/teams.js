@@ -32,4 +32,13 @@ export default class Teams {
         return axios.patch(`${this.API_HOST}/teams/${id}/removelead`, {userId: userId})
 
     }
+
+    generateLeadershipKeys({id, quantity}){
+        return axios.post(`${this.API_HOST}/teams/${id}/generate-leadership-keys`, {quantity: quantity})
+    }
+
+    deleteLeadershipKeys(leadershipKeyValue){
+        return axios.post(`${this.API_HOST}/teams/delete-leadership-key`, {leadershipKeyValue: leadershipKeyValue})
+    }
+    
 }
