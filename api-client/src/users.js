@@ -41,4 +41,8 @@ export default class Users {
     logout(){
         return axios.post(`${this.API_HOST}/users/logout`)
     }
+
+    promoteUserToLead({id, teamId}){
+        return axios.patch(`${this.API_HOST}/users/${id}/promote-user-to-lead`, {teamId: teamId})
+    }
 }
