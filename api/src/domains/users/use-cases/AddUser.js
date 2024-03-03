@@ -21,6 +21,9 @@ module.exports = (repository) => {
             const leadershipKeyCheck = await teamService.redeemLeadershipKey(leadershipKeyValue, newUser._id.toHexString())
             if(leadershipKeyCheck){
                 newUser.role = 'lead'
+                if(!newUser.teams.includes(leadershipKeyCheck._id)){
+                    newUser.teams.push(leadershipKeyCheck._id)
+                }
                 await teamService.addLead(leadershipKeyCheck._id.toHexString(), newUser._id.toHexString())
                 return await newUser.save()
             }
