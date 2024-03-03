@@ -1,7 +1,6 @@
 <template>
     <tr>
         <td>{{ name }}</td>
-        <td>{{ description }}</td>
         <td>{{ day }}</td>
         <td>{{ start }} - {{ end }}</td>
         <td>{{ duration }} hours</td>

@@ -10,7 +10,6 @@
             <thead>
                 <tr class="text-left">
                     <th>Name</th>
-                    <th>Description</th>
                     <th>Day</th>
                     <th>Time</th>
                     <th>Length</th>
@@ -21,7 +20,6 @@
                 <tbody>
                     <ShiftTableRow v-for="shift in shifts" :key="shift"
                         :name="shift.name"
-                        :description="shift.description"
                         :start="shift.start"
                         :end="shift.end"
                         :duration="shift.duration"
@@ -121,6 +119,10 @@ export default {
     }
 }
 </script>
-<style>
-    
+<style lang="scss">
+    tr {
+        &:hover {
+            background-color: rgb(193, 193, 255);
+        }
+    }
 </style>
