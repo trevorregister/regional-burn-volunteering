@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { client } from '@client'
+import { client } from '../../api-client/client'
 import { initUserStore } from '../stores/user'
 
 export default {

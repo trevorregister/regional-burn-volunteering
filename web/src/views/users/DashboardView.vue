@@ -54,7 +54,7 @@
 </template>
 <script>
 import { initUserStore } from '../../stores/user'
-import { client } from '@client'
+import { client } from '../../../api-client/client'
 import ShiftTableRow from '../../components/shifts/ShiftTableRow.vue'
 
 export default {

@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "baseUrl": "./",
+    "moduleResolution": "node"
   },
   "exclude": ["node_modules", "dist"]
 }
