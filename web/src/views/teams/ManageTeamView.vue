@@ -4,9 +4,9 @@
        {{team.name}}
     </div>
     <v-row>
-        <v-col cols="4"  v-for="lead in leads" :key=lead>
-            <v-sheet color="secondary">
-                {{lead.name}}
+        <v-col cols="4" v-for="lead in leads" :key=lead>
+            <v-sheet color="secondary" class="rounded-xl">
+                <v-container align="center">{{lead.name}}</v-container>
             </v-sheet>
         </v-col>
     </v-row>
