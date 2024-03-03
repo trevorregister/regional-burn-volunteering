@@ -40,6 +40,7 @@ module.exports = class UserDTO {
             role: data.role,
             shifts: data.shifts,
             events: data.events,
+            teams: data.teams,
         }
     }
 

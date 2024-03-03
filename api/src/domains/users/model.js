@@ -5,6 +5,7 @@ module.exports = class User {
         this.email = email
         this.name = name
         this.role = 'user'
+        this.teams = []
         this.hash = password
         this.shifts = []
         this.events = []

@@ -1,5 +1,6 @@
 import TeamView from '../views/teams/TeamView.vue'
 import TeamsView from '../views/teams/TeamsView.vue'
+import ManageTeamView from '../views/teams/ManageTeamView.vue'
 
 const teams = [
     {
@@ -11,6 +12,12 @@ const teams = [
         path: '/teams/:teamId',
         name: 'team',
         component: TeamView,
+        props: true
+    },
+    {
+        path: '/teams/:teamId/manage',
+        name: 'manageTeam',
+        component: ManageTeamView,
         props: true
     }
 ]

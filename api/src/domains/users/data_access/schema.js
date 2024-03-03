@@ -31,6 +31,11 @@ module.exports = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Shift'
     }],
+
+    teams: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Team'
+    }],
     
     events:[{
         type: Schema.Types.ObjectId,
