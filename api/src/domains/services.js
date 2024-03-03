@@ -83,6 +83,10 @@ class UserService extends Service {
     getTeams(id){
         return this.repository.getTeams(id)
     }
+
+    getLeads(idArray){
+        return this.repository.getLeads(idArray)
+    }
 }
 
 class ShiftService extends Service{
