@@ -1,18 +1,20 @@
 <template>
             <v-app-bar title="Regional Burn Volunteering" color="primary">
-                <v-btn v-if="userId==''" color="secondary">
-                    <RouterLink to="/login">Login</RouterLink>
+                <v-btn v-if="userId==''" >
+                    <router-link to="/login">Login</router-link>
                 </v-btn>
-                <v-btn v-if="userId!==''" color="secondary">
-                    <RouterLink to="/dashboard">Dashboard</RouterLink>
+                <v-btn v-if="userId!==''" >
+                    <router-link to="/dashboard">Dashboard</router-link>
                 </v-btn>
-                <v-btn color="secondary">
-                    <RouterLink to="/about">About</RouterLink>
+                <v-btn >
+                    <router-link to="/about">About</router-link>
                 </v-btn>
-                <v-btn color="secondary">
-                    <RouterLink to="/teams">Teams</RouterLink>
+                <v-btn >
+                    <router-link to="/teams">Teams</router-link>
                 </v-btn>
-                <v-btn @click="logout" color="secondary">Logout</v-btn>
+                <v-btn @click="logout" >
+                    <router-link to="/login">Logout</router-link>
+                </v-btn>
             </v-app-bar>
 </template>
 <script>
@@ -39,3 +41,9 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+    .v-btn {
+        background-color: white;
+        margin: 2px;
+    }
+</style>

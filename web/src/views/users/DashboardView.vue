@@ -25,7 +25,6 @@
             <thead>
                 <tr class="text-left">
                     <th>Name</th>
-                    <th>Description</th>
                     <th>Day</th>
                     <th>Time</th>
                     <th>Length</th>
