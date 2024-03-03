@@ -1,18 +1,18 @@
 <template>
             <v-app-bar title="Regional Burn Volunteering" color="primary">
-                <v-btn v-if="userId==''" >
+                <v-btn v-if="userId==''" density="comfortable">
                     <router-link to="/login">Login</router-link>
                 </v-btn>
-                <v-btn v-if="userId!==''" >
+                <v-btn v-if="userId!==''" density="comfortable">
                     <router-link to="/dashboard">Dashboard</router-link>
                 </v-btn>
-                <v-btn >
+                <v-btn density="comfortable">
                     <router-link to="/about">About</router-link>
                 </v-btn>
-                <v-btn >
+                <v-btn density="comfortable">
                     <router-link to="/teams">Teams</router-link>
                 </v-btn>
-                <v-btn @click="logout" >
+                <v-btn @click="logout" density="comfortable">
                     <router-link to="/login">Logout</router-link>
                 </v-btn>
             </v-app-bar>

@@ -1,19 +1,13 @@
 <template>
     <v-row>
         <v-col v-for="team in teams" :key="team">
-            <RouterLink
-            :to="{
-                name: 'team',
-                params: {
-                    teamId: team.id
-                }
-            }"
-            >
                 <TeamCard
                     :name="team.name"
                     :description="team.description"
-                />
-            </RouterLink>
+                    :teamId="team.id"
+                    :isLeadingThisTeam="isLeadingThisTeam(team)"
+                >
+                </TeamCard>
         </v-col>
     </v-row>
 </template>
@@ -40,12 +34,16 @@ export default {
         },
         async load(){
             await this.getTeams()
+        },
+        isLeadingThisTeam(team){
+            return team.leads.includes(this.userId)
+
         }
     },
     computed: {
         userId(){
             return this.userStore.userId
-        }
+        },
     },
 
     async created() {
