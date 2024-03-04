@@ -13,8 +13,8 @@
 </template>
 <script>
 import { initUserStore } from '@/stores/user'
-import { client } from '../../../api-client/client'
-import TeamCard from '../../components/teams/TeamCard.vue'
+import { client } from '../../../../api-client/client'
+import TeamCard from '../components/TeamCard.vue'
 export default {
     name: 'TeamsView',
     components: {

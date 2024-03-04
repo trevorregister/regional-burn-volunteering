@@ -36,8 +36,8 @@
     </div>
 </template>
 <script>
-import { client } from '../../../api-client/client'
-import ShiftTableRow from '../../components/shifts/ShiftTableRow.vue'
+import { client } from '../../../../api-client/client'
+import ShiftTableRow from '../../shifts/components/ShiftTableRow.vue'
 import { initUserStore } from '@/stores/user'
 
 export default {

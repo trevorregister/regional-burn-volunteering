@@ -13,7 +13,7 @@
 </template>
 <script>
 
-import { client } from '../../../api-client/client'
+import { client } from '../../../../api-client/client'
 
 export default {
     props: {

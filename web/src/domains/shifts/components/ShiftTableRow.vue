@@ -18,8 +18,8 @@
     </tr>
 </template>
 <script>
-import { client } from '../../../api-client/client'
-import { initUserStore } from '../../stores/user'
+import { client } from '../../../../api-client/client'
+import { initUserStore } from '../../../stores/user'
 
 export default {
     name: 'ShiftTableRow',

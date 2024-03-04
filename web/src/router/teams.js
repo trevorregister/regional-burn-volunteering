@@ -1,6 +1,6 @@
-import TeamView from '../views/teams/TeamView.vue'
-import TeamsView from '../views/teams/TeamsView.vue'
-import ManageTeamView from '../views/teams/ManageTeamView.vue'
+import TeamView from "@/domains/teams/views/TeamView.vue"
+import TeamsView from "@/domains/teams/views/TeamsView.vue"
+import ManageTeamView from "@/domains/teams/views/ManageTeamView.vue"
 
 const teams = [
     {
