@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'redaxios'
 
 export default class Shifts {
     constructor(API_HOST){
