@@ -44,6 +44,19 @@ module.exports = class UserRepository {
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$set: {role: 'lead'}})
     }
 
+    async getLeads(idArray){
+        const userObjectIds = []
+        idArray.map(id => {
+            if (typeof id === String){//possible that this could take in an array of strings in the future, but currently it's not being used that way.
+                userObjectIds.push(new ObjectId(id))
+            }
+            else {
+                userObjectIds.push(id)
+            }
+        })
+        return await this.db.find({_id: {$in: userObjectIds}})
+    }
+
     async getShifts(id){
         id = new ObjectId(id)
         const shifts = await this.db.aggregate([

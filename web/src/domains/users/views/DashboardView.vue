@@ -25,7 +25,6 @@
             <thead>
                 <tr class="text-left">
                     <th>Name</th>
-                    <th>Description</th>
                     <th>Day</th>
                     <th>Time</th>
                     <th>Length</th>
@@ -53,9 +52,9 @@
     </v-row>
 </template>
 <script>
-import { initUserStore } from '../../stores/user'
-import { client } from '@client'
-import ShiftTableRow from '../../components/shifts/ShiftTableRow.vue'
+import { initUserStore } from '@/stores/user'
+import { client } from '../../../../api-client/client'
+import ShiftTableRow from '../../shifts/components/ShiftTableRow.vue'
 
 export default {
     name: 'DashboardView',
@@ -131,4 +130,4 @@ export default {
         await this.load()
     }
 }
-</script>
+</script>../../../../api-client
