@@ -1,30 +1,36 @@
 <template>
-    <v-row>
-        <v-col v-for="team in teams" :key="team">
-                <TeamCard
-                    :name="team.name"
-                    :description="team.description"
-                    :teamId="team.id"
-                    :isLeadingThisTeam="isLeadingThisTeam(team)"
-                >
-                </TeamCard>
-        </v-col>
-    </v-row>
+    <loading-container :loading="isLoading">
+        <v-row>
+            <v-col v-for="team in teams" :key="team">
+                    <TeamCard
+                        :name="team.name"
+                        :description="team.description"
+                        :teamId="team.id"
+                        :isLeadingThisTeam="isLeadingThisTeam(team)"
+                    >
+                    </TeamCard>
+            </v-col>
+        </v-row>
+    </loading-container>
 </template>
 <script>
 import { initUserStore } from '@/stores/user'
 import { client } from '../../../../api-client/client'
 import TeamCard from '../components/TeamCard.vue'
+import LoadingContainer from '@/domains/shared/LoadingContainer.vue'
+
 export default {
     name: 'TeamsView',
     components: {
-        TeamCard
+        TeamCard,
+        LoadingContainer
     },
     data() {
         return {
             teams: [],
             userStore: initUserStore(),
-            userShifts: []
+            userShifts: [],
+            isLoading: true
         }
     },
     methods: {
@@ -33,7 +39,9 @@ export default {
             this.teams = teams.data
         },
         async load(){
+            this.isLoading = true
             await this.getTeams()
+            this.isLoading = false
         },
         isLeadingThisTeam(team){
             return team.leads.includes(this.userId)
