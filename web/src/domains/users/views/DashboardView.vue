@@ -1,65 +1,69 @@
 <template>
-    <div>
-        <h1>Dashboard</h1>
-        <p>{{ user.name }}</p>
-        <p>{{  user.role  }}</p>
-        <div class="ma-2 pa-2">
-            <h3>Totals</h3>
-            <p>Shifts: {{ totalShiftCount }}</p>
-            <p>Hours: {{ totalHours }}</p>
+    <loading-container :loading="isLoading">
+        <div>
+            <h1>Dashboard</h1>
+            <p>{{ user.name }}</p>
+            <p>{{  user.role  }}</p>
+            <div class="ma-2 pa-2">
+                <h3>Totals</h3>
+                <p>Shifts: {{ totalShiftCount }}</p>
+                <p>Hours: {{ totalHours }}</p>
+            </div>
         </div>
-    </div>
-    <div>
-        <h1>Teams</h1>
-    </div>
-    <v-row class="ma-2 pa-1">
-        <v-list v-for="team in teams" :key="team">
-            <h2>{{ team.name }}</h2>
-        </v-list>
-    </v-row>
-    <div>
-        <h1>Shifts</h1>
-    </div>
-    <v-row class="ma-2 pa-2">
-        <v-table v-if="shifts.length > 0">
-            <thead>
-                <tr class="text-left">
-                    <th>Name</th>
-                    <th>Day</th>
-                    <th>Time</th>
-                    <th>Length</th>
-                    <th>Signups</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-                <tbody>
-                    <ShiftTableRow v-for="shift in shifts" :key="shift"
-                        :name="shift.name"
-                        :description="shift.description"
-                        :start="shift.start"
-                        :end="shift.end"
-                        :duration="shift.duration"
-                        :signups="shift.signups ?? 0"
-                        :capacity="shift.capacity"
-                        :id="shift.id"
-                        :day="shift.day"
-                        :button="sendButton(shift)"
-                        @unsignup="unsignup"
-                        />
-                </tbody>
-        </v-table>
-        <h2 v-else>Signup for some shifts ya slacker</h2>
-    </v-row>
+        <div>
+            <h1>Teams</h1>
+        </div>
+        <v-row class="ma-2 pa-1">
+            <v-list v-for="team in teams" :key="team">
+                <h2>{{ team.name }}</h2>
+            </v-list>
+        </v-row>
+        <div>
+            <h1>Shifts</h1>
+        </div>
+        <v-row class="ma-2 pa-2">
+            <v-table v-if="shifts.length > 0">
+                <thead>
+                    <tr class="text-left">
+                        <th>Name</th>
+                        <th>Day</th>
+                        <th>Time</th>
+                        <th>Length</th>
+                        <th>Signups</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                        <ShiftTableRow v-for="shift in shifts" :key="shift"
+                            :name="shift.name"
+                            :description="shift.description"
+                            :start="shift.start"
+                            :end="shift.end"
+                            :duration="shift.duration"
+                            :signups="shift.signups ?? 0"
+                            :capacity="shift.capacity"
+                            :id="shift.id"
+                            :day="shift.day"
+                            :button="sendButton(shift)"
+                            @unsignup="unsignup"
+                            />
+                    </tbody>
+            </v-table>
+            <h2 v-else>Signup for some shifts ya slacker</h2>
+        </v-row>
+    </loading-container>
 </template>
 <script>
 import { initUserStore } from '@/stores/user'
 import { client } from '../../../../api-client/client'
 import ShiftTableRow from '../../shifts/components/ShiftTableRow.vue'
+import LoadingContainer from '@/domains/shared/LoadingContainer.vue'
 
 export default {
     name: 'DashboardView',
     components: {
-        ShiftTableRow
+        ShiftTableRow,
+        LoadingContainer
     },
     data() {
         return {
@@ -67,7 +71,8 @@ export default {
             userStore: initUserStore(),
             shifts: [],
             teams: [],
-            buttons: []
+            buttons: [],
+            isLoading: true
         }
     },
     methods: {
@@ -90,6 +95,7 @@ export default {
             return buttonToSend
         },
         async load() {
+            this.isLoading = true
             if(this.userId === ''){
                 alert('You need to log in first.')
                 this.$router.push({path: '/login'})
@@ -102,6 +108,7 @@ export default {
             this.teams = teamsResponse.data
 
             this.buildButtons()
+            this.isLoading = false
         },
         unsignup: function(shiftId){
             this.shifts = this.shifts.filter(shift => {
@@ -130,4 +137,4 @@ export default {
         await this.load()
     }
 }
-</script>../../../../api-client
+</script>
