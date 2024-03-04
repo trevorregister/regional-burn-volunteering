@@ -1,8 +1,17 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ],
+    "baseUrl": "./",
+    "moduleResolution": "node"
   },
   "exclude": ["node_modules", "dist"]
 }

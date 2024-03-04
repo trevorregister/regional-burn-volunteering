@@ -40,7 +40,7 @@
 
 <script>
 import { initUserStore } from '@/stores/user'
-import { client } from '../../api-client/client'
+import { client } from '../../../../api-client/client'
 
 export default {
   name: 'CreateAccountView',
@@ -80,4 +80,4 @@ export default {
 </script>
 <style lang="scss" scoped>
 
-</style>
+</style>../../../../api-client

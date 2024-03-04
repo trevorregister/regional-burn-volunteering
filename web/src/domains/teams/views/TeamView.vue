@@ -36,8 +36,8 @@
     </div>
 </template>
 <script>
-import { client } from '@client'
-import ShiftTableRow from '../../components/shifts/ShiftTableRow.vue'
+import { client } from '../../../../api-client/client'
+import ShiftTableRow from '../../shifts/components/ShiftTableRow.vue'
 import { initUserStore } from '@/stores/user'
 
 export default {
@@ -125,4 +125,4 @@ export default {
             background-color: rgb(193, 193, 255);
         }
     }
-</style>
+</style>../../../../api-client

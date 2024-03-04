@@ -1,26 +1,20 @@
 <template>
     <v-row>
         <v-col v-for="team in teams" :key="team">
-            <RouterLink
-            :to="{
-                name: 'team',
-                params: {
-                    teamId: team.id
-                }
-            }"
-            >
                 <TeamCard
                     :name="team.name"
                     :description="team.description"
-                />
-            </RouterLink>
+                    :teamId="team.id"
+                    :isLeadingThisTeam="isLeadingThisTeam(team)"
+                >
+                </TeamCard>
         </v-col>
     </v-row>
 </template>
 <script>
 import { initUserStore } from '@/stores/user'
-import { client } from '../../../api-client/client'
-import TeamCard from '../../components/teams/TeamCard.vue'
+import { client } from '../../../../api-client/client'
+import TeamCard from '../components/TeamCard.vue'
 export default {
     name: 'TeamsView',
     components: {
@@ -40,16 +34,20 @@ export default {
         },
         async load(){
             await this.getTeams()
+        },
+        isLeadingThisTeam(team){
+            return team.leads.includes(this.userId)
+
         }
     },
     computed: {
         userId(){
             return this.userStore.userId
-        }
+        },
     },
 
     async created() {
         await this.load()
     }
 }
-</script>
+</script>../../../../api-client

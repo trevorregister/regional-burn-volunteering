@@ -1,6 +1,6 @@
-import LoginView from '../views/LoginView.vue'
-import CreateAccountView from '../views/CreateAccountView.vue'
-import DashboardView from '../views/users/DashboardView.vue'
+import LoginView from '@/domains/users/views/LoginView.vue'
+import CreateAccountView from '@/domains/users/views/CreateAccountView.vue'
+import DashboardView from '@/domains/users/views/DashboardView.vue'
 
 const root = [     
     {
@@ -14,7 +14,7 @@ const root = [
         // route level code-splitting
         // this generates a separate chunk (About.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import('../views/AboutView.vue')
+        component: () => import('../domains/shared/AboutView.vue')
     },
     {
         path: '/create-account',
