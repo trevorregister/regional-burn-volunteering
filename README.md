@@ -8,7 +8,8 @@ https://miro.com/app/board/uXjVNS-_818=/
 https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=0-1&mode=design&t=y8NArxcAoQL9WEcW-0
 
 ## Setup
-1. Run `npm i` in a terminal from /api, /api-client, and /web.
+0. Get an .env file from me
+1. Run `npm i` in a terminal from /api and /web.
 2. `npm start` in one terminal from /api
 3. `npm run dev` in another terminal from /web
 
@@ -39,4 +40,4 @@ https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=
 
 ### Refactors
 * return `.data` so that you don't have to do it for every call within web. Example: `users = client.users.getUsers()` requires to then to `users.data`. 
-* after refactoring shift conflict in api, only give warning when conflict occurrs.
+* after refactoring shift conflict in api, only give warning when conflict occurs.
