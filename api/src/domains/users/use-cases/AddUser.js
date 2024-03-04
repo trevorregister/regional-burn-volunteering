@@ -14,7 +14,7 @@ module.exports = (repository) => {
         const hash = await bcrypt.hash(password, 10)
         const newUserData = new User(name, email, role, hash) 
         const newUser = await repository.create(newUserData)
-        if(!leadershipKeyValue) {
+        if(leadershipKeyValue === ' ') {
             return newUser
         }
         else{

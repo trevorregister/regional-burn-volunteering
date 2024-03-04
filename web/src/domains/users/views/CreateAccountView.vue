@@ -49,7 +49,7 @@ export default {
       email: '',
       password: '',
       name: '',
-      leadershipKeyValue: null,
+      leadershipKeyValue: ' ',
       userStore: initUserStore()
     }
   },
