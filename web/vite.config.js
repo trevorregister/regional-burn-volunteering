@@ -12,7 +12,7 @@ import { fileURLToPath, URL } from 'node:url'
 export default defineConfig(({mode}) =>{
   const API_HOST = (mode === 'development')
   ? "http://localhost:3000/api"
-  : "abc/api"
+  : "https://regional-burn-volunteering-api.onrender.com/api"
 
   return{
     plugins: [
