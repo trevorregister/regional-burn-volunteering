@@ -41,6 +41,11 @@ export default {
             type: Number
         },
     },
+    watch: {
+        shiftSignups() {
+            return this.signups
+        }
+    }
 }
 </script>
 <style>

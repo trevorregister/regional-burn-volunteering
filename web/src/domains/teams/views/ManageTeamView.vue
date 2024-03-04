@@ -12,7 +12,7 @@
                     <th>Time</th>
                     <th>Length</th>
                     <th>Signups</th>
-                    <th>Mana</th>
+                    <th>Manage</th>
                 </tr>
             </thead>
                 <tbody>
@@ -37,6 +37,9 @@ import { client } from '../../../../api-client/client'
 
 export default {
     name: 'ManageTeamView',
+    components: {
+        ManageShiftTableRow
+    },
     props: {
         teamId: {
             type: String
