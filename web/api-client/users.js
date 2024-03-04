@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'redaxios'
 
 export default class Users {
     constructor(API_HOST){
