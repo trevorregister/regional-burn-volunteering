@@ -50,4 +50,4 @@ export default {
         await this.load()
     }
 }
-</script>
+</script>../../../../api-client

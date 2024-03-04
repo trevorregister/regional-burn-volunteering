@@ -108,4 +108,4 @@ export default {
         },
     }
 }
-</script>
+</script>../../../../api-client

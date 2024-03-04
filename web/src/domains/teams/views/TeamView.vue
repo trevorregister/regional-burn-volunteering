@@ -125,4 +125,4 @@ export default {
             background-color: rgb(193, 193, 255);
         }
     }
-</style>
+</style>../../../../api-client
