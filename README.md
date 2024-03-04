@@ -28,6 +28,7 @@ https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=
 * controller -> use-case -> repo object destructuring to be consistent across the app. Look at AddLead use case as example.
 * update use-cases to patch only text fields (name, description, etc)
 * remove shift conflict from preventing signup. move function to individual route?
+* non-leadership account signup. borked due to leadershipKey issues, fixed via duct-tape with a recent commit.
 
 ### Web
 
