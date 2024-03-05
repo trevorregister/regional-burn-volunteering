@@ -96,10 +96,6 @@ export default {
         },
         async load() {
             this.isLoading = true
-            if(this.userId === ''){
-                alert('You need to log in first.')
-                this.$router.push({path: '/login'})
-            }
             const user = await client.users.getUserById(this.userId)
             this.user = user.data
             const shifts = await client.users.getShifts(this.userId)
