@@ -2,20 +2,29 @@ import { defineStore } from 'pinia';
 
 export const initUserStore = defineStore('user', {
   state: () => ({
-    isAuthenticated: false,
-    userId: null
+    token: localStorage.getItem('token') ?? '',
+    userId: localStorage.getItem('userId') ?? ''
   }),
   actions: {
-
+    setToken(token) {
+      this.token = token
+      localStorage.setItem('token', token)
+    },
     setId(userId) {
       this.userId = userId
+      localStorage.setItem('userId', userId)
     },
-    authenticate(){
-      this.isAuthenticated = true
+    setRole(role) {
+      this.role = role
+      localStorage.setItem('role', role)
     },
     clearUser() {
-      this.userId = null
-      this.isAuthenticated = false
+      this.token = ''
+      this.userId = ''
+
+      localStorage.removeItem('token')
+      localStorage.removeItem('userId')
+      localStorage.removeItem('role')
     }
   }
 });
