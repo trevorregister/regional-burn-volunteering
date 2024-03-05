@@ -96,16 +96,12 @@ export default {
         },
         async load() {
             this.isLoading = true
-            if(this.userId === ''){
-                alert('You need to log in first.')
-                this.$router.push({path: '/login'})
-            }
-            const userResponse = await client.users.getUserById(this.userId)
-            this.user = userResponse.data
-            const shiftsResponse = await client.users.getShifts(this.userId)
-            this.shifts = shiftsResponse.data
-            const teamsResponse = await client.users.getTeams(this.userId)
-            this.teams = teamsResponse.data
+            const user = await client.users.getUserById(this.userId)
+            this.user = user.data
+            const shifts = await client.users.getShifts(this.userId)
+            this.shifts = shifts.data
+            const teams = await client.users.getTeams(this.userId)
+            this.teams = teams.data
 
             this.buildButtons()
             this.isLoading = false

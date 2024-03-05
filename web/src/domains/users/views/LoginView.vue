@@ -49,9 +49,8 @@ export default {
         password: this.password
       })
       
-      this.userStore.setToken(login.data.token)
       this.userStore.setId(login.data.user.id)
-      this.userStore.setRole(login.data.role)
+      this.userStore.authenticate()
       this.$router.push({path: '/dashboard'})
 
     },
@@ -63,4 +62,4 @@ export default {
 </script>
 <style lang="scss" scoped>
 
-</style>../../../../api-client
+</style>
