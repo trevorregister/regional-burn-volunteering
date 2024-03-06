@@ -47,7 +47,6 @@ module.exports = class ShiftRepository {
     }
 
     async getShiftsByTeam(teamId){
-        /* return await this.db.find({team: new ObjectId(teamId)}) */
         return await this.db.aggregate([
             {
                 $match:

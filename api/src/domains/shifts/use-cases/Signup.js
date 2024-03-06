@@ -36,6 +36,7 @@ module.exports = (repository) => {
             await repository.incrementShift(shiftId),
             await repository.addMember(shiftId, userId),
             await userService.addShift(userId, shiftId),
+            await userService.addTeam(userId, shift.team),
             await teamService.addMember(shift.team, userId)
         ])
 
