@@ -6,7 +6,6 @@ const {
     GetShifts,
     GetTeams,
     PromoteUserToLead,
-    GetUsersById
 } = require('./use-cases/_index')
 
 const UserDTO = require('./dto')
@@ -30,19 +29,6 @@ module.exports = (repository) => {
             const { id } = req.params
             const user = await getUserByIdCase.execute(id)
             res.status(200).send(UserDTO.toWeb(user))
-        } catch (err) {
-            next(err)
-        }
-    }
-
-    const getUsersById = async (req, res, next) => {
-        try {
-            const getUsersByIdCase = GetUsersById(repository)
-            const idArray = req.query.idQuery.split(',')
-            const usersData = []
-            const users = await getUsersByIdCase.execute(idArray)
-            users.map(user => usersData.push(UserDTO.toWeb(user)))
-            res.status(200).send(usersData)
         } catch (err) {
             next(err)
         }
@@ -122,7 +108,6 @@ module.exports = (repository) => {
         getShifts,
         getTeams,
         promoteUserToLead,
-        getUsersById
     }
 }
 
