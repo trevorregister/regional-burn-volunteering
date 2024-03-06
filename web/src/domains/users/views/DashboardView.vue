@@ -17,7 +17,7 @@
                 <h2>{{ team.name }}</h2>
                 <shift-table
                     @shift-action="load"
-                    :shifts="filterShiftsforTeam(team.id)"
+                    :shifts="filterShiftsForTeam(team.id)"
                     :userShifts="shifts"/>
             </v-container>
         </v-row>
@@ -52,7 +52,7 @@ export default {
             const shifts = await client.users.getShifts(this.userStore.userId)
             this.shifts = shifts.data
         },
-        filterShiftsforTeam(teamId){
+        filterShiftsForTeam(teamId){
             return this.shifts.filter(shift => shift.team === teamId)
         },
         async load() {
