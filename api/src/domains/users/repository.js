@@ -16,6 +16,11 @@ module.exports = class UserRepository {
         return await this.db.findById({_id: new ObjectId(id) })
     }
 
+    async getUsersById(idArray){
+        const ids = idArray.map(id => new ObjectId(id))
+        return await this.db.find({_id: {$in: ids}})
+    }
+
     async addShift(id, shiftId){
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$push: {shifts: new ObjectId(shiftId)}})
     }
