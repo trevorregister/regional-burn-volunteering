@@ -45,12 +45,8 @@ export default {
         },
         userShifts: {
             type: Array,
-            required: true,
+            required: true
         },
-        forceManageButton: {
-            type: Boolean,
-            default: false
-        }
     },
     components: {
         ShiftTableRow,
@@ -65,14 +61,7 @@ export default {
     },
     methods: {
         buildButton(shift){
-            if(this.forceManageButton){
-                return {
-                    id: shift.id,
-                    label: 'Manage',
-                    action: 'manage'
-                }
-            }
-            else if (this.userShifts.some(userShift => userShift.id === shift.id)) {
+            if (this.userShifts.some(userShift => userShift.id === shift.id)) {
                 return {
                     id: shift.id,
                     label: 'Unsignup',

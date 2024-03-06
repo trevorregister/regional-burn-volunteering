@@ -10,7 +10,6 @@ const userRoutes = () => {
     const router = express.Router()
     const controller = UserController(repository)
 
-    router.get('/get-users-by-id', controller.getUsersById)
     router.get('/', controller.getUsers)
     router.get('/:id', controller.getUserById)
     router.get('/:id/shifts', controller.getShifts)
