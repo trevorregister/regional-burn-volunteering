@@ -47,7 +47,7 @@ module.exports = class ShiftRepository {
     }
 
     async getMembers(id){
-        return await this.db.aggregate([
+        const members =  await this.db.aggregate([
             {
                 $match:
                 {
@@ -66,10 +66,13 @@ module.exports = class ShiftRepository {
             {
                 $project:
                 {
-                    members: 1
+                    members: 1,
+                    _id: 0
                 }
-            }
+            },
         ])
+
+        return members[0].members.sort((a, b) => a.name.localeCompare(b.name))
     }
 
     async getShiftsByTeam(teamId){
