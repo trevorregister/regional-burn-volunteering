@@ -1,8 +1,6 @@
 <template>
     <loading-container :loading="false">
-    <div>
-        <h1>Shifts</h1>
-        <v-row>
+        <v-container>
             <v-table>
             <thead>
                 <tr class="text-left">
@@ -29,9 +27,8 @@
                         :button="buildButton(shift)"
                         />
                 </tbody>
-        </v-table>
-        </v-row>
-    </div>
+            </v-table>
+        </v-container>
 </loading-container>
 </template>
 <script>

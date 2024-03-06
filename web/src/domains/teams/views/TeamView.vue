@@ -54,7 +54,6 @@ export default {
 
     },
     async created() {
-        console.log('shift-action')
         await this.load()
     }
 }
