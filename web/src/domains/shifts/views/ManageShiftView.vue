@@ -37,8 +37,7 @@ export default {
             console.log('shift', this.shift)
         },
         async getMembers(){
-            console.log('shift member', this.shift.members, typeof this.shift.members)
-            const members = await client.users.getUsersById(this.shift.members)
+            const members = await client.shifts.getMembers(this.shiftId)
             this.members = members.data
         },
         async load(){

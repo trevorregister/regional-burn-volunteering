@@ -3,9 +3,11 @@ const {
     GetShiftById,
     UpdateShift,
     Signup,
-    Unsignup
+    Unsignup,
+    GetMembers
 } = require('./use-cases/_index')
 const ShiftDTO = require('./dto')
+const UserDTO = require('../users/dto')
 
 module.exports = (repository) => {
 
@@ -24,6 +26,20 @@ module.exports = (repository) => {
             const getShiftByIdCase = GetShiftById(repository)
             const shift = await getShiftByIdCase.execute(req.params.id)
             res.status(200).send(ShiftDTO.toWeb(shift))
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    const getMembers = async (req, res, next) => {
+        try {
+            const getMembersCase = GetMembers(repository)
+            const { id } = req.params
+            const members = await getMembersCase.execute(id)
+            const membersArray = []
+  /*           members.map(member => membersArray.push(UserDTO.toWeb(member))) */
+            members.forEach(member => member = UserDTO.toWeb(member))
+            res.status(200).send(members)
         } catch (err) {
             next(err)
         }
@@ -71,7 +87,8 @@ module.exports = (repository) => {
         getShiftById,
         updateShift,
         signup,
-        unsignup
+        unsignup,
+        getMembers
     }
 }
 
