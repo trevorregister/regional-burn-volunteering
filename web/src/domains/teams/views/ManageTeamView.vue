@@ -32,13 +32,12 @@
 </template>
 <script>
 
-import ManageShiftTableRow from '@/domains/shifts/components/ManageShiftTableRow.vue'
 import { client } from '../../../../api-client/client'
 
 export default {
     name: 'ManageTeamView',
     components: {
-        ManageShiftTableRow
+        
     },
     props: {
         teamId: {

@@ -1,6 +1,6 @@
 <template>
     <v-btn 
-    @click="shiftAction(button.action)"
+    @click="shiftAction(button.action, button.id)"
     :disabled="button.action === 'none'"
     >
         {{ button.label }}
@@ -18,9 +18,8 @@ export default {
         }
     },
     methods: {
-        shiftAction(action) {
-            console.log('button', action)
-            this.$emit('shift-action', action)
+        shiftAction(action, shiftId) {
+            this.$emit('shift-action', action, shiftId)
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <loading-container :loading="isLoading">
+    <loading-container :loading="false">
         <div>
             <h1>{{ team.name }}</h1>
             <p>{{ team.description }}</p>
@@ -76,47 +76,78 @@ export default {
         async getUserShifts(){
             const shifts = await client.users.getShifts(this.userStore.userId)
             this.userShifts = shifts.data
-
         },
         buildButton(shift){
-            if(shift.capacity === shift.signups){
+            if (this.userShifts.some(userShift => userShift.id === shift.id)) {
                 return {
+                    id: shift.id,
+                    label: 'Unsignup',
+                    action: 'unsignup'
+                }
+            }
+            else if(shift.capacity === shift.signups){
+                return {
+                    id: shift.id,
                     label: 'Full',
                     action: 'none'
                 }
             }
-            else if (this.userShifts.some(userShift => userShift.id === shift.id)) {
+            else {
                 return {
-                    label: 'Unsignup',
-                    action: 'unsignup'
-                }
-            } else {
-                return {
+                    id: shift.id,
                     label: 'Sign Up',
                     action: 'signup'
                 }
             }
         },
-        shiftAction(action){
-            console.log('team view', action)
+        async shiftAction(action, shiftId){
+            switch(action){
+                case 'signup':
+                    await this.signup(shiftId)
+                    break
+                case 'unsignup':
+                    await this.unsignup(shiftId)
+                    break
+                default:
+                    break
+            }
+            await this.load()
+        },
+        async signup(shiftId){
+            this.isLoading = true
+            await client.shifts.signup({
+                id: shiftId, 
+                userId: this.userStore.userId
+            })
+            this.isLoading = false
+        },
+        async unsignup(shiftId){
+            this.isLoading = true
+            await client.shifts.unsignup({
+                id: shiftId, 
+                userId: this.userStore.userId
+            })
+            this.isLoading = false
+
         },
         async load() {
-            this.isLoading = true
+
             await Promise.all([
                 await this.getTeamById(this.teamId),
+                await this.getUserShifts(),
                 await this.getTeamShifts(this.teamId),
-                await this.getUserShifts()
             ])
-            this.isLoading = false
         },
     },
     async created() {
         await this.load()
+
+
     }
 }
 </script>
 <style lang="scss">
-    tr {
+    tbody tr {
         &:hover {
             background-color: rgb(193, 193, 255);
         }

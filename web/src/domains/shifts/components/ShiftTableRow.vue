@@ -72,9 +72,8 @@ export default {
         }
     },
     methods: {
-        handleShiftAction(action) {
-            console.log('row', action)
-            this.$emit('shift-action', action)
+        handleShiftAction(action, shiftId) {
+            this.$emit('shift-action', action, shiftId)
         }
     }
 }
