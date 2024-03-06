@@ -1,5 +1,8 @@
 <template>
-    <v-btn @click="shiftAction(button.action)">
+    <v-btn 
+    @click="shiftAction(button.action)"
+    :disabled="button.action === 'none'"
+    >
         {{ button.label }}
     </v-btn>
 </template>

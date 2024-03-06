@@ -79,14 +79,26 @@ export default {
 
         },
         buildButton(shift){
-            console.log(shift.id)
-            return {
-                label: 'Sign Up',
-                action: 'signup'
+            if(shift.capacity === shift.signups){
+                return {
+                    label: 'Full',
+                    action: 'none'
+                }
+            }
+            else if (this.userShifts.some(userShift => userShift.id === shift.id)) {
+                return {
+                    label: 'Unsignup',
+                    action: 'unsignup'
+                }
+            } else {
+                return {
+                    label: 'Sign Up',
+                    action: 'signup'
+                }
             }
         },
-        shiftAction(){
-            console.log('action')
+        shiftAction(action){
+            console.log('team view', action)
         },
         async load() {
             this.isLoading = true
