@@ -5,25 +5,23 @@
         <td>{{ start }} - {{ end }}</td>
         <td>{{ duration }} hours</td>
         <td>{{  shiftSignups }}/{{ capacity }}</td>
-        <td v-if="userId !== ''">
-            <v-btn v-if="userButton.isSignedUp" @click="unsignup">Unsignup</v-btn>
-            <v-btn v-else-if="shiftSignups >= capacity" :disabled="true">Full</v-btn>
-            <v-btn v-else-if="!userButton.isSignedUp" @click="signup">Signup</v-btn>
-        </td>
-        <td v-else>
-            <v-btn>
-                <RouterLink to="/login">Login</RouterLink>
-            </v-btn>
+        <td>
+            <shift-action-button
+            :button="button"
+            @shift-action="handleShiftAction"/>
         </td>
     </tr>
 </template>
 <script>
-import { client } from '../../../../api-client/client'
 import { initUserStore } from '../../../stores/user'
+import ShiftActionButton from './ShiftActionButton.vue'
 
 export default {
     name: 'ShiftTableRow',
-    emits: ['unsignup'],
+    emits: ['shift-action'],
+    components: {
+        ShiftActionButton
+    },
     data (){
         return{
             shiftId: this.id,
@@ -33,79 +31,51 @@ export default {
     },
     props: {
         id: {
-            type: String
+            type: String,
+            required: true
         },
         name: {
-            type: String
+            type: String,
+            required: true
         },
         description: {
-            type: String
+            type: String,
+            required: true
         },
         start: {
-            type: String
+            type: String,
+            required: true
         },
         end: {
-            type: String
+            type: String,
+            required: true
         },
         day: {
-            type: String
+            type: String,
+            required: true
         },
         duration: {
-            type: Number
+            type: Number,
+            required: true
         },
         signups: {
-            type: Number
+            type: Number,
+            required: true
         },
         capacity: {
-            type: Number
+            type: Number,
+            required: true
         },
         button: {
-            Object
+            type: Object,
+            required: true
         }
     },
     methods: {
-        async signup(){
-            try{
-                await client.shifts.signup({
-                    id: this.shiftId,
-                    userId: this.userId
-                })
-                this.shiftSignups++
-                !this.isUserSignedUp
-            }
-            catch(err){
-                return null
-            }
-        },
-        async unsignup(){
-            try{
-                await client.shifts.unsignup({
-                    id: this.shiftId,
-                    userId: this.userId
-                })
-                this.shiftSignups--
-                await this.$emit('unsignup', this.shiftId)
-            }
-            catch(err){
-                return null
-            }
+        handleShiftAction(action) {
+            console.log('row', action)
+            this.$emit('shift-action', action)
         }
-    },
-    computed: {
-        userId() {
-            return this.userStore.userId
-        },
-        userButton(){
-            return this.button ? this.button : 'no'
-        },
-        isFull() {
-            return this.signups >= this.capacity
-        },
-    },
-    watch: {
-        shiftSignups() {
-            return this.signups
-        },
     }
 }
-</script>../../../../api-client
+</script>

@@ -1,28 +1,13 @@
 <template>
     <loading-container :loading="isLoading">
         <div>
-            <h1>Dashboard</h1>
-            <p>{{ user.name }}</p>
-            <p>{{  user.role  }}</p>
-            <div class="ma-2 pa-2">
-                <h3>Totals</h3>
-                <p>Shifts: {{ totalShiftCount }}</p>
-                <p>Hours: {{ totalHours }}</p>
-            </div>
+            <h1>{{ team.name }}</h1>
+            <p>{{ team.description }}</p>
         </div>
-        <div>
-            <h1>Teams</h1>
-        </div>
-        <v-row class="ma-2 pa-1">
-            <v-list v-for="team in teams" :key="team">
-                <h2>{{ team.name }}</h2>
-            </v-list>
-        </v-row>
         <div>
             <h1>Shifts</h1>
-        </div>
-        <v-row class="ma-2 pa-2">
-            <v-table v-if="shifts.length > 0">
+            <v-row>
+                <v-table>
                 <thead>
                     <tr class="text-left">
                         <th>Name</th>
@@ -30,13 +15,12 @@
                         <th>Time</th>
                         <th>Length</th>
                         <th>Signups</th>
-                        <th>Actions</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                     <tbody>
                         <ShiftTableRow v-for="shift in shifts" :key="shift"
                             :name="shift.name"
-                            :description="shift.description"
                             :start="shift.start"
                             :end="shift.end"
                             :duration="shift.duration"
@@ -44,47 +28,79 @@
                             :capacity="shift.capacity"
                             :id="shift.id"
                             :day="shift.day"
+                            @click="shiftAction(shift)"
                             :button="sendButton(shift)"
-                            @unsignup="unsignup"
                             />
                     </tbody>
             </v-table>
-            <h2 v-else>Signup for some shifts ya slacker</h2>
-        </v-row>
+            </v-row>
+        </div>
     </loading-container>
 </template>
 <script>
-import { initUserStore } from '@/stores/user'
 import { client } from '../../../../api-client/client'
 import ShiftTableRow from '../../shifts/components/ShiftTableRow.vue'
+import { initUserStore } from '@/stores/user'
 import LoadingContainer from '@/domains/shared/LoadingContainer.vue'
 
 export default {
-    name: 'DashboardView',
+    props: ['teamId'],
     components: {
         ShiftTableRow,
         LoadingContainer
-    },
+    }
+        ,
     data() {
         return {
-            user: {},
-            userStore: initUserStore(),
+            team: {},
             shifts: [],
-            teams: [],
+            userShiftIds: [],
+            userShifts: [],
+            userStore: initUserStore(),
             buttons: [],
             isLoading: true
         }
     },
     methods: {
+        async getTeamById(teamId){
+            const team = await client.teams.getTeamById(teamId)
+            this.team = team.data
+        },
+        async getTeamShifts(teamId){
+            const shifts = await client.teams.getShifts(teamId)
+            this.shifts = shifts.data
+        },
+        async getUserShifts(){
+            const userShiftIds = []
+            const shifts = await client.users.getShifts(this.userStore.userId)
+            shifts.data.map(shift => userShiftIds.push(shift.id))
+
+            this.userShiftIds = userShiftIds
+            this.userShifts = shifts.data
+
+        },
+        isUserSignedUp(shiftId){
+            return this.userShiftIds.includes(shiftId)
+        },
         buildButtons(){
             this.shifts.map(shift => {
                 this.buttons.push({
                     shiftId: shift.id,
-                    isFull: false,
+                    isFull: this.signups >= this.capacity,
                     isConflict: false,
-                    isSignedUp: true
+                    isSignedUp: this.isUserSignedUp(shift.id)
                 })
             })
+            
+        },
+        shiftAction(shift){
+            let foundButton = this.buttons.find( (button) => {
+                if(button.shiftId === shift.id){
+                    return {...button, id: button.id, isSignedUp: button.isSignedUp}
+                }    
+            })
+
+            foundButton.isSignedUp = !foundButton.isSignedUp
         },
         sendButton(shift){
             const buttonToSend = this.buttons.find( (button) => {
@@ -96,41 +112,24 @@ export default {
         },
         async load() {
             this.isLoading = true
-            const user = await client.users.getUserById(this.userId)
-            this.user = user.data
-            const shifts = await client.users.getShifts(this.userId)
-            this.shifts = shifts.data
-            const teams = await client.users.getTeams(this.userId)
-            this.teams = teams.data
-
+            await Promise.all([
+                await this.getTeamById(this.teamId),
+                await this.getTeamShifts(this.teamId),
+                await this.getUserShifts()
+            ])
             this.buildButtons()
             this.isLoading = false
         },
-        unsignup: function(shiftId){
-            this.shifts = this.shifts.filter(shift => {
-                return shift.id != shiftId
-            })
-        }
-        
     },
-    computed: {
-        userId() {
-            return this.userStore.userId
-        },
-        token() {
-            return this.userStore.token
-        },
-        totalShiftCount(){
-            return this.shifts.length
-        },
-        totalHours(){
-            return this.shifts.reduce( (total, shift) => {
-                return total + shift.duration
-             }, 0)
-        }
-    },
-    async created(){
+    async created() {
         await this.load()
     }
 }
-</script>../../shifts/components/ShiftTableRowOld.vue
+</script>
+<style lang="scss">
+    tr {
+        &:hover {
+            background-color: rgb(193, 193, 255);
+        }
+    }
+</style>../../../../api-client../../shifts/components/ShiftTableRowOld.vue

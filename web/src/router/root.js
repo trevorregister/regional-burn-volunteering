@@ -2,12 +2,18 @@ import LoginView from '@/domains/users/views/LoginView.vue'
 import CreateAccountView from '@/domains/users/views/CreateAccountView.vue'
 import DashboardView from '@/domains/users/views/DashboardView.vue'
 import HomeView from '@/domains/shared/HomeView.vue'
+import ParentComp from '@/domains/shifts/testing/ParentComp.vue'
 
-const root = [     
+const root = [   
     {
         path: '/',
         name: 'HomeView',
         component: HomeView
+    },
+    {
+        path: '/test',
+        name: 'ParentComp',
+        component: ParentComp
     },
     {
         path: '/login',
