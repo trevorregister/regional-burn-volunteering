@@ -15,14 +15,19 @@
             <h1>
                 Members
             </h1>
-            <p v-for="member in members" :key="member">{{ member }}</p>
+                <user-table-row v-for="member in members" :key="member"
+                    :user="member"/>
         </div>
     </v-container>
 </template>
 <script>
 import { client } from '../../../../api-client/client'
+import UserTableRow from '../../users/components/UserTableRow.vue'
 export default {
     name: 'ManageShiftView',
+    components: {
+        UserTableRow
+    },
     data(){
         return {
             shiftId: this.$route.params.shiftId,
@@ -34,7 +39,6 @@ export default {
         async getShift(){
             const shift = await client.shifts.getShiftById(this.shiftId)
             this.shift = shift.data
-            console.log('shift', this.shift)
         },
         async getMembers(){
             const members = await client.shifts.getMembers(this.shiftId)
