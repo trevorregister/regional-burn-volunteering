@@ -1,5 +1,5 @@
 <template>
-    <loading-container :loading="isLoading">
+    <loading-container :loading="false">
         <div>
             <h1>{{ team.name }}</h1>
             <p>{{ team.description }}</p>
@@ -19,17 +19,18 @@
                     </tr>
                 </thead>
                     <tbody>
-                        <ShiftTableRow v-for="shift in shifts" :key="shift"
+                        <shift-table-row v-for="shift in shifts" :key="shift"
+                            @shift-action="shiftAction"
                             :name="shift.name"
                             :start="shift.start"
                             :end="shift.end"
                             :duration="shift.duration"
+                            :description="shift.description"
                             :signups="shift.signups ?? 0"
                             :capacity="shift.capacity"
                             :id="shift.id"
                             :day="shift.day"
-                            @click="shiftAction(shift)"
-                            :button="sendButton(shift)"
+                            :button="shift.button"
                             />
                     </tbody>
             </v-table>
@@ -54,10 +55,8 @@ export default {
         return {
             team: {},
             shifts: [],
-            userShiftIds: [],
             userShifts: [],
             userStore: initUserStore(),
-            buttons: [],
             isLoading: true
         }
     },
@@ -67,69 +66,90 @@ export default {
             this.team = team.data
         },
         async getTeamShifts(teamId){
-            const shifts = await client.teams.getShifts(teamId)
-            this.shifts = shifts.data
+            let shifts = await client.teams.getShifts(teamId)
+            shifts = shifts.data
+            shifts.map(shift => {
+                shift.button = this.buildButton(shift)
+            })
+            this.shifts = shifts
         },
         async getUserShifts(){
-            const userShiftIds = []
             const shifts = await client.users.getShifts(this.userStore.userId)
-            shifts.data.map(shift => userShiftIds.push(shift.id))
-
-            this.userShiftIds = userShiftIds
             this.userShifts = shifts.data
+        },
+        buildButton(shift){
+            if (this.userShifts.some(userShift => userShift.id === shift.id)) {
+                return {
+                    id: shift.id,
+                    label: 'Unsignup',
+                    action: 'unsignup'
+                }
+            }
+            else if(shift.capacity === shift.signups){
+                return {
+                    id: shift.id,
+                    label: 'Full',
+                    action: 'none'
+                }
+            }
+            else {
+                return {
+                    id: shift.id,
+                    label: 'Sign Up',
+                    action: 'signup'
+                }
+            }
+        },
+        async shiftAction(action, shiftId){
+            switch(action){
+                case 'signup':
+                    await this.signup(shiftId)
+                    break
+                case 'unsignup':
+                    await this.unsignup(shiftId)
+                    break
+                default:
+                    break
+            }
+            await this.load()
+        },
+        async signup(shiftId){
+            this.isLoading = true
+            await client.shifts.signup({
+                id: shiftId, 
+                userId: this.userStore.userId
+            })
+            this.isLoading = false
+        },
+        async unsignup(shiftId){
+            this.isLoading = true
+            await client.shifts.unsignup({
+                id: shiftId, 
+                userId: this.userStore.userId
+            })
+            this.isLoading = false
 
-        },
-        isUserSignedUp(shiftId){
-            return this.userShiftIds.includes(shiftId)
-        },
-        buildButtons(){
-            this.shifts.map(shift => {
-                this.buttons.push({
-                    shiftId: shift.id,
-                    isFull: this.signups >= this.capacity,
-                    isConflict: false,
-                    isSignedUp: this.isUserSignedUp(shift.id)
-                })
-            })
-            
-        },
-        shiftAction(shift){
-            let foundButton = this.buttons.find( (button) => {
-                if(button.shiftId === shift.id){
-                    return {...button, id: button.id, isSignedUp: button.isSignedUp}
-                }    
-            })
-
-            foundButton.isSignedUp = !foundButton.isSignedUp
-        },
-        sendButton(shift){
-            const buttonToSend = this.buttons.find( (button) => {
-                if(button.shiftId === shift.id){
-                    return {...button, id: button.id, isSignedUp: button.isSignedUp}
-                }    
-            })
-            return buttonToSend
         },
         async load() {
-            this.isLoading = true
+
             await Promise.all([
                 await this.getTeamById(this.teamId),
+                await this.getUserShifts(),
                 await this.getTeamShifts(this.teamId),
-                await this.getUserShifts()
             ])
-            this.buildButtons()
-            this.isLoading = false
         },
     },
     async created() {
         await this.load()
+
+
     }
 }
 </script>
 <style lang="scss">
-    tr {
+    tbody tr {
         &:hover {
             background-color: rgb(193, 193, 255);
         }
     }
-</style>../../../../api-client
+</style>

@@ -3,7 +3,7 @@ import CreateAccountView from '@/domains/users/views/CreateAccountView.vue'
 import DashboardView from '@/domains/users/views/DashboardView.vue'
 import HomeView from '@/domains/shared/HomeView.vue'
 
-const root = [     
+const root = [   
     {
         path: '/',
         name: 'HomeView',

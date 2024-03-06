@@ -5,7 +5,7 @@ import { users } from './users'
 import { root } from './root'
 import { initUserStore } from '@/stores/user'
 
-const publicPages = ['/login', '/create-account', '/about']
+const publicPages = ['/login', '/create-account', '/about', '/test']
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
