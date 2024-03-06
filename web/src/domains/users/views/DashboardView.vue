@@ -133,4 +133,4 @@ export default {
         await this.load()
     }
 }
-</script>
+</script>../../shifts/components/ShiftTableRowOld.vue
