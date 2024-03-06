@@ -28,6 +28,10 @@ module.exports = class UserRepository {
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$pull: {shifts: new ObjectId(shiftId)}})
     }
 
+    removeTeam(id, teamId){
+        return this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$pull: {teams: new ObjectId(teamId)}})
+    }
+
     async updateRole(id, role){
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {role: role})
     }
@@ -83,6 +87,35 @@ module.exports = class UserRepository {
           )
         shifts[0].shifts.sort( (i, j) => i.start > j.start ? 1 : -1)
         return shifts[0].shifts
+    }
+
+    async getShiftsByTeam(id, teamId){
+        id = new ObjectId(id)
+        /* teamId = new ObjectId(teamId) */ //this is not necessary because the teamId is already an ObjectId. See Unsignup use case for why.
+        const shifts = await this.db.aggregate([
+            {
+              $match:
+                {
+                  _id: id,
+                },
+            },
+            {
+                $lookup: {
+                    from: 'shifts',
+                    localField: 'shifts',
+                    foreignField: '_id',
+                    as: 'shifts'
+                }
+            }
+          ])
+          .project(
+            {
+                shifts: 1,
+                _id: 0,
+            }
+          )
+          //shifts[0].shifts.map(shift => console.log('shift team', shift.team, 'teamId', teamId, 'equal', shift.team.toString() == teamId.toString()))
+        return shifts[0].shifts.filter(shift => shift.team.toString() === teamId.toString())
     }
 
     async getTeams(id){

@@ -36,6 +36,10 @@ class TeamService extends Service {
         return this.repository.addMember(id, userId)
     }
 
+    removeMember(userId){
+        return this.repository.removeMember(userId)
+    }
+
     getTeams() {
         return this.repository.getTeams()
     }
@@ -87,6 +91,15 @@ class UserService extends Service {
     getLeads(idArray){
         return this.repository.getLeads(idArray)
     }
+
+    getShiftsByTeam(id, teamId){
+        return this.repository.getShiftsByTeam(id, teamId)
+    }
+
+    removeTeam(id, teamId){
+        return this.repository.removeTeam(id, teamId)
+    }
+
 }
 
 class ShiftService extends Service{
