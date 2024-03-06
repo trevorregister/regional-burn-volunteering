@@ -1,14 +1,9 @@
 <template>
-    <v-btn v-if="button.action !== 'manage'"
-        @click="shiftAction(button.action, button.id)"
-        :disabled="button.action === 'none'"
+    <v-btn 
+    @click="shiftAction(button.action, button.id)"
+    :disabled="button.action === 'none'"
     >
         {{ button.label }}
-    </v-btn>
-    <v-btn v-else>
-        <router-link :to="`/shifts/${button.id}/manage`">
-            {{ button.label }}
-        </router-link>
     </v-btn>
 </template>
 

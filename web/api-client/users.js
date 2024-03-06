@@ -12,10 +12,6 @@ export default class Users {
         return axios.get(`${this.API_HOST}/users`)
     }
 
-    getUsersById(idQuery){
-        return axios.get(`${this.API_HOST}/users/get-users-by-id`, {params: {idQuery: idQuery}})
-    }
-
     login({email, password}){
         const credentials = {
             email: email,
