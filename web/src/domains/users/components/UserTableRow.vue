@@ -18,7 +18,6 @@ import { initUserStore } from '../../../stores/user'
 
 export default {
     name: 'UserTableRow',
-    emits: ['user-action'],
     data (){
         return{
             userStore: initUserStore(),
