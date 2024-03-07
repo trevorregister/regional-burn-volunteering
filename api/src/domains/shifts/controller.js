@@ -37,7 +37,6 @@ module.exports = (repository) => {
             const { id } = req.params
             let members = await getMembersCase.execute(id)
             members = members.map(member => member = UserDTO.toWeb(member))
-            console.log(members)
             res.status(200).send(members)
         } catch (err) {
             next(err)
