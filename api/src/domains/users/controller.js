@@ -69,7 +69,7 @@ module.exports = (repository) => {
             const getShiftsCase = GetShifts(repository)
             const { id } = req.params
             const shifts = await getShiftsCase.execute(id)
-            res.status(201).send(shifts)
+            res.status(200).send(shifts)
         } catch (err) {
             next(err)
         }
@@ -80,7 +80,7 @@ module.exports = (repository) => {
             const getTeamsCase = GetTeams(repository)
             const { id } = req.params
             const teams = await getTeamsCase.execute(id)
-            res.status(201).send(teams)
+            res.status(200).send(teams)
         } catch (err) {
             next(err)
         }
@@ -92,7 +92,7 @@ module.exports = (repository) => {
             const { id } = req.params
             const { teamId }   = req.body
             await promoteUserToLeadCase.execute(id, teamId)
-            res.status(201).send('user promoted to team lead')
+            res.status(204).send('user promoted to team lead')
         } catch (err) {
             next(err)
         }

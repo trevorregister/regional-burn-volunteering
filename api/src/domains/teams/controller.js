@@ -90,7 +90,7 @@ module.exports = (repository) => {
             const { id }  = req.params
             const { userId }   = req.body
             await addLeadCase.execute(id, userId)
-            res.status(201).send('lead added')
+            res.status(204).send('lead added')
         } catch (err) {
             next(err)
         }
@@ -102,7 +102,7 @@ module.exports = (repository) => {
             const { id } = req.params
             const { userId } = req.body
             await removeLeadCase.execute(id, userId)
-            res.status(201).send('lead removed')
+            res.status(204).send('lead removed')
         } catch (err) {
             next(err)
         }
@@ -126,7 +126,7 @@ module.exports = (repository) => {
             const deleteLeadershipKeyCase = DeleteLeadershipKey(repository)
             const { leadershipKeyValue } = req.body
             await deleteLeadershipKeyCase.execute(leadershipKeyValue)
-            res.status(201).send(`leadership key ${leadershipKeyValue} deleted`)
+            res.status(204).send(`leadership key ${leadershipKeyValue} deleted`)
         }
         catch(err){
             next(err)

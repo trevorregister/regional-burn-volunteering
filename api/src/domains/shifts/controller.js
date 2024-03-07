@@ -62,7 +62,7 @@ module.exports = (repository) => {
             const { id } = req.params
             const { userId } = req.body
             await signupCase.execute(userId, id)
-            res.status(200).send('signed up') 
+            res.status(204).send('signed up') 
         } catch (err) {
             next(err)
         }
@@ -74,7 +74,7 @@ module.exports = (repository) => {
             const { id } = req.params
             const { userId } = req.body
             await unsignupCase.execute(userId, id)
-            res.status(200).send('unsigned up') 
+            res.status(204).send('unsigned up') 
         } catch (err) {
             next(err)
         }
