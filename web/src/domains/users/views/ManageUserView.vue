@@ -18,9 +18,9 @@
             <v-container v-for="team in teams" :key="team">
                         <h2>{{ team.name }}</h2>
                 <shift-table
-                    @shift-action="load"
                     :shifts="filterShiftsForTeam(team.id)"
                     :userShifts="shifts"
+                    :forceRemoveUserFromShiftButton="canRemoveUserFromShift(team)"
                     />
             </v-container>
         </v-row>
@@ -30,6 +30,7 @@
 <script>
 import { client } from '../../../../api-client/client'
 import ShiftTable from '@/domains/shifts/components/ShiftTable.vue'
+import { initUserStore } from '@/stores/user'
 export default {
     name: 'ManageUserView',
     components: {
@@ -37,27 +38,31 @@ export default {
     },
     data(){
         return {
-            userId: this.$route.params.userId,
+            userIdToManage: this.$route.params.userId,
             user: {},
             shifts: [],
-            teams: []
+            teams: [],
+            userStore: initUserStore()
         }
     },
     methods: {
         async getUser(){
-            const user = await client.users.getUserById(this.userId)
+            const user = await client.users.getUserById(this.userIdToManage)
             this.user = user.data
         },
         async getTeams(){
-            const teams = await client.users.getTeams(this.userId)
+            const teams = await client.users.getTeams(this.userIdToManage)
             this.teams = teams.data.sort((a, b) => a.name.localeCompare(b.name))
         },
         async getShifts(){
-            const shifts = await client.users.getShifts(this.userId)
+            const shifts = await client.users.getShifts(this.userIdToManage)
             this.shifts = shifts.data
         },
         filterShiftsForTeam(teamId){
             return this.shifts.filter(shift => shift.team === teamId)
+        },
+        canRemoveUserFromShift(team){
+            return team.leads.includes(this.userStore.userId)
         },
         async load(){
             await this.getUser()

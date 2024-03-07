@@ -50,6 +50,10 @@ export default {
         forceManageButton: {
             type: Boolean,
             default: false
+        },
+        forceRemoveUserFromShiftButton: {
+            type: Boolean,
+            default: false
         }
     },
     components: {
@@ -70,6 +74,13 @@ export default {
                     id: shift.id,
                     label: 'Manage',
                     action: 'manage'
+                }
+            }
+            else if(this.forceRemoveUserFromShiftButton){
+                return {
+                    id: shift.id,
+                    label: 'Remove',
+                    action: 'remove'
                 }
             }
             else if (this.userShifts.some(userShift => userShift.id === shift.id)) {
@@ -101,6 +112,12 @@ export default {
                     break
                 case 'unsignup':
                     await this.unsignup(shiftId)
+                    break
+                case 'manage':
+                    this.$router.push(`/shifts/${shiftId}/manage`)
+                    break
+                case 'remove':
+                    console.log('remove')
                     break
                 default:
                     break
