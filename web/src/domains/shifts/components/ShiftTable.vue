@@ -71,33 +71,6 @@ export default {
         }
     },
     methods: {
-/*         async shiftAction(action, shiftId){
-            switch(action){
-                case 'signup':
-                    await this.signup(shiftId)
-                    break
-                case 'unsignup':
-                    await this.unsignup(shiftId)
-                    break
-            }
-        },
-        async signup(shiftId){
-            this.isLoading = true
-            await client.shifts.signup({
-                id: shiftId, 
-                userId: this.userStore.userId
-            })
-            this.isLoading = false
-        },
-        async unsignup(shiftId){
-            this.isLoading = true
-            await client.shifts.unsignup({
-                id: shiftId, 
-                userId: this.userStore.userId
-            })
-            this.isLoading = false
-
-        }, */
         handleShiftAction(action, shiftId) {
             this.$emit('shift-action', action, shiftId)
         },
