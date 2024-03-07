@@ -9,9 +9,8 @@
             <p>{{ team.description }}</p>
         </div>
         <shift-table
-            @shift-action="load"
+            @shift-action="shiftAction"
             :shifts="shifts"
-            :forceManageButton="true"
             :userShifts=[]
         />
     </v-container>
@@ -38,13 +37,22 @@ export default {
     methods: {
         async getTeamShifts(){
             let shifts = await client.teams.getShifts(this.teamId)
-            shifts = shifts.data
-            this.shifts = shifts
+            this.shifts = shifts.data.map(shift => {
+                shift.button = {
+                    id: shift.id,
+                    label: 'Manage',
+                    action: 'manage',
+                }
+                return shift
+            })
         },
 
         async getTeam(){
             const team = await client.teams.getTeamById(this.teamId)
             this.team = team.data
+        },
+        async shiftAction(action, shiftId){
+            this.$router.push(`/shifts/${shiftId}/manage`)
         },
         async load() {
             await this.getTeam()
