@@ -15,18 +15,17 @@
             <h1>
                 Members
             </h1>
-                <user-table-row v-for="member in members" :key="member"
-                    :user="member"/>
+            <user-table :users="members"/>
         </div>
     </v-container>
 </template>
 <script>
 import { client } from '../../../../api-client/client'
-import UserTableRow from '../../users/components/UserTableRow.vue'
+import UserTable from '@/domains/users/components/UserTable.vue'
 export default {
     name: 'ManageShiftView',
     components: {
-        UserTableRow
+        UserTable
     },
     data(){
         return {

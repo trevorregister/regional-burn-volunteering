@@ -13,8 +13,7 @@
             :shifts="shifts"
             :forceManageButton="true"
             :userShifts=[]
-        >
-        </shift-table>
+        />
     </v-container>
 </template>
 <script>

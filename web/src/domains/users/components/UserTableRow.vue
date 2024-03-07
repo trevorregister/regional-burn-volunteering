@@ -1,7 +1,8 @@
 <template>
     <tr>
-        <td>{{user.name}}</td>
+        <td>{{ user.name }}</td>
         <td>{{ user.email }}</td>
+        <td><v-btn>Details</v-btn></td>
     </tr>
 </template>
 <script>
