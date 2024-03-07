@@ -1,14 +1,9 @@
 <template>
-    <v-btn v-if="button.action !== 'manage'"
+    <v-btn
         @click="shiftAction(button.action, button.id)"
-        :disabled="button.action === 'none'"
+        :disabled="isDisabled"
     >
-        {{ button.label }}
-    </v-btn>
-    <v-btn v-else>
-        <router-link :to="`/shifts/${button.id}/manage`">
-            {{ button.label }}
-        </router-link>
+    {{ button.label }}
     </v-btn>
 </template>
 
@@ -25,6 +20,11 @@ export default {
     methods: {
         shiftAction(action, shiftId) {
             this.$emit('shift-action', action, shiftId)
+        },
+    },
+    computed: {
+        isDisabled(){
+            return this.button.action === 'none'
         }
     }
 }
