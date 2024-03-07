@@ -16,7 +16,7 @@ const teams = [
     },
     {
         path: '/teams/:teamId/manage',
-        name: 'manageTeam',
+        name: 'manage-team',
         component: ManageTeamView,
         props: true
     }

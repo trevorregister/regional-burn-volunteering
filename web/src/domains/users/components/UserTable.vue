@@ -9,7 +9,9 @@
                 </tr>
             </thead>
             <tbody>
-                <user-table-row v-for="user in users" :key="user" :user="user" />
+                <user-table-row v-for="user in users" :key="user" 
+                :user="user"
+            />
             </tbody>
         </v-table>
     </v-container>
