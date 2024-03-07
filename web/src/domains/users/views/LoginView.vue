@@ -37,7 +37,7 @@ export default {
   name: 'LoginView',
   data(){
     return {
-      email: 'lead87@email.com',
+      email: '',
       password: 'password',
       userStore: initUserStore()
     }
