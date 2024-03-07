@@ -13,7 +13,7 @@
                 </tr>
             </thead>
                 <tbody>
-                    <shift-table-row v-for="shift in shifts" :key="shift"
+<!--                     <shift-table-row v-for="shift in shifts" :key="shift"
                         @shift-action="shiftAction"
                         :name="shift.name"
                         :start="shift.start"
@@ -25,6 +25,19 @@
                         :id="shift.id"
                         :day="shift.day"
                         :button="buildButton(shift)"
+                        /> -->
+                        <shift-table-row v-for="shift in shifts" :key="shift"
+                        @shift-action="handleShiftAction"
+                        :name="shift.name"
+                        :start="shift.start"
+                        :end="shift.end"
+                        :duration="shift.duration"
+                        :description="shift.description"
+                        :signups="shift.signups ?? 0"
+                        :capacity="shift.capacity"
+                        :id="shift.id"
+                        :day="shift.day"
+                        :button="shift.button"
                         />
                 </tbody>
             </v-table>
@@ -32,29 +45,19 @@
 </loading-container>
 </template>
 <script>
-import { client } from '../../../../api-client/client'
+//import { client } from '../../../../api-client/client'
 import ShiftTableRow from '../../shifts/components/ShiftTableRow.vue'
 import { initUserStore } from '@/stores/user'
 import LoadingContainer from '@/domains/shared/LoadingContainer.vue'
 
 export default {
+    name: 'ShiftTable',
+    emits: ['shift-action'],
     props: {
         shifts: {
             type: Array,
             required: true
         },
-        userShifts: {
-            type: Array,
-            required: true,
-        },
-        forceManageButton: {
-            type: Boolean,
-            default: false
-        },
-        forceRemoveUserFromShiftButton: {
-            type: Boolean,
-            default: false
-        }
     },
     components: {
         ShiftTableRow,
@@ -68,44 +71,7 @@ export default {
         }
     },
     methods: {
-        buildButton(shift){
-            if(this.forceManageButton){
-                return {
-                    id: shift.id,
-                    label: 'Manage',
-                    action: 'manage'
-                }
-            }
-            else if(this.forceRemoveUserFromShiftButton){
-                return {
-                    id: shift.id,
-                    label: 'Remove',
-                    action: 'remove'
-                }
-            }
-            else if (this.userShifts.some(userShift => userShift.id === shift.id)) {
-                return {
-                    id: shift.id,
-                    label: 'Unsignup',
-                    action: 'unsignup'
-                }
-            }
-            else if(shift.capacity === shift.signups){
-                return {
-                    id: shift.id,
-                    label: 'Full',
-                    action: 'none'
-                }
-            }
-            else {
-                return {
-                    id: shift.id,
-                    label: 'Sign Up',
-                    action: 'signup'
-                }
-            }
-        },
-        async shiftAction(action, shiftId){
+/*         async shiftAction(action, shiftId){
             switch(action){
                 case 'signup':
                     await this.signup(shiftId)
@@ -113,16 +79,7 @@ export default {
                 case 'unsignup':
                     await this.unsignup(shiftId)
                     break
-                case 'manage':
-                    this.$router.push(`/shifts/${shiftId}/manage`)
-                    break
-                case 'remove':
-                    console.log('remove')
-                    break
-                default:
-                    break
             }
-            this.$emit('shift-action')
         },
         async signup(shiftId){
             this.isLoading = true
@@ -140,6 +97,9 @@ export default {
             })
             this.isLoading = false
 
+        }, */
+        handleShiftAction(action, shiftId) {
+            this.$emit('shift-action', action, shiftId)
         },
     },
 }

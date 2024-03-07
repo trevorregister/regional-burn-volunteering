@@ -18,9 +18,9 @@
             <v-container v-for="team in teams" :key="team">
                         <h2>{{ team.name }}</h2>
                 <shift-table
+                    @shift-action="load"
                     :shifts="filterShiftsForTeam(team.id)"
                     :userShifts="shifts"
-                    :forceRemoveUserFromShiftButton="canRemoveUserFromShift(team)"
                     />
             </v-container>
         </v-row>
@@ -42,7 +42,8 @@ export default {
             user: {},
             shifts: [],
             teams: [],
-            userStore: initUserStore()
+            userStore: initUserStore(),
+            buttons:[]
         }
     },
     methods: {
@@ -57,11 +58,32 @@ export default {
         async getShifts(){
             const shifts = await client.users.getShifts(this.userIdToManage)
             this.shifts = shifts.data
+            this.shifts = this.shifts.map(shift => {
+                this.buildButton(shift)
+                return shift
+            })
         },
         filterShiftsForTeam(teamId){
             return this.shifts.filter(shift => shift.team === teamId)
         },
-        canRemoveUserFromShift(team){
+        buildButton(shift){
+            if(this.canRemoveUserFromShift(shift)){
+                shift.button = {
+                    id: shift.id,
+                    label: 'Remove',
+                    action: 'remove'
+                }
+            }
+            else {
+                shift.button = {
+                    id: shift.id,
+                    label: 'None',
+                    action: 'none'
+                }
+            }
+        },
+        canRemoveUserFromShift(shift){
+            const team = this.teams.find(team => team.id === shift.team)
             return team.leads.includes(this.userStore.userId)
         },
         async load(){
@@ -78,7 +100,8 @@ export default {
             return this.shifts.reduce( (total, shift) => {
                 return total + shift.duration
              }, 0)
-        }
+        },
+
     },
     async created(){
         await this.load()

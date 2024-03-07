@@ -26,7 +26,7 @@ export default {
         isDisabled(){
             return this.button.action === 'none'
         }
-    }
+    },
 }
 </script>
 
