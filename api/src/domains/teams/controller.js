@@ -18,11 +18,8 @@ module.exports = (repository) => {
     const getTeams = async (req, res, next) => {
         try {
             const getTeamsCase = GetTeams(repository)
-            const teams = []
             const teamsResponse = await getTeamsCase.execute()
-            for await (const teamResponse of teamsResponse) {
-                teams.push(TeamDTO.toWeb(teamResponse))
-            }
+            const teams = teamsResponse.map(team => TeamDTO.toWeb(team))
             res.status(200).send(teams)
         } catch (err) {
             next(err)
@@ -42,11 +39,9 @@ module.exports = (repository) => {
     const getShifts = async (req, res, next) => {
         try {
             const getShiftsCase = GetShifts(repository)
-            const shifts = []
-            const shiftsResponse = await getShiftsCase.execute(req.params.id)
-            for await (const shiftResponse of shiftsResponse) {
-                shifts.push(ShiftDTO.toWeb(shiftResponse))
-            }
+            const { id } = req.params
+            let shifts = await getShiftsCase.execute(id)
+            shifts = shifts.map(shift => shift = ShiftDTO.toWeb(shift))
             res.status(200).send(shifts)
         } catch (err) {
             next(err)
@@ -56,12 +51,9 @@ module.exports = (repository) => {
     const getLeads = async (req, res, next) => {
         try {
             const getLeadsCase = GetLeads(repository)
-            const leads = []
             const { id } = req.params
-            const leadsResponse = await getLeadsCase.execute(id)
-            for await (const leadResponse of leadsResponse){
-                leads.push(UserDTO.toWeb(leadResponse))
-            }
+            let leads = await getLeadsCase.execute(id)
+            leads = leads.map(lead => lead = UserDTO.toWeb(lead))
             res.status(200).send(leads)
             
         } catch (err) {

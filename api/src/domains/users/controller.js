@@ -13,10 +13,9 @@ const UserDTO = require('./dto')
 module.exports = (repository) => {
     const getUsers = async (req, res, next) => {
         try {
-            const usersData = []
             const getUsersCase = GetUsers(repository)
-            const users = await getUsersCase.execute()
-            users.map(user => usersData.push(UserDTO.toWeb(user)))
+            let users = await getUsersCase.execute()
+            users = users.map(user => UserDTO.toWeb(user))
             res.status(200).send(usersData)
         } catch (err) {
             next(err)
