@@ -35,10 +35,9 @@ module.exports = (repository) => {
         try {
             const getMembersCase = GetMembers(repository)
             const { id } = req.params
-            const members = await getMembersCase.execute(id)
-            const membersArray = []
-  /*           members.map(member => membersArray.push(UserDTO.toWeb(member))) */
-            members.forEach(member => member = UserDTO.toWeb(member))
+            let members = await getMembersCase.execute(id)
+            members = members.map(member => member = UserDTO.toWeb(member))
+            console.log(members)
             res.status(200).send(members)
         } catch (err) {
             next(err)
