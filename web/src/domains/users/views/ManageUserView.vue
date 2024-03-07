@@ -18,7 +18,7 @@
             <v-container v-for="team in teams" :key="team">
                         <h2>{{ team.name }}</h2>
                 <shift-table
-                    @shift-action="load"
+                    @shift-action="shiftAction"
                     :shifts="filterShiftsForTeam(team.id)"
                     :userShifts="shifts"
                     />
@@ -71,7 +71,7 @@ export default {
                 shift.button = {
                     id: shift.id,
                     label: 'Remove',
-                    action: 'remove'
+                    action: 'unsignup'
                 }
             }
             else {
@@ -85,6 +85,13 @@ export default {
         canRemoveUserFromShift(shift){
             const team = this.teams.find(team => team.id === shift.team)
             return team.leads.includes(this.userStore.userId)
+        },
+        async shiftAction(action, shiftId){
+            await client.shifts.unsignup({
+                id: shiftId, 
+                userId: this.userIdToManage
+            })
+            await this.load()
         },
         async load(){
             await this.getUser()
