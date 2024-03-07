@@ -84,7 +84,12 @@ export default {
         },
         canRemoveUserFromShift(shift){
             const team = this.teams.find(team => team.id === shift.team)
-            return team.leads.includes(this.userStore.userId)
+            if (team) {
+                return team.leads.includes(this.userStore.userId)
+            }
+            else {
+                return false
+            }
         },
         async shiftAction(action, shiftId){
             await client.shifts.unsignup({
