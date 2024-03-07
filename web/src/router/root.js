@@ -6,7 +6,7 @@ import HomeView from '@/domains/shared/HomeView.vue'
 const root = [   
     {
         path: '/',
-        name: 'HomeView',
+        name: 'home-view',
         component: HomeView
     },
     {

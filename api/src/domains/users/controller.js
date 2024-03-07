@@ -6,7 +6,6 @@ const {
     GetShifts,
     GetTeams,
     PromoteUserToLead,
-    GetUsersById
 } = require('./use-cases/_index')
 
 const UserDTO = require('./dto')
@@ -14,10 +13,9 @@ const UserDTO = require('./dto')
 module.exports = (repository) => {
     const getUsers = async (req, res, next) => {
         try {
-            const usersData = []
             const getUsersCase = GetUsers(repository)
-            const users = await getUsersCase.execute()
-            users.map(user => usersData.push(UserDTO.toWeb(user)))
+            let users = await getUsersCase.execute()
+            users = users.map(user => UserDTO.toWeb(user))
             res.status(200).send(usersData)
         } catch (err) {
             next(err)
@@ -30,19 +28,6 @@ module.exports = (repository) => {
             const { id } = req.params
             const user = await getUserByIdCase.execute(id)
             res.status(200).send(UserDTO.toWeb(user))
-        } catch (err) {
-            next(err)
-        }
-    }
-
-    const getUsersById = async (req, res, next) => {
-        try {
-            const getUsersByIdCase = GetUsersById(repository)
-            const idArray = req.query.idQuery.split(',')
-            const usersData = []
-            const users = await getUsersByIdCase.execute(idArray)
-            users.map(user => usersData.push(UserDTO.toWeb(user)))
-            res.status(200).send(usersData)
         } catch (err) {
             next(err)
         }
@@ -84,7 +69,7 @@ module.exports = (repository) => {
             const getShiftsCase = GetShifts(repository)
             const { id } = req.params
             const shifts = await getShiftsCase.execute(id)
-            res.status(201).send(shifts)
+            res.status(200).send(shifts)
         } catch (err) {
             next(err)
         }
@@ -95,7 +80,7 @@ module.exports = (repository) => {
             const getTeamsCase = GetTeams(repository)
             const { id } = req.params
             const teams = await getTeamsCase.execute(id)
-            res.status(201).send(teams)
+            res.status(200).send(teams)
         } catch (err) {
             next(err)
         }
@@ -107,7 +92,7 @@ module.exports = (repository) => {
             const { id } = req.params
             const { teamId }   = req.body
             await promoteUserToLeadCase.execute(id, teamId)
-            res.status(201).send('user promoted to team lead')
+            res.status(204).send('user promoted to team lead')
         } catch (err) {
             next(err)
         }
@@ -122,7 +107,6 @@ module.exports = (repository) => {
         getShifts,
         getTeams,
         promoteUserToLead,
-        getUsersById
     }
 }
 

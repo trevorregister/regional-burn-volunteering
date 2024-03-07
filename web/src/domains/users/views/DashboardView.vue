@@ -14,9 +14,12 @@
         </div>
         <v-row class="ma-2 pa-1">
             <v-container v-for="team in teams" :key="team">
-                <h2>{{ team.name }}</h2>
+                        <h2>{{ team.name }}</h2>
+                        <router-link :to="`/teams/${team.id}/manage`">
+                            <v-btn v-if="isLeadingThisTeam(team)">Manage</v-btn>
+                        </router-link>
                 <shift-table
-                    @shift-action="load"
+                    @shift-action="shiftAction"
                     :shifts="filterShiftsForTeam(team.id)"
                     :userShifts="shifts"/>
             </v-container>
@@ -50,10 +53,28 @@ export default {
         },
         async getShifts(){
             const shifts = await client.users.getShifts(this.userStore.userId)
-            this.shifts = shifts.data
+            this.shifts = shifts.data.map(shift => {
+                shift.button = {
+                    id: shift.id,
+                    label: 'Unsignup',
+                    action: 'unsignup',
+                }
+                return shift
+            })
         },
         filterShiftsForTeam(teamId){
             return this.shifts.filter(shift => shift.team === teamId)
+        },
+        isLeadingThisTeam(team){
+            return team.leads.includes(this.userStore.userId)
+        },
+        async shiftAction(action, shiftId){
+            await client.shifts.unsignup({
+                id: shiftId, 
+                userId: this.userStore.userId
+            })
+            this.isLoading = false
+            await this.load()
         },
         async load() {
             await this.getTeams()

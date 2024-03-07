@@ -46,6 +46,35 @@ module.exports = class ShiftRepository {
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$set: update})
     }
 
+    async getMembers(id){
+        const members =  await this.db.aggregate([
+            {
+                $match:
+                {
+                    _id: new ObjectId(id)
+                }
+            },
+            {
+                $lookup:
+                {
+                    from: "users",
+                    localField: "members",
+                    foreignField: "_id",
+                    as: "members"
+                }
+            },
+            {
+                $project:
+                {
+                    members: 1,
+                    _id: 0
+                }
+            },
+        ])
+
+        return members[0].members.sort((a, b) => a.name.localeCompare(b.name))
+    }
+
     async getShiftsByTeam(teamId){
         return await this.db.aggregate([
             {

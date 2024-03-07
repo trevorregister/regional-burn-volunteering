@@ -3,9 +3,11 @@ const {
     GetShiftById,
     UpdateShift,
     Signup,
-    Unsignup
+    Unsignup,
+    GetMembers
 } = require('./use-cases/_index')
 const ShiftDTO = require('./dto')
+const UserDTO = require('../users/dto')
 
 module.exports = (repository) => {
 
@@ -29,6 +31,18 @@ module.exports = (repository) => {
         }
     }
 
+    const getMembers = async (req, res, next) => {
+        try {
+            const getMembersCase = GetMembers(repository)
+            const { id } = req.params
+            let members = await getMembersCase.execute(id)
+            members = members.map(member => member = UserDTO.toWeb(member))
+            res.status(200).send(members)
+        } catch (err) {
+            next(err)
+        }
+    }
+
     const updateShift = async (req, res, next) => {
         try {
             const updateShiftCase = UpdateShift(repository)
@@ -47,7 +61,7 @@ module.exports = (repository) => {
             const { id } = req.params
             const { userId } = req.body
             await signupCase.execute(userId, id)
-            res.status(200).send('signed up') 
+            res.status(204).send('signed up') 
         } catch (err) {
             next(err)
         }
@@ -59,7 +73,7 @@ module.exports = (repository) => {
             const { id } = req.params
             const { userId } = req.body
             await unsignupCase.execute(userId, id)
-            res.status(200).send('unsigned up') 
+            res.status(204).send('unsigned up') 
         } catch (err) {
             next(err)
         }
@@ -71,7 +85,8 @@ module.exports = (repository) => {
         getShiftById,
         updateShift,
         signup,
-        unsignup
+        unsignup,
+        getMembers
     }
 }
 

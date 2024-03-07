@@ -8,6 +8,10 @@ export default class Shifts {
         return axios.get(`${this.API_HOST}/shifts/${id}`)
     }
 
+    getMembers(id){
+        return axios.get(`${this.API_HOST}/shifts/${id}/members`)
+    }
+
     addShift({name, description, teamId, start, end, capacity}){
         const shift = {
             name: name,

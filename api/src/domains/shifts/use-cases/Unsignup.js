@@ -11,6 +11,7 @@ module.exports = (repository) => {
         const operations = []
         const shift = await repository.getShiftById(shiftId)
         const user = await userService.getUserById(userId)
+        const team = await teamService.getTeamById(shift.team)
         const shiftsOnThisTeam = await userService.getShiftsByTeam(userId, shift.team)
 
         if(!user) {
@@ -32,7 +33,7 @@ module.exports = (repository) => {
             await repository.decrementShift(shiftId)
         ])
 
-        if (shiftsOnThisTeam.length === 1){
+        if (shiftsOnThisTeam.length === 1 && !team.leads.includes(user._id)){
             await teamService.removeMember(userId)
             await userService.removeTeam(userId, shift.team)
         }

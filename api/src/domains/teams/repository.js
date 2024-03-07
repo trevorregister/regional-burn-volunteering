@@ -90,7 +90,8 @@ module.exports = class TeamRepository {
                 leadershipKey.redeemedBy = new ObjectId(userId)
             }
         })
-        return await team.save()
+        await team.save()
+        return team //doesn't need to return updated team document, just needs _id in AddUser use case.
     }
 
 }
