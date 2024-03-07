@@ -1,12 +1,6 @@
 ## About
 Volunteer sign up app for regional burning man events.
 
-## Domain mapping
-https://miro.com/app/board/uXjVNS-_818=/
-
-## Wireframing
-https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=0-1&mode=design&t=y8NArxcAoQL9WEcW-0
-
 ## Setup
 0. Get an .env file from me
 1. Run `npm i` in a terminal from /api and /web.
@@ -26,16 +20,16 @@ https://www.figma.com/file/QozoTFHFy9ZFMm0SaYDtH1/Volunteer?type=design&node-id=
 * controller -> use-case -> repo object destructuring to be consistent across the app. Look at AddLead use case as example.
 * update use-cases to patch only text fields (name, description, etc)
 * remove shift conflict from preventing signup. move function to individual route?
-* non-leadership account signup. borked due to leadershipKey issues, fixed via duct-tape with a recent commit.
+* non-leadership account signup borked due to leadershipKey issues, fixed via duct-tape. 
 
 ### Web
 
 #### Features
 * form validation
 * sideways scrolling for shift table
+* add shifts
 
 #### Refactors
-* create a shift-table component that replicates whats on TeamView so that it can be used everywhere else. should take just one prop, teamId. 
 
 ### API-Client
 
