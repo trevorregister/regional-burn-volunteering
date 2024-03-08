@@ -1,31 +1,18 @@
 <template>
-    <loading-container :loading="false">
-        <v-container>
+    <v-row>
+        <v-col class="d-flex justify-start">
             <v-table>
-            <thead>
-                <tr class="text-left">
-                    <th>Name</th>
-                    <th>Day</th>
-                    <th>Time</th>
-                    <th>Length</th>
-                    <th>Signups</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
+                <thead>
+                    <tr class="text-left">
+                        <th>Name</th>
+                        <th>Day</th>
+                        <th>Time</th>
+                        <th>Length</th>
+                        <th>Signups</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
                 <tbody>
-<!--                     <shift-table-row v-for="shift in shifts" :key="shift"
-                        @shift-action="shiftAction"
-                        :name="shift.name"
-                        :start="shift.start"
-                        :end="shift.end"
-                        :duration="shift.duration"
-                        :description="shift.description"
-                        :signups="shift.signups ?? 0"
-                        :capacity="shift.capacity"
-                        :id="shift.id"
-                        :day="shift.day"
-                        :button="buildButton(shift)"
-                        /> -->
                         <shift-table-row v-for="shift in shifts" :key="shift"
                         @shift-action="handleShiftAction"
                         :name="shift.name"
@@ -41,14 +28,14 @@
                         />
                 </tbody>
             </v-table>
-        </v-container>
-</loading-container>
+        </v-col>
+    </v-row>
 </template>
 <script>
 //import { client } from '../../../../api-client/client'
 import ShiftTableRow from '../../shifts/components/ShiftTableRow.vue'
 import { initUserStore } from '@/stores/user'
-import LoadingContainer from '@/domains/shared/LoadingContainer.vue'
+//import LoadingContainer from '@/domains/shared/LoadingContainer.vue'
 
 export default {
     name: 'ShiftTable',
@@ -61,7 +48,7 @@ export default {
     },
     components: {
         ShiftTableRow,
-        LoadingContainer
+        //LoadingContainer
     }
         ,
     data() {

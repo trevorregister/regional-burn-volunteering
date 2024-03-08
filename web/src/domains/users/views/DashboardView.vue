@@ -1,30 +1,46 @@
 <template>
-        <div>
-            <h1>Dashboard</h1>
-            <p>{{ user.name }}</p>
-            <p>{{  user.role  }}</p>
-            <div class="ma-2 pa-2">
-                <h3>Totals</h3>
-                <p>Shifts: {{ totalShiftCount }}</p>
-                <p>Hours: {{ totalHours }}</p>
-            </div>
-        </div>
-        <div>
-            <h1>Teams</h1>
-        </div>
-        <v-row class="ma-2 pa-1">
-            <v-container v-for="team in teams" :key="team">
-                        <h2>{{ team.name }}</h2>
-                        <router-link :to="`/teams/${team.id}/manage`">
-                            <v-btn v-if="isLeadingThisTeam(team)">Manage</v-btn>
-                        </router-link>
-                <shift-table
-                    @shift-action="shiftAction"
-                    :shifts="filterShiftsForTeam(team.id)"
-                    :userShifts="shifts"/>
-            </v-container>
-        </v-row>
-
+    <v-row>
+        <v-col>
+            <v-row class="pb-5">
+                <div>
+                    <div>
+                        <h1>Dashboard</h1>
+                        <p>{{ user.name }}</p>
+                        <p>{{  user.role  }}</p>
+                    </div>
+                    <div>
+                        <h3>Totals</h3>
+                    </div>
+                    <div>
+                        <strong>Shifts:</strong> {{ totalShiftCount }}
+                    </div>
+                    <div>
+                        <strong>Hours:</strong> {{ totalHours }}
+                    </div>
+                </div>
+            </v-row>
+            <v-row v-for="team in teams" :key="team" class="pt-3">
+                <div>
+                    <v-row>
+                        <v-col cols="3">
+                            <h2>{{ team.name }}</h2>
+                        </v-col>
+                        <v-col cols="3">
+                            <router-link :to="`/teams/${team.id}/manage`">
+                                <v-btn v-if="isLeadingThisTeam(team)">Manage</v-btn>
+                            </router-link>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <shift-table
+                            @shift-action="shiftAction"
+                            :shifts="filterShiftsForTeam(team.id)"
+                            :userShifts="shifts"/>
+                    </v-row>
+                </div>
+            </v-row>
+        </v-col>
+    </v-row>
 </template>
 <script>
 import { initUserStore } from '@/stores/user'

@@ -1,18 +1,21 @@
 <template>
     <v-container>
-        <h1>
-            Manage Team 
-            {{team.name}}
-        </h1>
-        <div>
-            <h1>{{ team.name }}</h1>
-            <p>{{ team.description }}</p>
-        </div>
-        <shift-table
-            @shift-action="shiftAction"
-            :shifts="shifts"
-            :userShifts=[]
-        />
+        <v-row>
+            <v-col>
+                <h1>
+                    Manage Team
+                </h1>
+                <div>
+                    <h1>{{ team.name }}</h1>
+                    <p>{{ team.description }}</p>
+                </div>
+                <shift-table
+                    @shift-action="shiftAction"
+                    :shifts="shifts"
+                    :userShifts=[]
+                />
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 <script>
