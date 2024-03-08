@@ -1,28 +1,26 @@
 <template>
-    <v-sheet class="mx-8 px-8">
+    <v-row>
+        <v-col>
             <v-row class="pb-5">
-                <v-col>
-                    <v-row>
+                <div>
+                    <div>
                         <h1>Dashboard</h1>
                         <p>{{ user.name }}</p>
                         <p>{{  user.role  }}</p>
-                    </v-row>
-                    <v-row>
+                    </div>
+                    <div>
                         <h3>Totals</h3>
-                    </v-row>
-                    <v-row>
+                    </div>
+                    <div>
                         <strong>Shifts:</strong> {{ totalShiftCount }}
-                    </v-row>
-                    <v-row>
+                    </div>
+                    <div>
                         <strong>Hours:</strong> {{ totalHours }}
-                    </v-row>
-                </v-col>
-            </v-row>
-            <v-row>
-                <h1>Teams</h1>
+                    </div>
+                </div>
             </v-row>
             <v-row v-for="team in teams" :key="team" class="pt-3">
-                <v-col>
+                <div>
                     <v-row>
                         <v-col cols="3">
                             <h2>{{ team.name }}</h2>
@@ -39,9 +37,10 @@
                             :shifts="filterShiftsForTeam(team.id)"
                             :userShifts="shifts"/>
                     </v-row>
-                </v-col>
+                </div>
             </v-row>
-    </v-sheet>
+        </v-col>
+    </v-row>
 </template>
 <script>
 import { initUserStore } from '@/stores/user'
