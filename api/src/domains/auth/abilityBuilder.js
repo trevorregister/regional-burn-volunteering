@@ -15,21 +15,20 @@ function defineAbilityFor(user) {
 
 function defineRulesFor(user){
     const { role } = user
-
     switch(role){
         case 'lead':
-            defineLeadRules()
+            defineLeadRules(user)
             break
         case 'user':
-            defineUserRules()
+            defineUserRules(user)
             break
         default:
-            cannot('manage', 'all')
+            cannot('manage', 'none')
     }
 }
 
-function defineUserRules(){
-    can('read', 'User')
+function defineUserRules(user){
+    can('read', 'User', {id: user.id})
     
 }
 
