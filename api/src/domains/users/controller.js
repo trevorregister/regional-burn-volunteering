@@ -8,9 +8,6 @@ const {
     PromoteUserToLead,
 } = require('./use-cases/_index')
 
-const { defineAbilityFor } = require('../../middleware/abilityBuilder')
-const test = {isLoggedIn: false}
-
 const UserDTO = require('./dto')
 
 module.exports = (repository) => {
@@ -27,8 +24,6 @@ module.exports = (repository) => {
 
     const getUserById = async (req, res, next) => {
         try {
-            //console.log(ability(test))
-            console.log(defineAbilityFor(test).can('read', 'User'))
             const getUserByIdCase = GetUserById(repository)
             const { id } = req.params
             const user = await getUserByIdCase.execute(id)
