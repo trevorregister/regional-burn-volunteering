@@ -3,6 +3,7 @@ const TeamController = require('./controller')
 const TeamDatabase = require('./data_access/database')
 const TeamRepository = require('./repository')
 const auth = require('../../middleware/auth')
+const authZ = require('../../middleware/authZ')
 
 const teamRoutes = () => {
     const database = new TeamDatabase()
@@ -10,6 +11,8 @@ const teamRoutes = () => {
     const router = express.Router()
     const controller = TeamController(repository)
 
+    router.use(auth, authZ)
+    
     router.post('/', controller.addTeam)
     router.post('/:id/generate-leadership-keys', controller.generateLeadershipKeys)
     router.post('/delete-leadership-key', controller.deleteLeadershipKey)
