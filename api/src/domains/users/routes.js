@@ -15,7 +15,7 @@ const userRoutes = () => {
     router.post('/login', controller.loginUser)
     router.post('/logout', controller.logoutUser)
 
-    //router.use(auth, authZ)
+    router.use(auth, authZ)
 
     router.get('/', controller.getUsers)
     router.get('/:id',controller.getUserById)

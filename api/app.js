@@ -10,9 +10,10 @@ const db = require('./config/db')
 const cors = require('cors')
 
 const app = express()
-/* const corsOptions = {
-    origin: 'https://localhost:5173/'
-} */
+const corsOptions = {
+    origin: 'http://localhost:8080',
+    credentials: true
+}
 
 
 db.connect('local')
@@ -20,8 +21,7 @@ db.connect('local')
 app.use(helmet())
 app.use(cookieParser())
 app.use(express.json())
-//app.use(cors(corsOptions))
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(express.urlencoded({extended: false}))
 app.use(morgan('dev'))
 app.use('/api', Routes())

@@ -1,7 +1,5 @@
 import axios from 'redaxios'
-/* axios.defaults.withCredentials = true
-axios.defaults.headers['Content-Type'] = 'application/json'
-axios.defaults.headers['Access-Control-Allow-Origin'] = '*' */
+axios.defaults.withCredentials = true
 
 export default class Users {
     constructor(API_HOST){
