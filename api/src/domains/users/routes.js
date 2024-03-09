@@ -11,14 +11,18 @@ const userRoutes = () => {
     const router = express.Router()
     const controller = UserController(repository)
 
-    router.get('/', controller.getUsers)
-    router.get('/:id', auth, authZ, controller.getUserById)
-    router.get('/:id/shifts', controller.getShifts)
-    router.get('/:id/teams', controller.getTeams)
-    router.patch('/:id/promote-user-to-lead', controller.promoteUserToLead)
     router.post('/', controller.addUser)
     router.post('/login', controller.loginUser)
     router.post('/logout', controller.logoutUser)
+
+    //router.use(auth, authZ)
+
+    router.get('/', controller.getUsers)
+    router.get('/:id',controller.getUserById)
+    router.get('/:id/shifts', controller.getShifts)
+    router.get('/:id/teams', controller.getTeams)
+    router.patch('/:id/promote-user-to-lead', controller.promoteUserToLead)
+
     
     return router
 }
