@@ -12,7 +12,6 @@ Volunteer sign up app for regional burning man events.
 ### API
 
 #### Features 
-* some kind of ABAC
 * clients to allow for use of cross-module use-cases
 
 #### Refactors
