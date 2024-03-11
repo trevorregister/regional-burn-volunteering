@@ -1,11 +1,6 @@
 const { defineAbilityFor } = require('../domains/auth/abilityBuilder')
 const { HttpError } = require('../config/errors')
-
-class User {
-    constructor(id){
-        this.id = id
-    }
-}
+const { User } = require('../domains/auth/subjects')
 
 module.exports = function (req, res, next) {
     try {
