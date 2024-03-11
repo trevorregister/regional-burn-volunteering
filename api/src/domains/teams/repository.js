@@ -55,6 +55,12 @@ module.exports = class TeamRepository {
         : false
     }
 
+    async isLeadingTeam(id, userId){
+        return await this.db.findOne({_id: new ObjectId(id), leads: new ObjectId(userId)})
+        ? true
+        : false
+    }
+
     async addLeadershipKeys(id, leadershipKeys){
         await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$push: {leadershipKeys: leadershipKeys}})
     }

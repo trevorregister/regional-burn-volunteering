@@ -4,10 +4,16 @@ const { HttpError } = require('../config/errors')
 module.exports = function (req, res, next) {
     try {
         const token = req.cookies.authcookie
-        if (!token) { throw new HttpError(401, 'not logged in') }
+        if (!token) {
+            throw new HttpError(401, 'not logged in') 
+        }
 
         const verified = jwt.verify(token, process.env.JWT_SECRET)
-        if(!verified) { throw new HttpError(403, 'unauthorized') }
+        if(!verified) { 
+            throw new HttpError(403, 'unauthorized') 
+        }
+        
+        req.user = { ...verified }
         next()
 
     }

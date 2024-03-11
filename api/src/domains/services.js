@@ -51,6 +51,14 @@ class TeamService extends Service {
     addLead(id, userId){
         return this.repository.addLead(id, userId)
     }
+
+    isLeadingAnyTeam(id, userId){
+        return this.repository.isLeadingAnyTeam(id, userId)
+    }
+
+    isLeadingTeam(id, userId){
+        return this.repository.isLeadingTeam(id, userId)
+    }
 }
 
 class UserService extends Service {

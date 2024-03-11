@@ -3,12 +3,15 @@ const ShiftController = require('./controller')
 const ShiftDatabase = require('./data_access/database')
 const ShiftRepository = require('./repository')
 const auth = require('../../middleware/auth')
+const authZ = require('../../middleware/authZ')
 
 const shiftRoutes = () => {
     const database = new ShiftDatabase()
     const repository = new ShiftRepository(database)
     const router = express.Router()
     const controller = ShiftController(repository)
+
+    router.use(auth)
 
     router.post('/', controller.addShift)
     router.get('/:id', controller.getShiftById)

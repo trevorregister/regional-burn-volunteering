@@ -7,6 +7,9 @@ const {
     GetTeams,
     PromoteUserToLead,
 } = require('./use-cases/_index')
+const {
+    CanReadUser 
+} = require('../auth/use-cases/_index')
 
 const UserDTO = require('./dto')
 
@@ -24,6 +27,8 @@ module.exports = (repository) => {
 
     const getUserById = async (req, res, next) => {
         try {
+            const canReadUserCase = CanReadUser()
+            await canReadUserCase.execute(req)
             const getUserByIdCase = GetUserById(repository)
             const { id } = req.params
             const user = await getUserByIdCase.execute(id)
@@ -50,7 +55,7 @@ module.exports = (repository) => {
             const verified = await loginUserCase.execute(email, password)
             verified
                 ? res.status(201).cookie('authcookie', verified.token, {httpOnly: true, sameSite: 'strict'}).send({user: UserDTO.toWeb(verified.user), token: verified.token})
-                : res.status(401).send(verified)
+                : res.status(401).send(UserDTO.toWeb(verified))
         } catch (err) {
             next(err)
         }

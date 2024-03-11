@@ -10,6 +10,8 @@ const teamRoutes = () => {
     const router = express.Router()
     const controller = TeamController(repository)
 
+    router.use(auth)
+
     router.post('/', controller.addTeam)
     router.post('/:id/generate-leadership-keys', controller.generateLeadershipKeys)
     router.post('/delete-leadership-key', controller.deleteLeadershipKey)
