@@ -18,7 +18,7 @@ const userRoutes = () => {
     router.use(auth)
 
     router.get('/', controller.getUsers)
-    router.get('/:id', authZ, controller.getUserById)
+    router.get('/:id', controller.getUserById)
     router.get('/:id/shifts', controller.getShifts)
     router.get('/:id/teams', controller.getTeams)
     router.patch('/:id/promote-user-to-lead', controller.promoteUserToLead)
