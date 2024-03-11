@@ -8,7 +8,8 @@ const {
     PromoteUserToLead,
 } = require('./use-cases/_index')
 const {
-    CanReadUser 
+    CanReadUser,
+    CanModifyTeamLeadership 
 } = require('../auth/use-cases/_index')
 
 const UserDTO = require('./dto')
@@ -93,6 +94,8 @@ module.exports = (repository) => {
 
     const promoteUserToLead = async (req, res, next) => {
         try {
+            const canModifyTeamLeadershipCase = CanModifyTeamLeadership()
+            await canModifyTeamLeadershipCase.execute(req)
             const promoteUserToLeadCase = PromoteUserToLead(repository)
             const { id } = req.params
             const { teamId }   = req.body

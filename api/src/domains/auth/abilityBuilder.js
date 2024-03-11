@@ -30,13 +30,13 @@ function defineRulesFor(user){
 
 function defineUserRules(user){
     can('read', 'User', {id: user.id})
-    
+
     can('update', 'UserShiftRelation', {isRequestingUser: true})
     
 }
 
 function defineLeadRules(){
-    can('read', 'User')
+    can('read', 'all')
 
     can('update', 'UserShiftRelation', {isLeadingTeam: true})
 
