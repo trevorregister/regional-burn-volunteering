@@ -71,7 +71,6 @@ module.exports = class ShiftRepository {
                 }
             },
         ])
-
         return members[0].members.sort((a, b) => a.name.localeCompare(b.name))
     }
 

@@ -20,6 +20,9 @@ function defineRulesFor(user){
         case 'user':
             defineUserRules(user)
             break
+        case 'event-lead':
+            defineEventLeadRules(user)
+            break
         default:
             cannot('manage', 'none')
     }
@@ -27,13 +30,26 @@ function defineRulesFor(user){
 
 function defineUserRules(user){
     can('read', 'User', {id: user.id})
+
     can('update', 'UserShiftRelation', {isRequestingUser: true})
     
 }
 
 function defineLeadRules(){
-    can('read', 'User')
+    can('read', 'all')
+
     can('update', 'UserShiftRelation', {isLeadingTeam: true})
+
+    can('update', 'Team', {isLeadingTeam: true})
+
+    can('write', 'Shift', {isLeadingTeam: true})
+    can('update', 'Shift', {isLeadingTeam: true})
+    can('delete', 'Shift', {isLeadingTeam: true})
+
+}
+
+function defineEventLeadRules(){
+    can('manage', 'all')
 }
 
 module.exports = {

@@ -3,7 +3,6 @@ const UserController = require('./controller')
 const UserDatabase = require('./data_access/database')
 const UserRepository = require('./repository')
 const auth = require('../../middleware/auth')
-const authZ = require('../../middleware/authZ')
 
 const userRoutes = () => {
     const database = new UserDatabase()
