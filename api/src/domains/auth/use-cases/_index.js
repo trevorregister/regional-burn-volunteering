@@ -1,7 +1,7 @@
 const CanReadUser  = require('./CanReadUser')
-const CanUpdateUser = require('./CanUpdateUser')
+const CanUpdateUserShiftRelation = require('./CanUpdateUserShiftRelation')
 
 module.exports = {
     CanReadUser,
-    CanUpdateUser
+    CanUpdateUserShiftRelation
 }
