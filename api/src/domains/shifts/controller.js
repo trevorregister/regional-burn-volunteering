@@ -7,7 +7,8 @@ const {
     GetMembers
 } = require('./use-cases/_index')
 const {
-    CanUpdateUserShiftRelation
+    CanUpdateUserShiftRelation,
+    CanModifyShift
 } = require('../auth/use-cases/_index')
 
 const ShiftDTO = require('./dto')
@@ -17,6 +18,8 @@ module.exports = (repository) => {
 
     const addShift = async (req, res, next) => {
         try {
+            const canModifyShiftCase = CanModifyShift()
+            await canModifyShiftCase.execute(req)
             const addShiftCase = AddShift(repository)
             const newShift = await addShiftCase.execute(ShiftDTO.toDb(req.body))
             res.status(201).send(ShiftDTO.toWeb(newShift))
@@ -49,6 +52,8 @@ module.exports = (repository) => {
 
     const updateShift = async (req, res, next) => {
         try {
+            const canModifyShiftCase = CanModifyShift()
+            await canModifyShiftCase.execute(req)
             const updateShiftCase = UpdateShift(repository)
             const { id } = req.params
             const update = req.body

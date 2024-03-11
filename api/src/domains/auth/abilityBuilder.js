@@ -34,6 +34,9 @@ function defineUserRules(user){
 function defineLeadRules(){
     can('read', 'User')
     can('update', 'UserShiftRelation', {isLeadingTeam: true})
+    can('write', 'Shift', {isLeadingTeam: true})
+    can('update', 'Shift', {isLeadingTeam: true})
+
 }
 
 module.exports = {

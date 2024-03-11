@@ -1,7 +1,6 @@
 class User {
-    constructor(id, teams = null){
+    constructor(id){
         this.id = id
-        this.teams = teams
         
     }
 }
@@ -13,7 +12,14 @@ class UserShiftRelation {
     }
 }
 
+class Shift {
+    constructor(isLeadingTeam){
+        this.isLeadingTeam = isLeadingTeam
+    }
+}
+
 module.exports = {
     User,
-    UserShiftRelation
+    UserShiftRelation,
+    Shift
 }
