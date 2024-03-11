@@ -27,13 +27,13 @@ function defineRulesFor(user){
 
 function defineUserRules(user){
     can('read', 'User', {id: user.id})
-    can('update', 'User', {id: user.id})
+    can('update', 'UserShiftRelation', {isRequestingUser: true})
     
 }
 
 function defineLeadRules(){
     can('read', 'User')
-    can('update', 'User')
+    can('update', 'UserShiftRelation', {isLeadingTeam: true})
 }
 
 module.exports = {
