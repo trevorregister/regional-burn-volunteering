@@ -6,6 +6,10 @@ const {
     Unsignup,
     GetMembers
 } = require('./use-cases/_index')
+const {
+    CanUpdateUser
+} = require('../auth/use-cases/_index')
+
 const ShiftDTO = require('./dto')
 const UserDTO = require('../users/dto')
 
@@ -57,6 +61,8 @@ module.exports = (repository) => {
 
     const signup = async (req, res, next) => {
         try {
+            const canUpdateUserCase = CanUpdateUser()
+            await canUpdateUserCase.execute(req)
             const signupCase = Signup(repository)
             const { id } = req.params
             const { userId } = req.body
@@ -69,6 +75,8 @@ module.exports = (repository) => {
 
     const unsignup = async (req, res, next) => {
         try {
+            const canUpdateUserCase = CanUpdateUser()
+            await canUpdateUserCase.execute(req)
             const unsignupCase = Unsignup(repository)
             const { id } = req.params
             const { userId } = req.body

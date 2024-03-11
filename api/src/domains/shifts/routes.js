@@ -11,7 +11,7 @@ const shiftRoutes = () => {
     const router = express.Router()
     const controller = ShiftController(repository)
 
-    router.use(auth, authZ)
+    router.use(auth)
 
     router.post('/', controller.addShift)
     router.get('/:id', controller.getShiftById)
