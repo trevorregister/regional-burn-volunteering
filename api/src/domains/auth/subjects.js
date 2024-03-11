@@ -18,8 +18,15 @@ class Shift {
     }
 }
 
+class Team {
+    constructor(isLeadingTeam){
+        this.isLeadingTeam = isLeadingTeam
+    }
+}
+
 module.exports = {
     User,
     UserShiftRelation,
-    Shift
+    Shift,
+    Team
 }

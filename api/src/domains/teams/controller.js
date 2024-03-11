@@ -10,6 +10,13 @@ const {
     DeleteLeadershipKey,
     GetLeads
 } = require('./use-cases/_index')
+
+const {
+    CanCreateTeam,
+    CanUpdateTeam,
+    CanModifyTeamLeadership
+} = require('../auth/use-cases/_index')
+
 const TeamDTO = require('./dto')
 const ShiftDTO = require('../shifts/dto')
 const UserDTO = require('../users/dto')
@@ -49,6 +56,7 @@ module.exports = (repository) => {
     }
 
     const getLeads = async (req, res, next) => {
+        //this doesn't seem to be used anywhere in the front yet.
         try {
             const getLeadsCase = GetLeads(repository)
             const { id } = req.params
@@ -64,6 +72,8 @@ module.exports = (repository) => {
 
     const addTeam = async (req, res, next) => {
         try {
+            const canCreateTeamCase = CanCreateTeam()
+            await canCreateTeamCase.execute(req)
             const addTeamCase = AddTeam(repository)
             const newTeam = await addTeamCase.execute(TeamDTO.toDb(req.body))
             res.status(201).send(TeamDTO.toWeb(newTeam))
@@ -74,7 +84,9 @@ module.exports = (repository) => {
 
     const updateTeam = async (req, res, next) => {
         try {
-            const updateTeamCase = UpdateTeamCase(repository)
+            const canUpdateTeamCase = CanUpdateTeam()
+            await canUpdateTeamCase.execute(req)
+            const updateTeamCase = UpdateTeam(repository)
             const update = req.body
             const { id } = req.params
             await updateTeamCase.execute(id, update)
@@ -86,6 +98,8 @@ module.exports = (repository) => {
 
     const addLead = async (req, res, next) => {
         try {
+            const canModifyTeamLeadershipCase = CanModifyTeamLeadership()
+            await canModifyTeamLeadershipCase.execute(req)
             const addLeadCase = AddLead(repository)
             const { id }  = req.params
             const { userId }   = req.body
@@ -98,6 +112,8 @@ module.exports = (repository) => {
 
     const removeLead = async (req, res, next) => {
         try {
+            const canModifyTeamLeadershipCase = CanModifyTeamLeadership()
+            await canModifyTeamLeadershipCase.execute(req)
             const removeLeadCase = RemoveLead(repository)
             const { id } = req.params
             const { userId } = req.body
@@ -110,6 +126,8 @@ module.exports = (repository) => {
 
     const generateLeadershipKeys = async (req, res, next) => {
         try{
+            const canModifyTeamLeadershipCase = CanModifyTeamLeadership()
+            await canModifyTeamLeadershipCase.execute(req)
             const generateLeadershipKeysCase = GenerateLeadershipKeys(repository)
             const { id } = req.params
             const { quantity } = req.body
@@ -123,6 +141,8 @@ module.exports = (repository) => {
 
     const deleteLeadershipKey = async (req, res, next) => {
         try{
+            const canModifyTeamLeadershipCase = CanModifyTeamLeadership()
+            await canModifyTeamLeadershipCase.execute(req)
             const deleteLeadershipKeyCase = DeleteLeadershipKey(repository)
             const { leadershipKeyValue } = req.body
             await deleteLeadershipKeyCase.execute(leadershipKeyValue)
