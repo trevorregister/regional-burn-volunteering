@@ -5,6 +5,7 @@ const CanCreateTeam = require('./CanCreateTeam')
 const CanUpdateTeam = require('./CanUpdateTeam')
 const CanModifyTeamLeadership = require('./CanModifyTeamLeadership')
 const CanReadShiftMembers = require('./CanReadShiftMembers')
+const IsEventLead = require('./IsEventLead')
 
 module.exports = {
     CanReadUser,
@@ -13,5 +14,7 @@ module.exports = {
     CanCreateTeam,
     CanUpdateTeam,
     CanModifyTeamLeadership,
-    CanReadShiftMembers
+    CanReadShiftMembers,
+    IsEventLead
+
 }
