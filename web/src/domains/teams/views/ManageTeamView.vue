@@ -1,19 +1,23 @@
 <template>
     <v-container>
         <v-row>
-                <h1>
-                    Manage Team
-                </h1>
+                <v-col cols="3">
+                    <h1>
+                        Manage Team
+                    </h1>
+                    <v-btn v-if="!showCol" @click="toggleCol">
+                        Add Shift
+                    </v-btn>
+                </v-col>
         </v-row>
         <v-row>
                 <v-col>
                     <h1>{{ team.name }}</h1>
-                    <p>{{ team.description }}</p>
                 </v-col>
+        </v-row>
+        <v-row>    
                 <v-col>
-                    <router-link :to="`/teams/${teamId}/add-shift`">
-                        <v-btn>Add Shift</v-btn>
-                    </router-link>
+                    <p>{{ team.description }}</p>
                 </v-col>
         </v-row>
         <v-row>
@@ -24,6 +28,9 @@
                     :userShifts=[]
                 />
             </v-col>
+            <v-col v-if="showCol">
+                <add-shift-view  @cancel="toggleCol"/>
+            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -31,11 +38,13 @@
 
 import { client } from '../../../../api-client/client'
 import ShiftTable from '../../shifts/components/ShiftTable.vue'
+import AddShiftView from '../components/AddShift.vue'
 
 export default {
     name: 'ManageTeamView',
     components: {
-        ShiftTable
+        ShiftTable,
+        AddShiftView
         
     },
     data() {
@@ -44,6 +53,7 @@ export default {
             team: {},
             leads: [],
             shifts: [],
+            showCol: false
         }
     },
     methods: {
@@ -66,6 +76,9 @@ export default {
         async shiftAction(action, shiftId){
             this.$router.push(`/shifts/${shiftId}/manage`)
         },
+        toggleCol(){
+            this.showCol = !this.showCol
+        },
         async load() {
             await this.getTeam()
             await this.getTeamShifts()
@@ -78,4 +91,4 @@ export default {
 </script>
 <style>
     
-</style>
+</style>./AddShift.vue
