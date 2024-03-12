@@ -1,14 +1,23 @@
 <template>
     <v-container>
         <v-row>
-            <v-col>
                 <h1>
                     Manage Team
                 </h1>
-                <div>
+        </v-row>
+        <v-row>
+                <v-col>
                     <h1>{{ team.name }}</h1>
                     <p>{{ team.description }}</p>
-                </div>
+                </v-col>
+                <v-col>
+                    <router-link :to="`/teams/${teamId}/add-shift`">
+                        <v-btn>Add Shift</v-btn>
+                    </router-link>
+                </v-col>
+        </v-row>
+        <v-row>
+            <v-col>
                 <shift-table
                     @shift-action="shiftAction"
                     :shifts="shifts"
