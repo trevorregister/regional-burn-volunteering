@@ -6,7 +6,7 @@
                         Manage Team
                     </h1>
                     <v-btn v-if="!showCol" @click="toggleCol">
-                        Add Shift
+                        Create Shifts
                     </v-btn>
                 </v-col>
         </v-row>
@@ -29,7 +29,7 @@
                 />
             </v-col>
             <v-col v-if="showCol">
-                <add-shift-view  @cancel="toggleCol"/>
+                <add-shift-view  @cancel="toggleCol" @shifts-created="toggleCol"/>
             </v-col>
         </v-row>
     </v-container>
@@ -76,8 +76,9 @@ export default {
         async shiftAction(action, shiftId){
             this.$router.push(`/shifts/${shiftId}/manage`)
         },
-        toggleCol(){
+        async toggleCol(){
             this.showCol = !this.showCol
+            await this.load()
         },
         async load() {
             await this.getTeam()
@@ -91,4 +92,4 @@ export default {
 </script>
 <style>
     
-</style>./AddShift.vue
+</style>
