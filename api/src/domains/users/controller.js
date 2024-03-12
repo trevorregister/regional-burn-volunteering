@@ -64,7 +64,7 @@ module.exports = (repository) => {
             const verified = await loginUserCase.execute(email, password)
             verified
                 ? res.status(201)
-                     .cookie('authcookie', verified.token, {httpOnly: true, sameSite: 'none'})
+                     .cookie('authcookie', verified.token, {httpOnly: true, sameSite: 'lax'})
                      .send({user: UserDTO.toWeb(verified.user), token: verified.token})
                 : res.status(401).send(UserDTO.toWeb(verified))
         } catch (err) {
