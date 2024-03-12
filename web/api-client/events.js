@@ -1,4 +1,5 @@
 import axios from 'redaxios'
+axios.defaults.withCredentials = true
 
 export default class Events {
     constructor(API_HOST){
