@@ -64,7 +64,13 @@ module.exports = (repository) => {
             const verified = await loginUserCase.execute(email, password)
             verified
                 ? res.status(201)
-                     .cookie('authcookie', verified.token, {httpOnly: true, sameSite: 'none', domain: 'regional-burn-volunteering.onrender.com'})
+                     .cookie(
+                        'authcookie', 
+                        verified.token, 
+                        {
+                            httpOnly: true, sameSite: 'strict'
+                        }
+                    )
                      .send({user: UserDTO.toWeb(verified.user), token: verified.token})
                 : res.status(401).send(UserDTO.toWeb(verified))
         } catch (err) {
