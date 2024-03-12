@@ -29,7 +29,10 @@
                 />
             </v-col>
             <v-col v-if="showCol">
-                <add-shift-view  @cancel="toggleCol" @shifts-created="toggleCol"/>
+                <add-shift-view   
+                    @cancel="toggleCol" 
+                    @shifts-created="toggleCol"
+                />
             </v-col>
         </v-row>
     </v-container>

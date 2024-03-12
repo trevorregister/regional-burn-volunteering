@@ -1,42 +1,49 @@
 <template>
-        <v-form>
+        <v-form  class="add-shift-form">
             <v-text-field
                 label="Name"
                 v-model="shift.name"
+                variant="outlined"
             />
             <v-text-field
                 label="Description"
                 v-model="shift.description"
+                variant="outlined"
             />
             <v-text-field
                 label="Capacity"
                 v-model="shift.capacity"
+                variant="outlined"
             />
             <v-text-field
                 label="Day"
                 type="date"
                 v-model="shift.day"
+                variant="outlined"
             />
             <v-text-field
                 label="Start Time"
                 type="time"
                 v-model="shift.startTime"
+                variant="outlined"
             />
             <v-text-field
                 label="Duration (hours)"
                 v-model="shift.duration"
+                variant="outlined"
             />
             <v-text-field
                 label="Number of shifts"
                 v-model="shift.amount"
+                variant="outlined"
             />
             <v-row>
-                <v-col>
+                <v-col class="d-flex justify-center pa-1">
                     <v-btn @click="create">
                         Create
                     </v-btn>
                 </v-col>
-                <v-col>
+                <v-col class="d-flex justify-center pa-1">
                     <v-btn @click="cancel">
                         Cancel
                     </v-btn>
@@ -48,7 +55,7 @@
 import { client } from '../../../../api-client/client'
 export default {
     name: 'AddShift',
-    emits: ['reset'],
+    emits: ['cancel', 'shifts-created'],
     data() {
         return {
             shift: {
@@ -97,6 +104,9 @@ export default {
     }
 }
 </script>
-<style>
-    
+<style scoped>
+    .add-shift-form {
+        position: fixed;
+        width: 20%;
+    }
 </style>
