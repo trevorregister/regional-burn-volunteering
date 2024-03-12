@@ -4,39 +4,55 @@
                 label="Name"
                 v-model="shift.name"
                 variant="outlined"
+                @blur="floorValues"
             />
             <v-text-field
                 label="Description"
                 v-model="shift.description"
                 variant="outlined"
+                @blur="floorValues"
             />
             <v-text-field
                 label="Capacity"
                 v-model="shift.capacity"
                 variant="outlined"
+                @blur="floorValues"
+
             />
             <v-text-field
                 label="Day"
                 type="date"
                 v-model="shift.day"
                 variant="outlined"
+                @blur="floorValues"
             />
             <v-text-field
                 label="Start Time"
                 type="time"
                 v-model="shift.startTime"
                 variant="outlined"
+                @blur="floorValues"
             />
             <v-text-field
                 label="Duration (hours)"
+                type="number"
                 v-model="shift.duration"
                 variant="outlined"
+                @blur="floorValues"
             />
             <v-text-field
                 label="Number of shifts"
+                type="number"
                 v-model="shift.amount"
                 variant="outlined"
-            />
+                @blur="floorValues"
+            >
+                <v-tooltip
+                    activator="parent"
+                >
+                Create multiple back-to-back shifts
+                </v-tooltip>
+            </v-text-field>
             <v-row>
                 <v-col class="d-flex justify-center pa-1">
                     <v-btn @click="create">
@@ -94,6 +110,11 @@ export default {
             }
             return this.shifts
         },
+        floorValues(){
+            this.shift.capacity = Math.floor(this.shift.capacity)
+            this.shift.duration = Math.floor(this.shift.duration)
+            this.shift.amount = Math.floor(this.shift.amount)
+        },
         async create(){
             const shifts = this.buildShifts()
             for await (const shift of shifts){
@@ -101,12 +122,12 @@ export default {
             }
             this.$emit('shifts-created')
         }
-    }
+    },
 }
 </script>
 <style scoped>
-    .add-shift-form {
+/*     .add-shift-form {
         position: fixed;
         width: 20%;
-    }
+    } */
 </style>
