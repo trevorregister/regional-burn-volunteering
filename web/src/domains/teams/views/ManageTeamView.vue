@@ -30,7 +30,7 @@
                 <v-col v-if="showCol" cols="4">
                     <create-shift-form   
                         @cancel="toggleCol" 
-                        @shifts-created="toggleCol"
+                        @shifts-created="load"
                     />
                 </v-col>
             </v-row> 
@@ -81,7 +81,7 @@ export default {
         },
         async toggleCol(){
             this.showCol = !this.showCol
-            await this.load()
+            //await this.load()
         },
         async load() {
             await this.getTeam()
