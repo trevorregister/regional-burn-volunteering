@@ -117,7 +117,7 @@
 import { client } from '../../../../api-client/client'
 
 export default {
-    name: 'AddShift',
+    name: 'CreateShiftForm',
     emits: ['cancel', 'shifts-created'],
     data() {
         return {

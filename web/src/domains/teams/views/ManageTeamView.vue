@@ -28,7 +28,7 @@
                     />
                 </v-col>
                 <v-col v-if="showCol" cols="4">
-                    <add-shift-view   
+                    <create-shift-form   
                         @cancel="toggleCol" 
                         @shifts-created="toggleCol"
                     />
@@ -41,13 +41,13 @@
 
 import { client } from '../../../../api-client/client'
 import ShiftTable from '../../shifts/components/ShiftTable.vue'
-import AddShiftView from '../components/AddShift.vue'
+import CreateShiftForm from '../components/CreateShiftForm.vue'
 
 export default {
     name: 'ManageTeamView',
     components: {
         ShiftTable,
-        AddShiftView
+        CreateShiftForm
         
     },
     data() {
