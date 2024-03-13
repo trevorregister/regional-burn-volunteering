@@ -1,41 +1,41 @@
 <template>
-    <v-container>
-        <v-row>
-            <v-col cols="3">
-                <h1>
-                    Manage Team
-                </h1>
-                <v-btn v-if="!showCol" @click="toggleCol">
-                    Create Shifts
-                </v-btn>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col>
+    <v-row>
+        <v-col>
+            <v-row>
+                <v-col cols="3" class="d-flex align-center pa-0">
+                    <h1>
+                        Manage Team
+                    </h1>
+                </v-col>
+                <v-col cols="2" class="d-flex align-center pa-0">
+                    <v-btn v-if="!showCol" @click="toggleCol">
+                        Create Shifts
+                    </v-btn>
+                </v-col>
+            </v-row>
+            <v-row>
                 <h1>{{ team.name }}</h1>
-            </v-col>
-        </v-row>
-        <v-row>    
-            <v-col>
+            </v-row>
+            <v-row>    
                 <p>{{ team.description }}</p>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col>
-                <shift-table
-                    @shift-action="shiftAction"
-                    :shifts="shifts"
-                    :userShifts=[]
-                />
-            </v-col>
-            <v-col v-if="showCol">
-                <add-shift-view   
-                    @cancel="toggleCol" 
-                    @shifts-created="toggleCol"
-                />
-            </v-col>
-        </v-row>
-    </v-container>
+            </v-row>
+            <v-row>
+                <v-col>
+                    <shift-table
+                        @shift-action="shiftAction"
+                        :shifts="shifts"
+                        :userShifts=[]
+                    />
+                </v-col>
+                <v-col v-if="showCol" cols="4">
+                    <add-shift-view   
+                        @cancel="toggleCol" 
+                        @shifts-created="toggleCol"
+                    />
+                </v-col>
+            </v-row> 
+        </v-col>
+    </v-row>
 </template>
 <script>
 
