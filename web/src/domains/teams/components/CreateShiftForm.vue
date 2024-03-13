@@ -62,14 +62,14 @@
             </v-text-field>
             <v-row>
                 <v-col class="d-flex justify-center pa-1">
-                    <v-btn @click="toggleModal">
-                        Create
-                    </v-btn>
+                    <action-button @click="toggleModal"
+                        :label="'Create'"
+                    />
                 </v-col>
                 <v-col class="d-flex justify-center pa-1">
-                    <v-btn @click="cancel">
-                        Cancel
-                    </v-btn>
+                    <cancel-button @click="cancel"
+                        :label="'Cancel'"
+                    />
                 </v-col>
             </v-row>
         </v-form>
@@ -102,12 +102,12 @@
                         </tbody>
                     </v-table>
                 <v-row justify="space-around" class="py-2">
-                    <v-btn color="primary" @click="create">
-                        Confirm
-                    </v-btn>
-                    <v-btn color="warning" @click="toggleModal">
-                        Cancel
-                    </v-btn>
+                    <action-button @click="create"
+                        :label="'Confirm'"
+                    />
+                    <cancel-button @click="toggleModal"
+                        :label="'Cancel'"
+                    />
                 </v-row>
             </v-sheet>
         </v-overlay>
@@ -115,9 +115,15 @@
 </template>
 <script>
 import { client } from '../../../../api-client/client'
+import ActionButton from '@/domains/shared/components/ActionButton.vue'
+import CancelButton from '@/domains/shared/components/CancelButton.vue'
 
 export default {
     name: 'CreateShiftForm',
+    components: {
+        ActionButton,
+        CancelButton
+    },
     emits: ['cancel', 'shifts-created'],
     data() {
         return {

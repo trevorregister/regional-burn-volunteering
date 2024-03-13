@@ -14,7 +14,7 @@
               type="password"
             >
           </v-text-field>
-          <v-btn block class="mt-2" color="secondary" type="submit">
+          <v-btn block class="mt-2" color="primary" type="submit">
             Submit
           </v-btn>
           </v-form>

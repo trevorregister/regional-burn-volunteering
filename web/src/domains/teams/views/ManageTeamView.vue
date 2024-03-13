@@ -8,9 +8,9 @@
                     </h1>
                 </v-col>
                 <v-col cols="2" class="d-flex align-center pa-0">
-                    <v-btn v-if="!showCol" @click="toggleCol">
-                        Create Shifts
-                    </v-btn>
+                    <action-button v-if="!showCol" @click="toggleCol"
+                        :label="'Create Shifts'"
+                        />
                 </v-col>
             </v-row>
             <v-row>
@@ -42,12 +42,14 @@
 import { client } from '../../../../api-client/client'
 import ShiftTable from '../../shifts/components/ShiftTable.vue'
 import CreateShiftForm from '../components/CreateShiftForm.vue'
+import ActionButton from '@/domains/shared/components/ActionButton.vue'
 
 export default {
     name: 'ManageTeamView',
     components: {
         ShiftTable,
-        CreateShiftForm
+        CreateShiftForm,
+        ActionButton
         
     },
     data() {
