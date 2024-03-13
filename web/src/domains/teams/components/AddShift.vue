@@ -15,6 +15,7 @@
             <v-text-field
                 label="Capacity"
                 v-model="shift.capacity"
+                type="number"
                 variant="outlined"
                 @blur="floorValues"
 
@@ -33,9 +34,8 @@
                 variant="outlined"
                 @blur="roundToNearestHour"
             >
-                <v-tooltip
-                    activator="parent" >
-                Rounds to nearest hour
+                <v-tooltip activator="parent" >
+                    Rounds to nearest hour
                 </v-tooltip>
             </v-text-field>
             <v-text-field
@@ -44,7 +44,11 @@
                 v-model="shift.duration"
                 variant="outlined"
                 @blur="floorValues"
-            />
+                >
+                <v-tooltip activator="parent">
+                    Whole values only
+                </v-tooltip>
+            </v-text-field>
             <v-text-field
                 label="Number of shifts"
                 type="number"
@@ -52,10 +56,8 @@
                 variant="outlined"
                 @blur="floorValues"
             >
-                <v-tooltip
-                    activator="parent"
-                >
-                Create multiple back-to-back shifts
+                <v-tooltip activator="parent">
+                    Create multiple back-to-back shifts
                 </v-tooltip>
             </v-text-field>
             <v-row>
