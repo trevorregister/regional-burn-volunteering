@@ -27,7 +27,8 @@
                         </v-col>
                         <v-col cols="3">
                             <router-link :to="`/teams/${team.id}/manage`">
-                                <v-btn v-if="isLeadingThisTeam(team)">Manage</v-btn>
+                                <action-button v-if="isLeadingThisTeam(team)"
+                                    :label="'Manage'"/>
                             </router-link>
                         </v-col>
                     </v-row>
@@ -46,11 +47,13 @@
 import { initUserStore } from '@/stores/user'
 import { client } from '../../../../api-client/client'
 import ShiftTable from '../../shifts/components/ShiftTable.vue'
+import ActionButton from '@/domains/shared/components/ActionButton.vue'
 
 export default {
     name: 'DashboardView',
     components: {
-        ShiftTable
+        ShiftTable,
+        ActionButton
     },
     data() {
         return {

@@ -68,7 +68,8 @@ module.exports = (repository) => {
                         'authcookie', 
                         verified.token, 
                         {
-                            httpOnly: true, sameSite: 'strict'
+                            httpOnly: true, 
+                            sameSite: 'strict'
                         }
                     )
                      .send({user: UserDTO.toWeb(verified.user), token: verified.token})

@@ -1,15 +1,20 @@
 <template>
-    <v-btn
+    <action-button
         @click="shiftAction(button.action, button.id)"
         :disabled="isDisabled"
-    >
-    {{ button.label }}
-    </v-btn>
+        :label="button.label"
+    />
 </template>
 
 <script>
+
+import ActionButton from '@/domains/shared/components/ActionButton.vue'
+
 export default {
     name: 'ShiftActionButton',
+    components: {
+        ActionButton
+    },
     emits: ['shift-action'],
     props: {
         button: {

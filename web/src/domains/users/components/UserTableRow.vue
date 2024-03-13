@@ -7,17 +7,21 @@
             {{ user.email }}
         </td>
         <td>
-            <v-btn>
-                <router-link :to="`/users/${user.id}/manage`">Details</router-link>
-            </v-btn>
+            <router-link :to="`/users/${user.id}/manage`">
+                <action-button :label="'Details'"/>
+            </router-link>
         </td>
     </tr>
 </template>
 <script>
 import { initUserStore } from '../../../stores/user'
+import ActionButton from '../../shared/components/ActionButton.vue'
 
 export default {
     name: 'UserTableRow',
+    components: {
+        ActionButton
+    },
     data (){
         return{
             userStore: initUserStore(),
