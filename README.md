@@ -13,8 +13,10 @@ Volunteer sign up app for regional burning man events.
 
 #### Features 
 * clients to allow for use of cross-module use-cases
+* delete shifts
 
 #### Refactors
+* new collection: shift-types. Contains name, description, and team. shifts ref this. 
 * mongoose transactions to preserve atomicity with signups/unsignups
 * controller -> use-case -> repo object destructuring to be consistent across the app. Look at AddLead use case as example.
 * update use-cases to patch only text fields (name, description, etc)
@@ -26,9 +28,13 @@ Volunteer sign up app for regional burning man events.
 #### Features
 * form validation
 * sideways scrolling for shift table
-* add shifts
+* delete shifts
+* error messages
+* add teams
+* unsignup user from manage shift view
 
 #### Refactors
+* display shifts in tables by day
 
 ### API-Client
 
