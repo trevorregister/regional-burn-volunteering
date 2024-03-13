@@ -31,8 +31,13 @@
                 type="time"
                 v-model="shift.startTime"
                 variant="outlined"
-                @blur="floorValues"
-            />
+                @blur="roundToNearestHalfHour"
+            >
+                <v-tooltip
+                    activator="parent" >
+                Rounds to nearest half-hour
+                </v-tooltip>
+            </v-text-field>
             <v-text-field
                 label="Duration (hours)"
                 type="number"
@@ -114,6 +119,16 @@ export default {
             this.shift.capacity = Math.floor(this.shift.capacity)
             this.shift.duration = Math.floor(this.shift.duration)
             this.shift.amount = Math.floor(this.shift.amount)
+        },
+        roundToNearestHalfHour() {
+            let time = this.shift.startTime.split(":")
+            const hours = time[0]
+            const minutes = time[1]
+            const roundedMinutes = minutes < 15 ? 0 : minutes < 45 ? 30 : 60;
+            const roundedHours = roundedMinutes === 60 ? hours + 1 : hours;
+            const finalMinutes = roundedMinutes === 60 ? 0 : roundedMinutes;
+            time = `${roundedHours}:${finalMinutes}`
+            this.shift.startTime = time
         },
         async create(){
             const shifts = this.buildShifts()

@@ -1,24 +1,24 @@
 <template>
     <v-container>
         <v-row>
-                <v-col cols="3">
-                    <h1>
-                        Manage Team
-                    </h1>
-                    <v-btn v-if="!showCol" @click="toggleCol">
-                        Create Shifts
-                    </v-btn>
-                </v-col>
+            <v-col cols="3">
+                <h1>
+                    Manage Team
+                </h1>
+                <v-btn v-if="!showCol" @click="toggleCol">
+                    Create Shifts
+                </v-btn>
+            </v-col>
         </v-row>
         <v-row>
-                <v-col>
-                    <h1>{{ team.name }}</h1>
-                </v-col>
+            <v-col>
+                <h1>{{ team.name }}</h1>
+            </v-col>
         </v-row>
         <v-row>    
-                <v-col>
-                    <p>{{ team.description }}</p>
-                </v-col>
+            <v-col>
+                <p>{{ team.description }}</p>
+            </v-col>
         </v-row>
         <v-row>
             <v-col>
