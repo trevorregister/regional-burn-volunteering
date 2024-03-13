@@ -31,11 +31,11 @@
                 type="time"
                 v-model="shift.startTime"
                 variant="outlined"
-                @blur="roundToNearestHalfHour"
+                @blur="roundToNearestHour"
             >
                 <v-tooltip
                     activator="parent" >
-                Rounds to nearest half-hour
+                Rounds to nearest hour
                 </v-tooltip>
             </v-text-field>
             <v-text-field
@@ -60,7 +60,7 @@
             </v-text-field>
             <v-row>
                 <v-col class="d-flex justify-center pa-1">
-                    <v-btn @click="create">
+                    <v-btn @click="toggleModal">
                         Create
                     </v-btn>
                 </v-col>
@@ -71,9 +71,49 @@
                 </v-col>
             </v-row>
         </v-form>
+    <v-container>
+        <v-overlay v-model="showModal"
+            scroll-strategy="none"
+            class="align-center justify-center"
+        >
+            <v-sheet elevation="5" class="rounded-lg">
+                <div class="pa-2">
+                    <h1>Confirm</h1>
+                    <p>Create the following shifts?</p>
+                </div>
+                    <v-table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Start</th>
+                                <th>Length</th>
+                                <th>Capacity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="shift in shifts" :key="shift">
+                                <td>{{ shift.name }}</td>
+                                <td>{{ formateDate(shift.start) }}</td>
+                                <td>{{ (shift.end - shift.start)/3600000 }}</td> <!-- converts to hours -->
+                                <td>{{ shift.capacity }}</td>
+                            </tr>
+                        </tbody>
+                    </v-table>
+                <v-row justify="space-around" class="py-2">
+                    <v-btn color="primary" @click="create">
+                        Confirm
+                    </v-btn>
+                    <v-btn color="warning" @click="toggleModal">
+                        Cancel
+                    </v-btn>
+                </v-row>
+            </v-sheet>
+        </v-overlay>
+    </v-container>
 </template>
 <script>
 import { client } from '../../../../api-client/client'
+
 export default {
     name: 'AddShift',
     emits: ['cancel', 'shifts-created'],
@@ -89,6 +129,7 @@ export default {
                 amount: 1
             },
             shifts: [],
+            showModal: false
         }
     },
     methods: {
@@ -120,17 +161,33 @@ export default {
             this.shift.duration = Math.floor(this.shift.duration)
             this.shift.amount = Math.floor(this.shift.amount)
         },
-        roundToNearestHalfHour() {
+        formateDate(date){
+            return date.toLocaleTimeString('en-US', {timeStyle: 'short'})
+        },
+        roundToNearestHour() {
             let time = this.shift.startTime.split(":")
             const hours = time[0]
             const minutes = time[1]
-            const roundedMinutes = minutes < 15 ? 0 : minutes < 45 ? 30 : 60;
-            const roundedHours = roundedMinutes === 60 ? hours + 1 : hours;
-            const finalMinutes = roundedMinutes === 60 ? 0 : roundedMinutes;
-            time = `${roundedHours}:${finalMinutes}`
+
+            const finalMinutes = "00"
+
+            let finalHours = minutes >= 30 
+                ? `${Number(hours) + 1}` //number conversion to prevent string concatenation
+                : hours
+
+            finalHours.length === 1 
+                ? finalHours = `0${finalHours}` //ensures 2 digit format for hours
+                : finalHours
+
+            time = `${finalHours}:${finalMinutes}`
             this.shift.startTime = time
         },
+        toggleModal(){
+            this.buildShifts()
+            this.showModal = !this.showModal
+        },
         async create(){
+            this.showModal = false
             const shifts = this.buildShifts()
             for await (const shift of shifts){
                 await client.shifts.addShift(shift)
@@ -141,8 +198,4 @@ export default {
 }
 </script>
 <style scoped>
-/*     .add-shift-form {
-        position: fixed;
-        width: 20%;
-    } */
 </style>
