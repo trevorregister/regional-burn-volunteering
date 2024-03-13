@@ -28,10 +28,9 @@
     </v-table>
 </template>
 <script>
-//import { client } from '../../../../api-client/client'
+
 import ShiftTableRow from '../../shifts/components/ShiftTableRow.vue'
 import { initUserStore } from '@/stores/user'
-//import LoadingContainer from '@/domains/shared/LoadingContainer.vue'
 
 export default {
     name: 'ShiftTable',
