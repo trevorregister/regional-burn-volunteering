@@ -38,6 +38,7 @@ function defineUserRules(user){
 function defineLeadRules(){
     can('read', 'all')
 
+    can('update', 'UserShiftRelation', {isRequestingUser: true})
     can('update', 'UserShiftRelation', {isLeadingTeam: true})
 
     can('update', 'Team', {isLeadingTeam: true})
