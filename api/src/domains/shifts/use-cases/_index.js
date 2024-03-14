@@ -4,6 +4,7 @@ const UpdateShift = require('./UpdateShift')
 const Signup = require('./Signup')
 const Unsignup = require('./Unsignup')
 const GetMembers = require('./GetMembers')
+const DeleteShift = require('./DeleteShift')
 
 module.exports = {
     AddShift,
@@ -11,5 +12,6 @@ module.exports = {
     UpdateShift,
     Signup,
     Unsignup,
-    GetMembers
+    GetMembers,
+    DeleteShift
 }

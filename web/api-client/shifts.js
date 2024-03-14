@@ -32,4 +32,8 @@ export default class Shifts {
     unsignup({id, userId}){
         return axios.patch(`${this.API_HOST}/shifts/${id}/unsignup`, {userId: userId})
     }
+
+    deleteShift(id){
+        return axios.delete(`${this.API_HOST}/shifts/${id}`)
+    }
 }
