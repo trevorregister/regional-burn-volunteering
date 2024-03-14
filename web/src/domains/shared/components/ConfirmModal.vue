@@ -13,7 +13,7 @@
                     <action-button @click="confirm"
                         :label="'Confirm'"
                     />
-                    <cancel-button @click="cancel"
+                    <warning-button @click="cancel"
                         :label="'Cancel'"
                     />
                 </v-row>
@@ -23,12 +23,12 @@
 </template>
 <script>
 import ActionButton from './ActionButton.vue'
-import CancelButton from './CancelButton.vue'
+import WarningButton from './WarningButton.vue'
 export default {
     name: 'ConfirmModal',
     components: {
         ActionButton,
-        CancelButton
+        WarningButton
     }, 
     emits: ['cancel', 'confirm'],
     props:{

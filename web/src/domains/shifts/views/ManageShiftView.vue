@@ -12,7 +12,7 @@
             <p><strong>Signups: </strong>{{ shift.signups }}/{{ shift.capacity }}</p>
         </div>
         <div>
-            <cancel-button @click="toggleModal"
+            <warning-button @click="toggleModal"
                 :label="'Delete Shift'"
             />
         </div>
@@ -31,7 +31,7 @@
 <script>
 import { client } from '../../../../api-client/client'
 import UserTable from '@/domains/users/components/UserTable.vue'
-import CancelButton from '@/domains/shared/components/CancelButton.vue'
+import WarningButton from '@/domains/shared/components/WarningButton.vue'
 //import ActionButton from '@/domains/shared/components/ActionButton.vue'
 import ConfirmModal from '@/domains/shared/components/ConfirmModal.vue'
 
@@ -39,8 +39,7 @@ export default {
     name: 'ManageShiftView',
     components: {
         UserTable,
-        CancelButton,
-        //ActionButton,
+        WarningButton,
         ConfirmModal
     },
     data(){

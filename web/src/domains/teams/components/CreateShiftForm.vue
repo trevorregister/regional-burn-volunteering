@@ -67,7 +67,7 @@
                     />
                 </v-col>
                 <v-col class="d-flex justify-center pa-1">
-                    <cancel-button @click="cancel"
+                    <warning-button @click="cancel"
                         :label="'Cancel'"
                     />
                 </v-col>
@@ -105,7 +105,7 @@
                     <action-button @click="create"
                         :label="'Confirm'"
                     />
-                    <cancel-button @click="toggleModal"
+                    <warning-button @click="toggleModal"
                         :label="'Cancel'"
                     />
                 </v-row>
@@ -116,13 +116,13 @@
 <script>
 import { client } from '../../../../api-client/client'
 import ActionButton from '@/domains/shared/components/ActionButton.vue'
-import CancelButton from '@/domains/shared/components/CancelButton.vue'
+import WarningButton from '@/domains/shared/components/WarningButton.vue'
 
 export default {
     name: 'CreateShiftForm',
     components: {
         ActionButton,
-        CancelButton
+        WarningButton
     },
     emits: ['cancel', 'shifts-created'],
     data() {
