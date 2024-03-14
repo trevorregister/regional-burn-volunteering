@@ -81,7 +81,7 @@ module.exports = (repository) => {
 
     const logoutUser = (req, res, next) => {
         try {
-            res.clearCookie('authcookie').status(200).send('logged out')
+            res.clearCookie('authcookie').status(200).end()
         } catch (err) {
             next(err)
         }
@@ -121,7 +121,7 @@ module.exports = (repository) => {
             const { teamId }   = req.body
             await promoteUserToLeadCase.execute(id, teamId)
             
-            res.status(204).send('user promoted to team lead')
+            res.status(204).end()
         } catch (err) {
             next(err)
         }

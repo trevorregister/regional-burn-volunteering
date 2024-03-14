@@ -69,7 +69,7 @@ module.exports = (repository) => {
             const update = req.body
             await updateShiftCase.execute(id, update)
 
-            res.status(201).send('updated')
+            res.status(204).end()
         } catch (err) {
             next(err)
         }
@@ -85,7 +85,7 @@ module.exports = (repository) => {
             const { userId } = req.body
 
             await signupCase.execute(userId, id)
-            res.status(204).send('signed up') 
+            res.status(204).end()
         } catch (err) {
             next(err)
         }
@@ -101,7 +101,7 @@ module.exports = (repository) => {
             const { userId } = req.body
             await unsignupCase.execute(userId, id)
             
-            res.status(204).send('unsigned up') 
+            res.status(204).end()
         } catch (err) {
             next(err)
         }

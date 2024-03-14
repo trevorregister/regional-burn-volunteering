@@ -53,7 +53,7 @@ module.exports = (repository) => {
             const update = req.body
             await updateEventCase.execute(id, update)
             
-            res.status(201).send('updated')
+            res.status(201).end()
         } catch (err) {
             next(err)
         }
