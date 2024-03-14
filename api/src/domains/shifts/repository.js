@@ -46,6 +46,10 @@ module.exports = class ShiftRepository {
         return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$set: update})
     }
 
+    async deleteShift(id){
+        return await this.db.findOneAndDelete({_id: new ObjectId(id)})
+    }
+
     async getMembers(id){
         const members =  await this.db.aggregate([
             {

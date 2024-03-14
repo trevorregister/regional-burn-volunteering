@@ -18,6 +18,7 @@ const shiftRoutes = () => {
     router.patch('/:id', controller.updateShift)
     router.patch('/:id/signup', controller.signup)
     router.patch('/:id/unsignup', controller.unsignup)
+    router.delete('/:id', controller.deleteShift)
     
     return router
 }

@@ -4,7 +4,8 @@ const {
     UpdateShift,
     Signup,
     Unsignup,
-    GetMembers
+    GetMembers,
+    DeleteShift
 } = require('./use-cases/_index')
 const {
     CanUpdateUserShiftRelation,
@@ -106,6 +107,20 @@ module.exports = (repository) => {
         }
     }
 
+    const deleteShift = async (req, res, next) => {
+        try {
+            const canModifyShiftCase = CanModifyShift()
+            await canModifyShiftCase.execute(req)
+
+            const deleteShiftCase = DeleteShift(repository)
+            const { id } = req.params
+            await deleteShiftCase.execute(id)
+            res.status(204).end()
+        } catch (err) {
+            next(err)
+        }
+    }
+
 
     return {
         addShift,
@@ -113,7 +128,8 @@ module.exports = (repository) => {
         updateShift,
         signup,
         unsignup,
-        getMembers
+        getMembers,
+        deleteShift
     }
 }
 
