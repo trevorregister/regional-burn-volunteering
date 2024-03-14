@@ -32,7 +32,6 @@ export default {
     }, 
     emits: ['cancel', 'confirm'],
     props:{
-        header: String,
         prompt: {
             type: String,
             required: true
