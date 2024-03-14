@@ -12,8 +12,6 @@ Volunteer sign up app for regional burning man events.
 ### API
 
 #### Features 
-* clients to allow for use of cross-module use-cases
-* delete shifts
 
 #### Refactors
 * new collection: shift-types. Contains name, description, and team. shifts ref this. 
@@ -28,7 +26,6 @@ Volunteer sign up app for regional burning man events.
 #### Features
 * form validation
 * sideways scrolling for shift table
-* delete shifts
 * error messages
 * add teams
 * unsignup user from manage shift view
