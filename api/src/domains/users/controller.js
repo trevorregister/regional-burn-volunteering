@@ -70,6 +70,7 @@ module.exports = (repository) => {
                         {
                             httpOnly: true, 
                             sameSite: 'none',
+                            secure: true,
                             domain: '.onrender.com'
                         }
                     )
