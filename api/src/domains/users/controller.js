@@ -71,7 +71,7 @@ module.exports = (repository) => {
                             httpOnly: true, 
                             sameSite: 'none',
                             secure: true,
-                            domain: '.trevorregister.com'
+                            domain: process.env.DOMAIN
                         }
                     )
                      .send({user: UserDTO.toWeb(verified.user), token: verified.token})
