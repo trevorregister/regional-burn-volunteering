@@ -69,7 +69,8 @@ module.exports = (repository) => {
                         verified.token, 
                         {
                             httpOnly: true, 
-                            sameSite: 'strict'
+                            sameSite: 'strict',
+                            domain: '.onrender.com'
                         }
                     )
                      .send({user: UserDTO.toWeb(verified.user), token: verified.token})
