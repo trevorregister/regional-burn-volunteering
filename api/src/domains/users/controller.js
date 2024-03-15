@@ -71,7 +71,7 @@ module.exports = (repository) => {
                             httpOnly: true, 
                             sameSite: 'none',
                             secure: true,
-                            domain: 'regional-burn-volunteering.onrender.com'
+                            domain: '.trevorregister.com'
                         }
                     )
                      .send({user: UserDTO.toWeb(verified.user), token: verified.token})
