@@ -69,7 +69,7 @@ module.exports = (repository) => {
                         verified.token, 
                         {
                             httpOnly: true, 
-                            sameSite: 'strict',
+                            sameSite: 'none',
                             domain: '.onrender.com'
                         }
                     )
