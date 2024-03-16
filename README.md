@@ -11,7 +11,8 @@ Volunteer sign up app for regional burning man events.
 
 ### API
 
-#### Features 
+#### Features
+* integration testing using supertest for routes/controllers 
 
 #### Refactors
 * new collection: shift-types. Contains name, description, and team. shifts ref this. 
