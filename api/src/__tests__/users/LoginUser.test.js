@@ -3,13 +3,13 @@ const { LoginUser } = require('../../domains/users/use-cases/_index')
 const dotenv = require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
-const build = new Builder()
+const builder = new Builder()
 
 describe('LoginUser', () => {
 
     it('successful login should return user and token', async () => {
-        const user = await build.user()
-        const loginUserCase = LoginUser(build.userRepo)
+        const user = await builder.user()
+        const loginUserCase = LoginUser(builder.userRepo)
         const login = await loginUserCase.execute(user.email, 'password')
         const verified = jwt.verify(login.token, process.env.JWT_SECRET)
 
@@ -31,8 +31,8 @@ describe('LoginUser', () => {
 
     it('unsuccessful login should return 401', async () => {
         try{
-            const user = await build.user()
-            const loginUserCase = LoginUser(build.userRepo)
+            const user = await builder.user()
+            const loginUserCase = LoginUser(builder.userRepo)
             await loginUserCase.execute(user.email, 'asdf')
         } catch(err){
             expect(err.code).toBe(401)

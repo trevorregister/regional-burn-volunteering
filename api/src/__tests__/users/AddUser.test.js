@@ -1,19 +1,19 @@
 const { Builder } = require('../builder')
 const { AddUser } = require('../../domains/users/use-cases/_index')
 
-const build = new Builder()
+const builder = new Builder()
 
 describe('AddUser', () => {
 
     it('create new user returns user', async () => {
         const user = {
-            name: build.faker.person.fullName(),
-            email: build.faker.internet.email(),
-            password: build.faker.internet.password(),
+            name: builder.faker.person.fullName(),
+            email: builder.faker.internet.email(),
+            password: builder.faker.internet.password(),
             role: 'user',
             leadershipKeyValue: ' ' //need to fix the use case to not require this
         }
-        const addUserCase = AddUser(build.userRepo)
+        const addUserCase = AddUser(builder.userRepo)
         const newUser = await addUserCase.execute(user)
         const { name, email, role } = newUser
         expect({
@@ -28,21 +28,21 @@ describe('AddUser', () => {
     })
 
     it('create new lead returns lead, redeems leadership key, adds lead to team leads', async () => {
-        const team = await build.team({leadershipKeys: [{
-            value: build.faker.lorem.word(8),
+        const team = await builder.team({leadershipKeys: [{
+            value: builder.faker.lorem.word(8),
             isRedeemed: false,
             redeemedBy: null
         }]})
 
         const lead = {
-            name: build.faker.person.fullName(),
-            email: build.faker.internet.email(),
-            password: build.faker.internet.password(),
+            name: builder.faker.person.fullName(),
+            email: builder.faker.internet.email(),
+            password: builder.faker.internet.password(),
             role: 'user',
             leadershipKeyValue: team.leadershipKeys[0].value
         }
 
-        const addUserCase = AddUser(build.userRepo)
+        const addUserCase = AddUser(builder.userRepo)
         const newLead = await addUserCase.execute(lead)
 
         const { name, email, role } = newLead
@@ -56,7 +56,7 @@ describe('AddUser', () => {
             role: 'lead'
         })
 
-        const updatedTeam = await build.teamRepo.getTeamById(team._id)
+        const updatedTeam = await builder.teamRepo.getTeamById(team._id)
         const { isRedeemed, redeemedBy } = updatedTeam.leadershipKeys[0]
         expect({
             isRedeemed,
@@ -70,14 +70,14 @@ describe('AddUser', () => {
 
     it('create new lead with invalid leadership key value returns 400', async () => {
         const user = {
-            name: build.faker.person.fullName(),
-            email: build.faker.internet.email(),
-            password: build.faker.internet.password(),
+            name: builder.faker.person.fullName(),
+            email: builder.faker.internet.email(),
+            password: builder.faker.internet.password(),
             role: 'user',
-            leadershipKeyValue: build.faker.lorem.word(8)
+            leadershipKeyValue: builder.faker.lorem.word(8)
         }
         try{
-            const addUserCase = AddUser(build.userRepo)
+            const addUserCase = AddUser(builder.userRepo)
             await addUserCase.execute(user)
         }
         catch(err){
@@ -86,16 +86,16 @@ describe('AddUser', () => {
     })
     
     it('create user with duplicate email returns 400', async () => {
-        const user = await build.user()
+        const user = await builder.user()
         const newUser = {
-            name: build.faker.person.fullName(),
+            name: builder.faker.person.fullName(),
             email: user.email,
-            password: build.faker.internet.password(),
+            password: builder.faker.internet.password(),
             role: 'user'
         }
 
         try{
-            const addUserCase = AddUser(build.userRepo)
+            const addUserCase = AddUser(builder.userRepo)
             await addUserCase.execute(newUser)
         }
         catch(err){

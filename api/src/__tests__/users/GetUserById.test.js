@@ -1,13 +1,13 @@
 const { Builder } = require('../builder')
 const { GetUserById } = require('../../domains/users/use-cases/_index')
 
-const build = new Builder()
+const builder = new Builder()
 
 describe('GetUserById', () => {
 
     it('get user by id should return that user', async () => {
-        const user = await build.user()
-        const getUserByIdCase = GetUserById(build.userRepo)
+        const user = await builder.user()
+        const getUserByIdCase = GetUserById(builder.userRepo)
         const retrievedUser = await getUserByIdCase.execute(user._id)
 
         expect(retrievedUser.toObject()).toEqual({
