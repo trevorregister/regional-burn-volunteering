@@ -52,6 +52,35 @@ const teamBuilder = build({
 
 })
 
+const shiftBuilder = build({
+    name: 'Shift',
+    fields: {
+        _id: perBuild(() => new ObjectId()),
+        name: perBuild(() => faker.lorem.word(2)),
+        description: perBuild(() => faker.lorem.sentence()),
+        team: perBuild(() => new ObjectId()),
+        members: [],
+        start: perBuild(() => faker.date.past()),
+        end: perBuild(() => faker.date.future()),
+        capacity: perBuild(() => faker.number.int(2, 5)),
+        signups: 0,
+        duration: 1
+    }, 
+    postBuild: (shift) => {
+        let past = new Date(shift.start)
+        let future = new Date(shift.end)
+        past.setSeconds(0)
+        past.setMinutes(0)
+        future.setSeconds(0)
+        future.setMinutes(0) 
+        shift.start = past
+        shift.end = future
+        shift.duration = Math.abs(shift.end - shift.start) / 36e5
+        return shift
+    }
+
+})
+
 function applyOverrides(builderInstance, overrides) {
     for (const key in overrides) {
         if (overrides.hasOwnProperty(key)) {
@@ -81,6 +110,7 @@ class Builder {
         this.faker = faker
         this.user = createBuilderMethod(userBuilder, userDatabase)
         this.team = createBuilderMethod(teamBuilder, teamDatabase)
+        this.shift = createBuilderMethod(shiftBuilder, shiftDatabase)
     }
     randomId(){
         return new mongoose.Types.ObjectId()
