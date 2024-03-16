@@ -43,7 +43,7 @@ const teamBuilder = build({
     name: 'Team',
     fields: {
         _id: perBuild(() => new ObjectId()),
-        name: perBuild(() => faker.company.companyName()),
+        name: perBuild(() => faker.lorem.word(2)),
         description: perBuild(() => faker.lorem.sentence()),
         members: [],
         leads: [],
