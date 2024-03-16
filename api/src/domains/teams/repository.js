@@ -45,6 +45,10 @@ module.exports = class TeamRepository {
         )
     }
 
+    async removeShift(id, shiftId){
+        return await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$pull: {shifts: new ObjectId(shiftId)}})
+    }
+
     async removeLead(id, userId){
         await this.db.findOneAndUpdate({_id: new ObjectId(id)}, {$pull: {leads: new ObjectId(userId)}})
     }

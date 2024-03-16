@@ -14,6 +14,8 @@ const {
 } = require('../auth/use-cases/_index')
 
 const UserDTO = require('./dto')
+const ShiftDTO = require('../shifts/dto')
+const TeamDTO = require('../teams/dto')
 
 module.exports = (repository) => {
     const getUsers = async (req, res, next) => {
@@ -94,8 +96,9 @@ module.exports = (repository) => {
             const getShiftsCase = GetShifts(repository)
             const { id } = req.params
             const shifts = await getShiftsCase.execute(id)
-
-            res.status(200).send(shifts)
+            const shiftsResponse = []
+            shifts.forEach(shift => shiftsResponse.push(ShiftDTO.toWeb(shift) ))
+            res.status(200).send(shiftsResponse)
         } catch (err) {
             next(err)
         }
@@ -106,8 +109,9 @@ module.exports = (repository) => {
             const getTeamsCase = GetTeams(repository)
             const { id } = req.params
             const teams = await getTeamsCase.execute(id)
-
-            res.status(200).send(teams)
+            const teamsResponse = []
+            teams.forEach(team => teamsResponse.push(TeamDTO.toWeb(team) ))
+            res.status(200).send(teamsResponse)
         } catch (err) {
             next(err)
         }
