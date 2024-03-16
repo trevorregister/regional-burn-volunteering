@@ -31,13 +31,42 @@ const userBuilder = build({
         _id: perBuild(() => new ObjectId()),
         name: perBuild(() => faker.person.fullName()),
         email: perBuild(() => faker.internet.email()),
-        hash: '$2b$10$0k888.GCzQolvjeD8JRntu8eYdi.GpGY0z3qytVal7HCTLNpTMJee',
+        hash: '$2b$10$0k888.GCzQolvjeD8JRntu8eYdi.GpGY0z3qytVal7HCTLNpTMJee', //password is the password
         role: 'user',
         shifts: [],
         events: [],
         teams: []
     },
 })
+
+const teamBuilder = build({
+    name: 'Team',
+    fields: {
+        _id: perBuild(() => new ObjectId()),
+        name: perBuild(() => faker.company.companyName()),
+        description: perBuild(() => faker.lorem.sentence()),
+        members: [],
+        leads: [],
+        shifts: []
+    }
+
+})
+
+function applyOverrides(builderInstance, overrides) {
+    for (const key in overrides) {
+        if (overrides.hasOwnProperty(key)) {
+            builderInstance[key] = overrides[key];
+        }
+    }
+}
+
+function createBuilderMethod(builder, db){
+    return function(overrides = {}) {
+        const builderInstance = builder.one(overrides)
+        applyOverrides(builderInstance, overrides)
+        return db.create(builderInstance)
+    }
+}
 
 class Builder {
     constructor(){
@@ -50,21 +79,12 @@ class Builder {
         this.shiftRepo = shiftRepository
         this.eventRepo = eventRepository
         this.faker = faker
+        this.user = createBuilderMethod(userBuilder, userDatabase)
+        this.team = createBuilderMethod(teamBuilder, teamDatabase)
     }
     randomId(){
         return new mongoose.Types.ObjectId()
     }
-    user(overrides = {}){
-        const user = userBuilder.one({overrides})
-        if(overrides.shifts){
-            user.shifts = [...overrides.shifts]
-        }
-        if(overrides.teams){
-            user.teams = [...overrides.teams]
-        }
-        return this.userDb.create(user)
-    }
-
 }
 
 module.exports = {
