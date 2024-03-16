@@ -59,6 +59,10 @@ class TeamService extends Service {
     isLeadingTeam(id, userId){
         return this.repository.isLeadingTeam(id, userId)
     }
+
+    removeShift(id, shiftId){
+        return this.repository.removeShift(id, shiftId)
+    }
 }
 
 class UserService extends Service {
