@@ -6,10 +6,18 @@ const builder = new Builder()
 describe('GetShifts', () => {
 
     it('return user shifts', async () => {
+        const userId = builder.randomId()
         const team = await builder.team()
-        const shift = await builder.shift({team: team._id})
-        const user = await builder.user({teams: [team._id], shifts: [shift._id]})
-        await builder.shiftRepo.addMember(shift._id, user._id)
+        const shift = await builder.shift({
+            team: team._id, 
+            members: [userId]
+        })
+        const user = await builder.user({
+            _id: userId,
+            teams: [team._id], 
+            shifts: [shift._id]
+        })
+        
         const getShiftsCase = GetShifts(builder.userRepo)
         const retrievedShifts = await getShiftsCase.execute(user._id)
         retrievedShifts.forEach(() => {

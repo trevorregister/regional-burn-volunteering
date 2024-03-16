@@ -20,10 +20,20 @@ describe('RemoveLead', () => {
     })
 
     it('remove lead of multiple teams, leaves role as lead', async () => {
-        const lead = await builder.user({role: 'lead'})
-        const teamOne = await builder.team({leads: [lead._id]})
-        const teamTwo = await builder.team({leads: [lead._id]})
-        await builder.userDb.findOneAndUpdate({_id: lead._id}, {$set: {teams: [teamOne._id, teamTwo._id]}})
+        const teamOneId = builder.randomId()   
+        const teamTwoId = builder.randomId()
+        const lead = await builder.user({
+            role: 'lead',
+            teams: [teamOneId, teamTwoId]
+        })
+        const teamOne = await builder.team({
+            _id: teamOneId,
+            leads: [lead._id]
+        })
+        const teamTwo = await builder.team({
+            _id: teamTwoId,
+            leads: [lead._id]
+        })
 
         const removeLeadCase = RemoveLead(builder.teamRepo)
         await removeLeadCase.execute(teamOne._id, lead)

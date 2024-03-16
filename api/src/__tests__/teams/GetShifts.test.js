@@ -6,9 +6,15 @@ const builder = new Builder()
 describe('GetShifts', () => {
     
         it('get shifts for specified team', async () => {
-            const shift = await builder.shift()
-            const team = await builder.team({shifts: [shift._id]})
-            await builder.shiftDb.findOneAndUpdate({_id: shift._id}, {$set: {team: team._id}})
+            const teamId = builder.randomId()
+            const shift = await builder.shift({
+                team: teamId
+            })
+            const team = await builder.team({
+                _id: teamId,
+                shifts: [shift._id]
+            })
+            
             const updatedShift = await builder.shiftDb.findOne({_id: shift._id})
             const getShiftsCase = GetShifts(builder.teamRepo)
             const shifts = await getShiftsCase.execute(team._id)

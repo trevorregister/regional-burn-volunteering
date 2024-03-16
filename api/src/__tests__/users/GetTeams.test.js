@@ -6,11 +6,18 @@ const builder = new Builder()
 describe('GetTeams', () => {
 
     it('return user teams', async () => {
-        const team = await builder.team()
-        const user = await builder.user({teams: [team._id]})
-        await builder.teamRepo.addMember(team._id, user._id)
+        const userId = builder.randomId()
+        const team = await builder.team({
+            members: [userId]
+        })
+        const user = await builder.user({
+            _id: userId,
+            teams: [team._id]
+        })
+
         const getTeamsCase = GetTeams(builder.userRepo)
         const retrievedTeams = await getTeamsCase.execute(user._id)
+        
         retrievedTeams.forEach(() => {
             expect(team.toObject()).toEqual({
                 _id: team._id,
