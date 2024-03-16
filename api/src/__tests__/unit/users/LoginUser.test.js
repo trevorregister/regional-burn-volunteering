@@ -1,5 +1,5 @@
-const { Builder } = require('../builder')
-const { LoginUser } = require('../../domains/users/use-cases/_index')
+const { Builder } = require('../../builder')
+const { LoginUser } = require('../../../domains/users/use-cases/_index')
 const dotenv = require('dotenv').config()
 const jwt = require('jsonwebtoken')
 

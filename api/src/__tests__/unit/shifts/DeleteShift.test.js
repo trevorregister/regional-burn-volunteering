@@ -1,5 +1,5 @@
-const { Builder } = require('../builder')
-const { DeleteShift } = require('../../domains/shifts/use-cases/_index')
+const { Builder } = require('../../builder')
+const { DeleteShift } = require('../../../domains/shifts/use-cases/_index')
 
 const builder = new Builder()
 

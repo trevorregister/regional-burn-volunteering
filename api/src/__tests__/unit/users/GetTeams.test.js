@@ -1,5 +1,5 @@
-const { Builder } = require('../builder')
-const { GetTeams } = require('../../domains/users/use-cases/_index')
+const { Builder } = require('../../builder')
+const { GetTeams } = require('../../../domains/users/use-cases/_index')
 
 const builder = new Builder()
 
