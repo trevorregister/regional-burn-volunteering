@@ -47,7 +47,8 @@ const teamBuilder = build({
         description: perBuild(() => faker.lorem.sentence()),
         members: [],
         leads: [],
-        shifts: []
+        shifts: [],
+        leadershipKeys: [],
     }
 
 })
