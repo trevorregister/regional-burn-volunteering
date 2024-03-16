@@ -49,6 +49,7 @@ class Builder {
         this.teamRepo = teamRepository
         this.shiftRepo = shiftRepository
         this.eventRepo = eventRepository
+        this.faker = faker
     }
     randomId(){
         return new mongoose.Types.ObjectId()
