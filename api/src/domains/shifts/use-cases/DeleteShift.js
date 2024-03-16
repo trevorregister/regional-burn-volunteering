@@ -20,6 +20,8 @@ module.exports = (repository) => {
             throw new HttpError(404, `${shift.team} team not found`)
         }
 
+        await teamService.removeShift(shift.team, id)
+
         for await (const member of shift.members){
             const user = await userService.getUserById(member)
             if (!user) continue
