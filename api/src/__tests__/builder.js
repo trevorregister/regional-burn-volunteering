@@ -63,7 +63,7 @@ const shiftBuilder = build({
         members: [],
         start: perBuild(() => faker.date.past()),
         end: perBuild(() => faker.date.future()),
-        capacity: perBuild(() => faker.number.int(2, 5)),
+        capacity: perBuild(() => faker.number.int({min: 2, max: 5})),
         signups: 0,
         duration: 1
     }, 
@@ -72,8 +72,10 @@ const shiftBuilder = build({
         let future = new Date(shift.end)
         past.setSeconds(0)
         past.setMinutes(0)
+        past.setMilliseconds(0)
         future.setSeconds(0)
         future.setMinutes(0) 
+        future.setMilliseconds(0)
         shift.start = past
         shift.end = future
         shift.duration = Math.abs(shift.end - shift.start) / 36e5
