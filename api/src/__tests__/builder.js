@@ -1,6 +1,5 @@
 const { build, perBuild } = require('@jackfranklin/test-data-bot')
 const { faker } = require('@faker-js/faker')
-const bcrypt = require('bcrypt')
 const { ObjectId } = require('mongodb')
 const mongoose = require('mongoose')
 
