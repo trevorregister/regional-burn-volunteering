@@ -13,6 +13,7 @@ Volunteer sign up app for regional burning man events.
 
 #### Features
 * integration testing using supertest for routes/controllers 
+* build out events module using tdd
 
 #### Refactors
 * new collection: shift-types. Contains name, description, and team. shifts ref this. 
