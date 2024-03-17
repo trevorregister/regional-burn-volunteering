@@ -4,6 +4,6 @@ module.exports = {
     testPathIgnorePatterns: [
       './src/__tests__/builder.js', 
       './src/__tests__/jest.setup.js',
-      './src/__tests__/integration/supertest.config.js',
+      './src/__tests__/integration/setup.js',
     ],
   }
