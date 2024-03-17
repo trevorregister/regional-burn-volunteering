@@ -1,7 +1,5 @@
-const { Builder } = require('../../builder')
+const builder = require('../../builder')
 const { GetShiftById } = require('../../../domains/shifts/use-cases/_index')
-
-const builder = new Builder()
 
 describe('GetShiftById', () => {
 

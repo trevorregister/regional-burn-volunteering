@@ -2,10 +2,13 @@
   "name": "fai-volunteers",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest --runInBand ./src/__tests__",
-    "start": "nodemon app.js"
+    "test:watch": "jest --watch --runInBand ./src/__tests__",
+    "test:int": "jest --runInBand ./src/__tests__/integration",
+    "test:unit": "jest --runInBand ./src/__tests__/unit",
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -31,7 +34,8 @@
     "mongoose": "^8.0.0",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1",
-    "passport": "^0.6.0"
+    "passport": "^0.6.0",
+    "supertest": "^6.3.4"
   },
   "_moduleAliases": {
     "@schemas": "src/schemas"
