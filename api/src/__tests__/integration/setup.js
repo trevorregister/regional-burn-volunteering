@@ -12,28 +12,27 @@ const routes = {
 
 function createRequestMethods(request, domainRoute){
     return {
-        post: (endpoint, data, token = '') => {
+        post: (endpoint, data, token = '') => 
             request
                 .post(`${domainRoute}${endpoint}`)
                 .set({'Cookie': `authcookie=${token}`})
-                .send(data)
-        },
-        get: (endpoint, token = '') => {
+                .send(data),
+        get: (endpoint, token = '') => 
             request
                 .get(`${domainRoute}${endpoint}`)
                 .set({'Cookie': `authcookie=${token}`})
-        },
-        patch: (endpoint, data, token = '') => {
+        ,
+        patch: (endpoint, data, token = '') => 
             request
                 .patch(`${domainRoute}${endpoint}`)
                 .set({'Cookie': `authcookie=${token}`})
                 .send(data)
-        },
-        delete: (endpoint, token = '') => {
+        ,
+        delete: (endpoint, token = '') => 
             request
                 .delete(`${domainRoute}${endpoint}`)
                 .set({'Cookie': `authcookie=${token}`})
-        }
+        
     }
 }
 
