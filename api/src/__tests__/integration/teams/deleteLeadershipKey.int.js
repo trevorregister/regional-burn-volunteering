@@ -14,4 +14,12 @@ describe('Delete Leadership Key', () => {
         const res = await request.teams.post(`/delete-leadership-key`, {leadershipKeyValue: leadershipKey.value}, token)
         expect(res.status).toBe(204)
     })
+
+    it('given a request from a non-event-lead, returns 403', async () =>{
+        const user = await builder.user()
+        const token = builder.token(user)
+        const team = await builder.team()
+        const res = await request.teams.post(`/delete-leadership-key`, {leadershipKeyValue: builder.faker.lorem.word(8)}, token)
+        expect(res.status).toBe(403)
+    })
 })
