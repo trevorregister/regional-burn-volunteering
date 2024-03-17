@@ -1,7 +1,5 @@
-const { Builder } = require('../../builder')
+const builder = require('../../builder')
 const { Unsignup } = require('../../../domains/shifts/use-cases/_index')
-
-const builder = new Builder()
 
 describe('Unsignup', () => {
     it('unsignup user from shift removes shift/team from user', async () => {

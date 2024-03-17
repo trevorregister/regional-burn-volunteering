@@ -1,7 +1,5 @@
-const { Builder } = require('../../builder')
+const builder = require('../../builder')
 const { RemoveLead } = require('../../../domains/teams/use-cases/_index')
-
-const builder = new Builder()
 
 describe('RemoveLead', () => {
 

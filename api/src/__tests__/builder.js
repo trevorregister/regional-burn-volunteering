@@ -119,6 +119,6 @@ class Builder {
     }
 }
 
-module.exports = {
-    Builder
-}
+const builder = new Builder()
+
+module.exports = builder

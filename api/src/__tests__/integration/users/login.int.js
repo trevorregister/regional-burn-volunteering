@@ -1,9 +1,7 @@
 const request = require('../setup')
-const { Builder } = require('../../builder')
+const builder = require('../../builder')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv').config()
-
-const builder = new Builder()
 
 describe('login', () => {
 

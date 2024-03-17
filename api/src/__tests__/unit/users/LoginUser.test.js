@@ -1,9 +1,7 @@
-const { Builder } = require('../../builder')
+const builder = require('../../builder')
 const { LoginUser } = require('../../../domains/users/use-cases/_index')
 const dotenv = require('dotenv').config()
 const jwt = require('jsonwebtoken')
-
-const builder = new Builder()
 
 describe('LoginUser', () => {
 

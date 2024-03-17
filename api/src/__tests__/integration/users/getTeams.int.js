@@ -1,7 +1,6 @@
-const { Builder } = require('../../builder')
+const builder = require('../../builder')
 const request = require('../setup')
 
-const builder = new Builder()
 
 describe('getTeams', () => {
 
