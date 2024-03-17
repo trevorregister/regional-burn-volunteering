@@ -1,18 +1,15 @@
 const Shift = require('../model')
 const { HttpError } = require('../../../config/errors')
-const { UserService, TeamService } = require('../../services')
 const { ObjectId }= require('mongodb')
-
-const userService = new UserService()
-const teamService = new TeamService()
+const client = require('../../client')
 
 module.exports = (repository) => {
     async function execute(userId, shiftId,){
         const operations = []
         const shift = await repository.getShiftById(shiftId)
-        const user = await userService.getUserById(userId)
-        const team = await teamService.getTeamById(shift.team)
-        const shiftsOnThisTeam = await userService.getShiftsByTeam(userId, shift.team)
+        const user = await client.users.getUserById(userId)
+        const team = await client.teams.getTeamById(shift.team)
+        const shiftsOnThisTeam = await client.users.getShiftsByTeam(userId, shift.team)
 
         if(!user) {
             throw new HttpError(404, 'user not found')
@@ -28,14 +25,14 @@ module.exports = (repository) => {
         }
 
         await Promise.all([
-            await userService.removeShift(userId, shiftId),
+            await client.users.removeShift(userId, shiftId),
             await repository.removeMember(shiftId, userId),
             await repository.decrementShift(shiftId)
         ])
 
         if (shiftsOnThisTeam.length === 1 && !team.leads.includes(user._id)){
-            await teamService.removeMember(userId)
-            await userService.removeTeam(userId, shift.team)
+            await client.teams.removeMember(userId)
+            await client.users.removeTeam(userId, shift.team)
         }
 
     }

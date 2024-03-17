@@ -1,11 +1,6 @@
 const { defineAbilityFor } = require('../abilityBuilder')
 const { HttpError } = require('../../../config/errors')
 const { Team } = require('../subjects')
-const { 
-    TeamService, 
-} = require('../../services')
-
-const teamService = new TeamService()
 
 module.exports = () => {
     async function execute(req){

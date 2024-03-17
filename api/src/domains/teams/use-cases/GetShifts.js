@@ -1,11 +1,9 @@
 const { HttpError } = require('../../../config/errors')
-const { ShiftService } = require('../../services')
-
-const shiftService = new ShiftService()
+const client = require('../../client')
 
 module.exports = (repository) => {
     async function execute(id){
-        const shifts = await shiftService.getShiftsByTeam(id)
+        const shifts = await client.shifts.getShiftsByTeam(id)
         return shifts ?? []
 
     }
