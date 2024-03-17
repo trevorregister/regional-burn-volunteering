@@ -1,13 +1,8 @@
 const { defineAbilityFor } = require('../abilityBuilder')
 const { HttpError } = require('../../../config/errors')
 const { UserShiftRelation } = require('../subjects')
-const { 
-    TeamService,
-    ShiftService 
-} = require('../../services')
+const client = require('../../client')
 
-const shiftService = new ShiftService()
-const teamService = new TeamService()
 
 module.exports = () => {
     async function execute(req){
@@ -15,11 +10,11 @@ module.exports = () => {
         const { userId } = req.body
         const { id } = req.params //id = shiftId
 
-        const shift = await shiftService.getShiftById(id)
-        const team = await teamService.getTeamById(shift.team)
+        const shift = await client.shifts.getShiftById(id)
+        const team = await client.teams.getTeamById(shift.team)
 
         const isRequestingUser = user.id === userId
-        const isLeadingTeam = await teamService.isLeadingTeam(team._id, user.id)
+        const isLeadingTeam = await client.teams.isLeadingTeam(team._id, user.id)
         
         const relation = new UserShiftRelation(isLeadingTeam, isRequestingUser)
         const ability = defineAbilityFor(user)

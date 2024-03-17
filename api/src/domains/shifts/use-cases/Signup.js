@@ -1,17 +1,13 @@
 const Shift = require('../model')
 const { HttpError } = require('../../../config/errors')
-const { UserService, TeamService } = require('../../services')
 const { ObjectId }= require('mongodb')
-
-const userService = new UserService()
-const teamService = new TeamService()
-
+const client = require('../../client')
 
 module.exports = (repository) => {
     //disabling conflict checking until it can be refactored. See to-do for more.
     async function execute(userId, shiftId,){
         const shift = await repository.getShiftById(shiftId)
-        const user = await userService.getUserById(userId)
+        const user = await client.users.getUserById(userId)
         //const isShiftConflict = await repository.isShiftConflict(userId, shift.start, shift.end)
         if(!user) {
             throw new HttpError(404, 'user not found')
@@ -35,9 +31,9 @@ module.exports = (repository) => {
         return await Promise.all([
             await repository.incrementShift(shiftId),
             await repository.addMember(shiftId, userId),
-            await userService.addShift(userId, shiftId),
-            await userService.addTeam(userId, shift.team),
-            await teamService.addMember(shift.team, userId)
+            await client.users.addShift(userId, shiftId),
+            await client.users.addTeam(userId, shift.team),
+            await client.teams.addMember(shift.team, userId)
         ])
 
     }

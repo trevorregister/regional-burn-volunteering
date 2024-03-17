@@ -1,8 +1,7 @@
 const User = require('../model')
 const { HttpError } = require('../../../config/errors')
 const bcrypt = require('bcrypt')
-const { TeamService } = require('../../services')
-const teamService = new TeamService()
+const client = require('../../client')
 
 module.exports = (repository) => {
     //a little janky because the redeemLeadershipKey call sets the user that redeems it. which means the user has to exist in the data base first.
@@ -18,13 +17,13 @@ module.exports = (repository) => {
             return newUser
         }
         else{
-            const leadershipKeyCheck = await teamService.redeemLeadershipKey(leadershipKeyValue, newUser._id.toHexString())
+            const leadershipKeyCheck = await client.teams.redeemLeadershipKey(leadershipKeyValue, newUser._id.toHexString())
             if(leadershipKeyCheck){
                 newUser.role = 'lead'
                 if(!newUser.teams.includes(leadershipKeyCheck._id)){
                     newUser.teams.push(leadershipKeyCheck._id)
                 }
-                await teamService.addLead(leadershipKeyCheck._id.toHexString(), newUser._id.toHexString())
+                await client.teams.addLead(leadershipKeyCheck._id.toHexString(), newUser._id.toHexString())
                 return await newUser.save()
             }
             else{
