@@ -6,7 +6,6 @@ const dotenv = require('dotenv').config()
 const cookieParser = require('cookie-parser')
 const Routes = require('./src/routes')
 const errorHandler = require('./src/middleware/errorHandler')
-const db = require('./config/db')
 const cors = require('cors')
 
 const app = express()
@@ -16,7 +15,6 @@ const corsOptions = {
 }
 
 
-//db.connect('local')
 
 app.use(helmet())
 app.use(cors(corsOptions))
