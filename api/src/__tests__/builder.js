@@ -2,6 +2,8 @@ const { build, perBuild } = require('@jackfranklin/test-data-bot')
 const { faker } = require('@faker-js/faker')
 const { ObjectId } = require('mongodb')
 const mongoose = require('mongoose')
+const dotenv = require('dotenv').config()
+const jwt = require('jsonwebtoken')
 
 const UserDatabase = require ('../domains/users/data_access/database')
 const ShiftDatabase = require ('../domains/shifts/data_access/database')    
@@ -116,6 +118,9 @@ class Builder {
     }
     randomId(){
         return new mongoose.Types.ObjectId()
+    }
+    token(user){
+        return jwt.sign({id: user._id, role: user.role}, process.env.JWT_SECRET)
     }
 }
 

@@ -93,6 +93,9 @@ module.exports = (repository) => {
 
     const getShifts = async (req, res, next) => {
         try {
+            const canReadUserCase = CanReadUser()
+            await canReadUserCase.execute(req)
+
             const getShiftsCase = GetShifts(repository)
             const { id } = req.params
             const shifts = await getShiftsCase.execute(id)
@@ -119,8 +122,8 @@ module.exports = (repository) => {
 
     const promoteUserToLead = async (req, res, next) => {
         try {
-            const canModifyTeamLeadershipCase = CanModifyTeamLeadership()
-            await canModifyTeamLeadershipCase.execute(req)
+            const isEventLeadCase = IsEventLead()
+            await isEventLeadCase.execute(req)
 
             const promoteUserToLeadCase = PromoteUserToLead(repository)
             const { id } = req.params
