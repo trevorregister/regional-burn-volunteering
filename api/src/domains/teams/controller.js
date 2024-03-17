@@ -12,7 +12,7 @@ const {
 } = require('./use-cases/_index')
 
 const {
-    CanCreateTeam,
+    IsEventLead,
     CanUpdateTeam,
     CanModifyTeamLeadership
 } = require('../auth/use-cases/_index')
@@ -76,8 +76,8 @@ module.exports = (repository) => {
 
     const addTeam = async (req, res, next) => {
         try {
-            const canCreateTeamCase = CanCreateTeam()
-            await canCreateTeamCase.execute(req)
+            const IsEventLeadCase = IsEventLead()
+            await IsEventLeadCase.execute(req)
 
             const addTeamCase = AddTeam(repository)
             const newTeam = await addTeamCase.execute(TeamDTO.toDb(req.body))
@@ -106,8 +106,8 @@ module.exports = (repository) => {
 
     const addLead = async (req, res, next) => {
         try {
-            const canModifyTeamLeadershipCase = CanModifyTeamLeadership()
-            await canModifyTeamLeadershipCase.execute(req)
+            const IsEventLeadCase = IsEventLead()
+            await IsEventLeadCase.execute(req)
 
             const addLeadCase = AddLead(repository)
             const { id }  = req.params
@@ -122,8 +122,8 @@ module.exports = (repository) => {
 
     const removeLead = async (req, res, next) => {
         try {
-            const canModifyTeamLeadershipCase = CanModifyTeamLeadership()
-            await canModifyTeamLeadershipCase.execute(req)
+            const IsEventLeadCase = IsEventLead()
+            await IsEventLeadCase.execute(req)
 
             const removeLeadCase = RemoveLead(repository)
             const { id } = req.params
@@ -138,8 +138,8 @@ module.exports = (repository) => {
 
     const generateLeadershipKeys = async (req, res, next) => {
         try{
-            const canModifyTeamLeadershipCase = CanModifyTeamLeadership()
-            await canModifyTeamLeadershipCase.execute(req)
+            const IsEventLeadCase = IsEventLead()
+            await IsEventLeadCase.execute(req)
 
             const generateLeadershipKeysCase = GenerateLeadershipKeys(repository)
             const { id } = req.params
@@ -155,8 +155,8 @@ module.exports = (repository) => {
 
     const deleteLeadershipKey = async (req, res, next) => {
         try{
-            const canModifyTeamLeadershipCase = CanModifyTeamLeadership()
-            await canModifyTeamLeadershipCase.execute(req)
+            const IsEventLeadCase = IsEventLead()
+            await IsEventLeadCase.execute(req)
 
             const deleteLeadershipKeyCase = DeleteLeadershipKey(repository)
             const { leadershipKeyValue } = req.body
