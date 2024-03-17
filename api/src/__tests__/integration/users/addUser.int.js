@@ -1,5 +1,5 @@
 const { Builder } = require('../../builder')
-const client = require('../setup')
+const request = require('../setup')
 
 const builder = new Builder()
 
@@ -12,7 +12,7 @@ describe('addUser', () => {
             name: builder.faker.person.fullName(),
             leadershipKeyValue: ' ' //required because of a current bug
         }
-        const res = await client.users.post('/',userData)
+        const res = await request.users.post('/',userData)
         expect(res.status).toBe(201)
         expect(res.body.email).toBe(userData.email.toLowerCase())
     })
@@ -23,7 +23,7 @@ describe('addUser', () => {
                 password: 'password',
                 name: builder.faker.person.fullName()
             }
-            await client.users.post('/',userData)
+            await request.users.post('/',userData)
         } catch (err) {
             expect(err.status).toBe(422)
         }
@@ -37,7 +37,7 @@ describe('addUser', () => {
                 name: builder.faker.person.fullName(),
                 leadershipKeyValue: 'invalid'
             }
-            await client.users.post('/',userData)
+            await request.users.post('/',userData)
         } catch (err) {
             expect(err.status).toBe(422)
             expect(err.response.body.message).toBe('leadership key value error')

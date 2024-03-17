@@ -1,7 +1,7 @@
 const supertest = require('supertest')
 const app = require('../../../app')
 
-const request = supertest(app)
+const supertestRequest = supertest(app)
 
 const routes = {
     users: '/api/users',
@@ -36,7 +36,7 @@ function createRequestMethods(request, domainRoute){
     }
 }
 
-class Client {
+class Request {
     constructor(request, routes){
         this.users = createRequestMethods(request, routes.users)
         this.teams = createRequestMethods(request, routes.teams)
@@ -45,6 +45,6 @@ class Client {
     }
 }
 
-const client = new Client(request, routes)
+const client = new Request(supertestRequest, routes)
 
 module.exports = client
