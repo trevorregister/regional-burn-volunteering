@@ -12,10 +12,10 @@ const routes = {
 
 function requestsBuilder(request, domainRoute){
     return {
-        post: (endpoint, data) => request.post(`${domainRoute}/${endpoint}`).send(data),
-        get: (endpoint) => request.get(`${domainRoute}/${endpoint}`),
-        put: (endpoint, data) => request.put(`${domainRoute}/${endpoint}`).send(data),
-        delete: (endpoint) => request.delete(`${domainRoute}/${endpoint}`)
+        post: (endpoint, data, token = '') => request.post(`${domainRoute}/${endpoint}`).set({'Cookie': `authcookie=${token}`}).send(data),
+        get: (endpoint, token = '') => request.get(`${domainRoute}/${endpoint}`).set({'Cookie': `authcookie=${token}`}),
+        patch: (endpoint, data, token = '') => request.put(`${domainRoute}/${endpoint}`).set({'Cookie': `authcookie=${token}`}).send(data),
+        delete: (endpoint, token = '') => request.delete(`${domainRoute}/${endpoint}`).set({'Cookie': `authcookie=${token}`})
     }
 }
 
