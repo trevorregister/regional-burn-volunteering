@@ -32,7 +32,9 @@ function defineUserRules(user){
     can('read', 'User', {id: user.id})
 
     can('update', 'UserShiftRelation', {isRequestingUser: true})
-    
+    cannot('read', 'UserShiftRelation', {isRequestingUser: false})
+    cannot('write','Shift')
+    cannot('update', 'Shift')
 }
 
 function defineLeadRules(){
@@ -45,7 +47,10 @@ function defineLeadRules(){
 
     can('write', 'Shift', {isLeadingTeam: true})
     can('update', 'Shift', {isLeadingTeam: true})
+    cannot('update', 'Shift', {isLeadingTeam: false})
+    cannot('write', 'Shift', {isLeadingTeam: false})
     can('delete', 'Shift', {isLeadingTeam: true})
+    cannot('delete', 'Shift', {isLeadingTeam: false})
 
 }
 
