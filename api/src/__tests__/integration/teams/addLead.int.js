@@ -8,7 +8,6 @@ describe('Add Lead', () => {
         const team = await builder.team()
         const user = await builder.user()
         const res = await request.teams.patch(`/${team._id}/addLead`, {userId: user._id}, token)
-        console.log(res.headers)
         expect(res.status).toBe(204)
     })
 
