@@ -12,7 +12,6 @@ Volunteer sign up app for regional burning man events.
 ### API
 
 #### Features
-* integration testing using supertest for routes/controllers 
 * build out events module using tdd
 
 #### Refactors
