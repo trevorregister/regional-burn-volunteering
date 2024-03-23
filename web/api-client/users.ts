@@ -1,14 +1,20 @@
 import axios from 'redaxios'
-import { WebUser } from './types'
 axios.defaults.withCredentials = true
+
+import {
+    GetUserRequest,
+    GetUserResponse,
+    CreateUserRequest
+} from '../api-types/_index'
 
 export default class Users {
     readonly API_HOST: string
     constructor(API_HOST: string){
         this.API_HOST = API_HOST
     }
-    getUserById(id: string){
-        return axios.get(`${this.API_HOST}/users/${id}`)
+    async getUserById(id: GetUserRequest): Promise<GetUserResponse>{
+        const res = await axios.get(`${this.API_HOST}/users/${id}`)
+        return res.data
     }
 
     getUsers(){
@@ -23,23 +29,15 @@ export default class Users {
         return axios.post(`${this.API_HOST}/users/login`, credentials)
     }
 
-    addUser({
-        email, 
-        name, 
-        password, 
-        leadershipKeyValue} :{
-        email: string,
-        name: string,
-        password: string,
-        leadershipKeyValue: string
-        }){
-        const user = {
+    async addUser({email, name, password, leadershipKeyValue} :CreateUserRequest): Promise<GetUserResponse>{
+        const user: CreateUserRequest = {
             email: email,
             name: name,
             password: password,
             leadershipKeyValue: leadershipKeyValue
         }
-        return axios.post(`${this.API_HOST}/users`,user)
+        const res = await axios.post(`${this.API_HOST}/users`,user)
+        return res.data
     }
 
     getShifts(id: string){

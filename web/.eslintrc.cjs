@@ -13,7 +13,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module', // Allows for the use of imports
-    project: './tsconfig.json', // Specify it only if you have tsconfig.json file
+    tsconfigRootDir: __dirname,
+    project: '../web/tsconfig.json', 
+    extraFileExtensions: ['.vue']// Specify it only if you have tsconfig.json file
   },
   env: {
     node: true,

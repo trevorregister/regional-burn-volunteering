@@ -49,7 +49,7 @@ export default {
     methods: {
         async getUser(){
             const user = await client.users.getUserById(this.userIdToManage)
-            this.user = user.data
+            this.user = user
         },
         async getTeams(){
             const teams = await client.users.getTeams(this.userIdToManage)

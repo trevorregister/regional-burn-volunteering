@@ -1,30 +1,14 @@
 {
-    "compilerOptions": {
-      "target": "esnext",
-      "module": "esnext",
-      "strict": true,
-      "moduleResolution": "node",
-      "experimentalDecorators": true,
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
-      "sourceMap": true,
-      "baseUrl": ".",
-      "paths": {
-        "@/*": [
-          "src/*"
-        ]
-      },
-      "lib": [
-        "esnext",
-        "dom",
-        "dom.iterable",
-        "scripthost"
-      ]
-    },
-    "include": [
-      "api-client/**/*.ts",
-    ],
-    "exclude": [
-      "node_modules"
-    ]
-  }
+  "compilerOptions": {
+    // ... other options
+  },
+  "include": [
+    "api-client/**/*.ts",
+    "**/*.ts",
+    "**/*.vue",
+    ".eslintrc.cjs" // Add this line to include the .eslintrc.cjs file
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
