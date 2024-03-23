@@ -14,7 +14,7 @@
     </loading-container>
 </template>
 <script>
-import { initUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user'
 import { client } from '../../../../api-client/client'
 import TeamCard from '../components/TeamCard.vue'
 import LoadingContainer from '@/domains/shared/LoadingContainer.vue'
@@ -28,7 +28,7 @@ export default {
     data() {
         return {
             teams: [],
-            userStore: initUserStore(),
+            userStore: useUserStore(),
             userShifts: [],
             isLoading: true
         }

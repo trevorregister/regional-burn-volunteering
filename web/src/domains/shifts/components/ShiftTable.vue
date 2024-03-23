@@ -30,7 +30,7 @@
 <script>
 
 import ShiftTableRow from '../../shifts/components/ShiftTableRow.vue'
-import { initUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user'
 
 export default {
     name: 'ShiftTable',
@@ -48,7 +48,7 @@ export default {
         ,
     data() {
         return {
-            userStore: initUserStore(),
+            userStore: useUserStore(),
             isLoading: true
         }
     },

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-export const initUserStore = defineStore('user', {
+export const useUserStore = defineStore('user', {
   state: () => ({
     isAuthenticated: localStorage.getItem('isAuthenticated') ?? false,
     userId: localStorage.getItem('userId') ?? null

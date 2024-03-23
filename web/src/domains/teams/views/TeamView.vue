@@ -12,7 +12,7 @@
     </v-container>
 </template>
 <script>
-import { initUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user'
 import { client } from '../../../../api-client/client'
 import ShiftTable from '../../shifts/components/ShiftTable.vue'
 
@@ -27,7 +27,7 @@ export default {
             team: {},
             shifts: [],
             userShifts: [],
-            userStore: initUserStore()
+            userStore: useUserStore()
         }
     },
     methods: {

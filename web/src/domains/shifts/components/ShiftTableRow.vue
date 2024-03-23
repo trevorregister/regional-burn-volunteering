@@ -13,7 +13,7 @@
     </tr>
 </template>
 <script>
-import { initUserStore } from '../../../stores/user'
+import { useUserStore } from '../../../stores/user'
 import ShiftActionButton from './ShiftActionButton.vue'
 
 export default {
@@ -26,7 +26,7 @@ export default {
         return{
             shiftId: this.id,
             shiftSignups: this.signups,
-            userStore: initUserStore(),
+            userStore: useUserStore(),
         }
     },
     props: {

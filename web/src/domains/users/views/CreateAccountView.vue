@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { initUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user'
 import { client } from '../../../../api-client/client'
 
 export default {
@@ -50,7 +50,7 @@ export default {
       password: '',
       name: '',
       leadershipKeyValue: ' ',
-      userStore: initUserStore()
+      userStore: useUserStore()
     }
   },
   methods: {

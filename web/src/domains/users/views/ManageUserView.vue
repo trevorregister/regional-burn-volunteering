@@ -30,7 +30,7 @@
 <script>
 import { client } from '../../../../api-client/client'
 import ShiftTable from '@/domains/shifts/components/ShiftTable.vue'
-import { initUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user'
 export default {
     name: 'ManageUserView',
     components: {
@@ -42,7 +42,7 @@ export default {
             user: {},
             shifts: [],
             teams: [],
-            userStore: initUserStore(),
+            userStore: useUserStore(),
             buttons:[]
         }
     },

@@ -14,7 +14,7 @@
     </tr>
 </template>
 <script>
-import { initUserStore } from '../../../stores/user'
+import { useUserStore } from '../../../stores/user'
 import ActionButton from '../../shared/components/ActionButton.vue'
 
 export default {
@@ -24,7 +24,7 @@ export default {
     },
     data (){
         return{
-            userStore: initUserStore(),
+            userStore: useUserStore(),
         }
     },
     props: {

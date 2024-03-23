@@ -3,7 +3,7 @@ import { teams } from './teams'
 import { shifts } from './shifts'
 import { users } from './users'
 import { root } from './root'
-import { initUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user'
 
 const publicPages = ['/login', '/create-account', '/about', '/test']
 
@@ -18,7 +18,7 @@ const router = createRouter({
 })
 
 router.beforeEach( (to) =>{
-  const userStore = initUserStore()
+  const userStore = useUserStore()
   const authRequired = !publicPages.includes(to.path)
 
   if (!userStore.isAuthenticated && authRequired){

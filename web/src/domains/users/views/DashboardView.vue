@@ -44,7 +44,7 @@
     </v-row>
 </template>
 <script>
-import { initUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user'
 import { client } from '../../../../api-client/client'
 import ShiftTable from '../../shifts/components/ShiftTable.vue'
 import ActionButton from '@/domains/shared/components/ActionButton.vue'
@@ -58,7 +58,7 @@ export default {
     data() {
         return {
             user: {},
-            userStore: initUserStore(),
+            userStore: useUserStore(),
             shifts: [],
             teamShifts: [],
             teams: [],

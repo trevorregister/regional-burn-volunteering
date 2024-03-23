@@ -19,12 +19,12 @@
 </template>
 <script>
 import { client } from '../../../api-client/client'
-import { initUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user'
 export default {
     name: 'TopNavBar',
     data() {
         return {
-            userStore: initUserStore()
+            userStore: useUserStore()
         }
     },
     methods: {
