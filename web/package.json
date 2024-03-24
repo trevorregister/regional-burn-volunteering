@@ -21,6 +21,7 @@
     "redaxios": "^0.5.1",
     "roboto-fontface": "*",
     "sass": "^1.71.1",
+    "vee-validate": "^4.12.6",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5",
     "vuetify": "^3.5.6"
