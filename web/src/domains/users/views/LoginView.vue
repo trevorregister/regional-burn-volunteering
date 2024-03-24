@@ -2,32 +2,17 @@
   <v-container>
     <v-row align="center" justify="center">
       <v-sheet width="300" elevation="2" border="md">
-          <v-form @submit.prevent="login">
-            <v-text-field
-               v-model="email"
-              label="Email"
-            >
-            </v-text-field>
-            <v-text-field
-              v-model="password"
-              label="Password"
-              type="password"
-            >
-          </v-text-field>
-          <action-button
-            @click="login"
-            label="Submit"
-            width="300"/>
-          </v-form>
+        <v-form @submit.prevent="login">
+          <v-text-field v-model="email" label="Email"> </v-text-field>
+          <v-text-field v-model="password" label="Password" type="password"> </v-text-field>
+          <action-button @click="login" label="Submit" width="300" />
+        </v-form>
       </v-sheet>
     </v-row>
     <v-row align="center" justify="center">
-      <v-btn variant="text" @click="toCreateAccount">
-          Create Account
-        </v-btn>
+      <v-btn variant="text" @click="toCreateAccount"> Create Account </v-btn>
     </v-row>
   </v-container>
-
 </template>
 
 <script>
@@ -41,7 +26,7 @@ export default {
     ActionButton
   },
   inject: ['flash'],
-  data(){
+  data() {
     return {
       email: '',
       password: 'password',
@@ -49,26 +34,23 @@ export default {
     }
   },
   methods: {
-    async login(){
+    async login() {
       try {
-          const login = await client.users.login({
-            email: this.email,
-            password: this.password
-          })
-          this.userStore.setId(login.data.user.id)
-          this.userStore.authenticate()
-          this.$router.push({path: '/dashboard'})
+        const login = await client.users.login({
+          email: this.email,
+          password: this.password
+        })
+        this.userStore.setId(login.data.user.id)
+        this.userStore.authenticate()
+        this.$router.push({ path: '/dashboard' })
       } catch (err) {
         this.flash.$error(`${err.data.message}`)
       }
-
     },
-    toCreateAccount(){
-      this.$router.push({path: '/create-account'})
+    toCreateAccount() {
+      this.$router.push({ path: '/create-account' })
     }
   }
 }
 </script>
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

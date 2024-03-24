@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -6,12 +6,11 @@ export const useUserStore = defineStore('user', {
     userId: localStorage.getItem('userId') ?? null
   }),
   actions: {
-
     setId(userId) {
       this.userId = userId
       localStorage.setItem('userId', userId)
     },
-    authenticate(){
+    authenticate() {
       this.isAuthenticated = true
       localStorage.setItem('isAuthenticated', true)
     },
@@ -22,4 +21,4 @@ export const useUserStore = defineStore('user', {
       localStorage.removeItem('isAuthenticated')
     }
   }
-});
+})
