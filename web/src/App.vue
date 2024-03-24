@@ -61,7 +61,7 @@ import FlashBoundary from './domains/shared/FlashBoundary.vue'
       removeFlash(id){
         setTimeout(() => {
           this.flashes = this.flashes.filter(flash => flash.id !== id)
-          }, 3500)
+          }, 3000)
       }
     }
   }
