@@ -25,7 +25,6 @@ Volunteer sign up app for regional burning man events.
 ### Web
 
 #### Features
-* form validation
 * sideways scrolling for shift table
 * error messages
 * add teams
