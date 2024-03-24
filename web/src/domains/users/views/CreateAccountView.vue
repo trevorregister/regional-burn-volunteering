@@ -1,27 +1,31 @@
 <template>
   <v-container>
     <v-row align="center" justify="center">
-      <v-sheet width="300" elevation="2">
-          <v-form @submit.prevent="createUser">
+      <v-sheet width="300" border="md" class="pa-4">
+          <v-form>
             <v-text-field
-               v-model="name"
+              v-model="name"
               label="Name"
+              variant="underlined"
             >
             </v-text-field>
             <v-text-field
-               v-model="email"
+              v-model="email"
               label="Email"
+              variant="underlined"
             >
             </v-text-field>
             <v-text-field
               v-model="password"
               label="Password"
               type="password"
+              variant="underlined"
             >
           </v-text-field>
           <v-text-field
               v-model="leadershipKeyValue"
               label="Leadership code (optional)"
+              variant="underlined"
             >
             <v-tooltip
               activator="parent"
@@ -29,9 +33,16 @@
             >Only for members of leadership.
             </v-tooltip>
           </v-text-field>
-          <v-btn block class="mt-2" color="secondary" type="submit">
-            Submit
-          </v-btn>
+          <v-col
+            class="d-flex justify-center pa-2 align-center"
+          >
+          <action-button
+            @click="createUser"
+            :disabled="fieldsFilled"
+            label="Submit"
+            width="300"
+          />
+        </v-col>
           </v-form>
       </v-sheet>
     </v-row>
@@ -40,10 +51,19 @@
 
 <script>
 import { useUserStore } from '@/stores/user'
+import { useVuelidate } from '@vuelidate/core'
 import { client } from '../../../../api-client/client'
+import { createAccountValidation } from '../../../utils/validations'
+import  ActionButton  from '../../shared/components/ActionButton.vue'
 
 export default {
   name: 'CreateAccountView',
+  components: {
+    ActionButton
+  },
+  setup() {
+    return { v$: useVuelidate() }
+  },
   data() {
     return {
       email: '',
@@ -53,29 +73,49 @@ export default {
       userStore: useUserStore()
     }
   },
+  validations(){
+    return {
+      ...createAccountValidation
+    }
+  },
   methods: {
     async createUser(){
-      const newUserRes = await client.users.addUser({
-        email: this.email,
-        name: this.name,
-        password: this.password,
-        leadershipKeyValue: this.leadershipKeyValue
-      })
+      try {
+        const validated = await this.v$.$validate()
+        if (!validated) {
+          throw new Error('Validation failed')
 
-      const newUser = newUserRes.data
-
-      const login = await client.users.login({
-        email: newUser.email,
-        password: this.password
-      })
-
-      this.userStore.setId(login.data.user.id)
-
-      this.$router.push({path: '/dashboard'})
+        } else {
+          const newUserRes = await client.users.addUser({
+            email: this.email,
+            name: this.name,
+            password: this.password,
+            leadershipKeyValue: this.leadershipKeyValue
+          })
+  
+          const newUser = newUserRes.data
+  
+          const login = await client.users.login({
+            email: newUser.email,
+            password: this.password
+          })
+  
+          this.userStore.setId(login.data.user.id)
+  
+          this.$router.push({path: '/dashboard'})
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  },
+  computed: {
+    fieldsFilled(){
+      return (this.name === '' || this.email === '' || this.password === '')
     }
   }
 }
 </script>
-<style lang="scss" scoped>
 
+<style lang="scss" scoped>
 </style>

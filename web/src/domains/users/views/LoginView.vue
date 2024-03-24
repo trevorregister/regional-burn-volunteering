@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row align="center" justify="center">
-      <v-sheet width="300" elevation="2">
+      <v-sheet width="300" elevation="2" border="md">
           <v-form @submit.prevent="login">
             <v-text-field
                v-model="email"
@@ -14,9 +14,10 @@
               type="password"
             >
           </v-text-field>
-          <v-btn block class="mt-2" color="primary" type="submit">
-            Submit
-          </v-btn>
+          <action-button
+            @click="login"
+            label="Submit"
+            width="300"/>
           </v-form>
       </v-sheet>
     </v-row>
@@ -32,9 +33,18 @@
 <script>
 import { client } from '../../../../api-client/client'
 import { useUserStore } from '../../../stores/user'
+import ActionButton from '../../shared/components/ActionButton.vue'
+import { loginValidation } from '../../../utils/validations'
+import useVuelidate from '@vuelidate/core'
 
 export default {
   name: 'LoginView',
+  components: {
+    ActionButton
+  },
+  setup() {
+    return { v$: useVuelidate()}
+  },
   data(){
     return {
       email: '',
@@ -42,16 +52,30 @@ export default {
       userStore: useUserStore()
     }
   },
+  validations(){
+    return {
+      ...loginValidation
+    }
+  },
   methods: {
     async login(){
-      const login = await client.users.login({
-        email: this.email,
-        password: this.password
-      })
-      
-      this.userStore.setId(login.data.user.id)
-      this.userStore.authenticate()
-      this.$router.push({path: '/dashboard'})
+      try {
+        const validated = this.v$.$validate()
+        if (!validated) {
+          throw new Error('Validation failed')
+        } else {
+          const login = await client.users.login({
+            email: this.email,
+            password: this.password
+          })
+          
+          this.userStore.setId(login.data.user.id)
+          this.userStore.authenticate()
+          this.$router.push({path: '/dashboard'})
+        }
+      } catch (err) {
+        throw new Error(`${err.message}`)
+      }
 
     },
     toCreateAccount(){

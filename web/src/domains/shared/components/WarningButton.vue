@@ -1,5 +1,5 @@
 <template>
-    <v-btn color="warning">
+    <v-btn color="white" class="text-primary">
         {{ label }}
     </v-btn>
 </template>

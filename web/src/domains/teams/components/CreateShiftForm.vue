@@ -3,20 +3,20 @@
             <v-text-field
                 label="Name"
                 v-model="shift.name"
-                variant="outlined"
+                variant="underlined"
                 @blur="floorValues"
             />
             <v-text-field
                 label="Description"
                 v-model="shift.description"
-                variant="outlined"
+                variant="underlined"
                 @blur="floorValues"
             />
             <v-text-field
                 label="Capacity"
                 v-model="shift.capacity"
                 type="number"
-                variant="outlined"
+                variant="underlined"
                 @blur="floorValues"
 
             />
@@ -24,14 +24,14 @@
                 label="Day"
                 type="date"
                 v-model="shift.day"
-                variant="outlined"
+                variant="underlined"
                 @blur="floorValues"
             />
             <v-text-field
                 label="Start Time"
                 type="time"
                 v-model="shift.startTime"
-                variant="outlined"
+                variant="underlined"
                 @blur="roundToNearestHour"
             >
                 <v-tooltip activator="parent" >
@@ -42,7 +42,7 @@
                 label="Duration (hours)"
                 type="number"
                 v-model="shift.duration"
-                variant="outlined"
+                variant="underlined"
                 @blur="floorValues"
                 >
                 <v-tooltip activator="parent">
@@ -53,7 +53,7 @@
                 label="Number of shifts"
                 type="number"
                 v-model="shift.amount"
-                variant="outlined"
+                variant="underlined"
                 @blur="floorValues"
             >
                 <v-tooltip activator="parent">
@@ -117,6 +117,8 @@
 import { client } from '../../../../api-client/client'
 import ActionButton from '@/domains/shared/components/ActionButton.vue'
 import WarningButton from '@/domains/shared/components/WarningButton.vue'
+import { createShiftValidation } from '@/utils/validations'
+import useVuelidate from '@vuelidate/core'
 
 export default {
     name: 'CreateShiftForm',
@@ -125,6 +127,9 @@ export default {
         WarningButton
     },
     emits: ['cancel', 'shifts-created'],
+    setup(){
+        return { v$: useVuelidate()}
+    },
     data() {
         return {
             shift: {
@@ -138,6 +143,11 @@ export default {
             },
             shifts: [],
             showModal: false
+        }
+    },
+    validation() {
+        return {
+            ...createShiftValidation
         }
     },
     methods: {
@@ -195,12 +205,22 @@ export default {
             this.showModal = !this.showModal
         },
         async create(){
-            this.showModal = false
-            const shifts = this.buildShifts()
-            for await (const shift of shifts){
-                await client.shifts.addShift(shift)
+            try {
+                const validated = await this.v$.$validate()
+                if (!validated) {
+                    throw new Error('Validation failed')
+                }
+                else {
+                    this.showModal = false
+                    const shifts = this.buildShifts()
+                    for await (const shift of shifts){
+                        await client.shifts.addShift(shift)
+                    }
+                    this.$emit('shifts-created')
+                }
+            } catch (err) {
+                throw new Error(`${err.message}`)
             }
-            this.$emit('shifts-created')
         }
     },
 }
