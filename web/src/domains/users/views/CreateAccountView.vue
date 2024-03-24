@@ -53,7 +53,6 @@
 import { useUserStore } from '@/stores/user'
 import { useVuelidate } from '@vuelidate/core'
 import { client } from '../../../../api-client/client'
-import { createAccountValidation } from '../../../utils/validations'
 import  ActionButton  from '../../shared/components/ActionButton.vue'
 
 export default {
@@ -61,6 +60,7 @@ export default {
   components: {
     ActionButton
   },
+  inject: ['flash'],
   setup() {
     return { v$: useVuelidate() }
   },
@@ -73,40 +73,25 @@ export default {
       userStore: useUserStore()
     }
   },
-  validations(){
-    return {
-      ...createAccountValidation
-    }
-  },
   methods: {
     async createUser(){
       try {
-        const validated = await this.v$.$validate()
-        if (!validated) {
-          throw new Error('Validation failed')
-
-        } else {
           const newUserRes = await client.users.addUser({
             email: this.email,
             name: this.name,
             password: this.password,
             leadershipKeyValue: this.leadershipKeyValue
           })
-  
           const newUser = newUserRes.data
-  
           const login = await client.users.login({
             email: newUser.email,
             password: this.password
           })
-  
           this.userStore.setId(login.data.user.id)
   
           this.$router.push({path: '/dashboard'})
-        }
       } catch (err) {
-        console.log(err)
-      }
+        this.flash.$error(`${err.data.message}`)}
     }
   },
   computed: {

@@ -34,17 +34,13 @@
 import { client } from '../../../../api-client/client'
 import { useUserStore } from '../../../stores/user'
 import ActionButton from '../../shared/components/ActionButton.vue'
-import { loginValidation } from '../../../utils/validations'
-import useVuelidate from '@vuelidate/core'
 
 export default {
   name: 'LoginView',
   components: {
     ActionButton
   },
-  setup() {
-    return { v$: useVuelidate()}
-  },
+  inject: ['flash'],
   data(){
     return {
       email: '',
@@ -52,29 +48,18 @@ export default {
       userStore: useUserStore()
     }
   },
-  validations(){
-    return {
-      ...loginValidation
-    }
-  },
   methods: {
     async login(){
       try {
-        const validated = this.v$.$validate()
-        if (!validated) {
-          throw new Error('Validation failed')
-        } else {
           const login = await client.users.login({
             email: this.email,
             password: this.password
           })
-          
           this.userStore.setId(login.data.user.id)
           this.userStore.authenticate()
           this.$router.push({path: '/dashboard'})
-        }
       } catch (err) {
-        throw new Error(`${err.message}`)
+        this.flash.$error(`${err.data.message}`)
       }
 
     },

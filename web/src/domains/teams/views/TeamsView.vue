@@ -25,6 +25,7 @@ export default {
         TeamCard,
         LoadingContainer
     },
+    inject: ['flash'],
     data() {
         return {
             teams: [],
@@ -35,8 +36,12 @@ export default {
     },
     methods: {
         async getTeams() {
-            const teams = await client.teams.getTeams()
-            this.teams = teams.data
+            try {
+                const teams = await client.teams.getTeams()
+                this.teams = teams.data
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         },
         async load(){
             this.isLoading = true
@@ -58,4 +63,4 @@ export default {
         await this.load()
     }
 }
-</script>../../../../api-client
+</script>

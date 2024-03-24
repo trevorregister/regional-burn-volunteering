@@ -55,6 +55,7 @@ export default {
         ShiftTable,
         ActionButton
     },
+    inject: ['flash'],
     data() {
         return {
             user: {},
@@ -67,19 +68,27 @@ export default {
     },
     methods: {
         async getTeams(){
-            const teams = await client.users.getTeams(this.userStore.userId)
-            this.teams = teams.data.sort((a, b) => a.name.localeCompare(b.name))
+            try {
+                const teams = await client.users.getTeams(this.userStore.userId)
+                this.teams = teams.data.sort((a, b) => a.name.localeCompare(b.name))
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         },
         async getShifts(){
-            const shifts = await client.users.getShifts(this.userStore.userId)
-            this.shifts = shifts.data.map(shift => {
-                shift.button = {
-                    id: shift.id,
-                    label: 'Unsignup',
-                    action: 'unsignup',
-                }
-                return shift
-            })
+            try {
+                const shifts = await client.users.getShifts(this.userStore.userId)
+                this.shifts = shifts.data.map(shift => {
+                    shift.button = {
+                        id: shift.id,
+                        label: 'Unsignup',
+                        action: 'unsignup',
+                    }
+                    return shift
+                })
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         },
         filterShiftsForTeam(teamId){
             return this.shifts.filter(shift => shift.team === teamId)
@@ -88,11 +97,15 @@ export default {
             return team.leads.includes(this.userStore.userId)
         },
         async shiftAction(action, shiftId){
-            await client.shifts.unsignup({
-                id: shiftId, 
-                userId: this.userStore.userId
-            })
-            this.isLoading = false
+            try {
+                await client.shifts.unsignup({
+                    id: shiftId, 
+                    userId: this.userStore.userId
+                })
+                this.isLoading = false
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
             await this.load()
         },
         async load() {

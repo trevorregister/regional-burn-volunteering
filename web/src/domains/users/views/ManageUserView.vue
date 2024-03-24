@@ -36,6 +36,7 @@ export default {
     components: {
         ShiftTable
     },
+    inject: ['flash'],
     data(){
         return {
             userIdToManage: this.$route.params.userId,
@@ -48,20 +49,32 @@ export default {
     },
     methods: {
         async getUser(){
-            const user = await client.users.getUserById(this.userIdToManage)
-            this.user = user.data
+            try {
+                const user = await client.users.getUserById(this.userIdToManage)
+                this.user = user.data
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         },
         async getTeams(){
-            const teams = await client.users.getTeams(this.userIdToManage)
-            this.teams = teams.data.sort((a, b) => a.name.localeCompare(b.name))
+            try {
+                const teams = await client.users.getTeams(this.userIdToManage)
+                this.teams = teams.data.sort((a, b) => a.name.localeCompare(b.name))
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         },
         async getShifts(){
-            const shifts = await client.users.getShifts(this.userIdToManage)
-            this.shifts = shifts.data
-            this.shifts = this.shifts.map(shift => {
-                this.buildButton(shift)
-                return shift
-            })
+            try {
+                const shifts = await client.users.getShifts(this.userIdToManage)
+                this.shifts = shifts.data
+                this.shifts = this.shifts.map(shift => {
+                    this.buildButton(shift)
+                    return shift
+                })
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         },
         filterShiftsForTeam(teamId){
             return this.shifts.filter(shift => shift.team === teamId)
@@ -92,10 +105,14 @@ export default {
             }
         },
         async shiftAction(action, shiftId){
-            await client.shifts.unsignup({
-                id: shiftId, 
-                userId: this.userIdToManage
-            })
+            try {
+                await client.shifts.unsignup({
+                    id: shiftId, 
+                    userId: this.userIdToManage
+                })
+            } catch (err) {
+                this.flash.$warning(`${err.data.message}`)
+            }
             await this.load()
         },
         async load(){

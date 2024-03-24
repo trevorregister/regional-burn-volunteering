@@ -63,20 +63,28 @@ export default {
     },
     methods: {
         async getTeamShifts(){
-            let shifts = await client.teams.getShifts(this.teamId)
-            this.shifts = shifts.data.map(shift => {
-                shift.button = {
-                    id: shift.id,
-                    label: 'Manage',
-                    action: 'manage',
-                }
-                return shift
-            })
+            try {
+                let shifts = await client.teams.getShifts(this.teamId)
+                this.shifts = shifts.data.map(shift => {
+                    shift.button = {
+                        id: shift.id,
+                        label: 'Manage',
+                        action: 'manage',
+                    }
+                    return shift
+                })
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         },
 
         async getTeam(){
-            const team = await client.teams.getTeamById(this.teamId)
-            this.team = team.data
+            try {
+                const team = await client.teams.getTeamById(this.teamId)
+                this.team = team.data
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         },
         async shiftAction(action, shiftId){
             this.$router.push(`/shifts/${shiftId}/manage`)
