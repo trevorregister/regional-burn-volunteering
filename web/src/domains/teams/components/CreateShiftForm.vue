@@ -126,6 +126,7 @@ export default {
         ActionButton,
         WarningButton
     },
+    inject: ['flash'],
     emits: ['cancel', 'shifts-created'],
     setup(){
         return { v$: useVuelidate()}
@@ -219,7 +220,7 @@ export default {
                     this.$emit('shifts-created')
                 }
             } catch (err) {
-                throw new Error(`${err.message}`)
+                this.flash.$warning(`${err}`)
             }
         }
     },

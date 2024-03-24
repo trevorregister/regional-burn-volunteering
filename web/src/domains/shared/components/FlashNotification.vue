@@ -1,13 +1,12 @@
 <template>
     <v-alert
-    class="fade-in"
+    class="flash-alert"
+    :text="message"
     density="compact"
-    style="margin-top: 35px;"
+    style="margin-top: 35px; position: fixed; width: 75%; z-index: 1000;"
     :type="type"
     closable
-    >
-        {{ message }}
-    </v-alert>
+    />
 </template>
 <script>
 export default {
@@ -31,7 +30,12 @@ export default {
   100% {opacity: 1;}
 }
 
-.fade-in {
+.flash-alert {
   animation: fadeIn 1s ease-in;
+  margin-top: 35px; 
+  position: fixed; 
+  width: 75%; 
+  z-index: 1000;
+  
 }   
 </style>
