@@ -51,7 +51,7 @@ export default {
         CreateShiftForm,
         ActionButton,
     },
-    inject: ['$flash'],
+    inject: ['flash'],
     data() {
         return {
             teamId: this.$route.params.teamId,
@@ -63,7 +63,6 @@ export default {
     },
     methods: {
         async getTeamShifts(){
-            this.$flash('success!', 'success')
             let shifts = await client.teams.getShifts(this.teamId)
             this.shifts = shifts.data.map(shift => {
                 shift.button = {

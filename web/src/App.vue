@@ -7,7 +7,7 @@ import FlashBoundary from './domains/shared/FlashBoundary.vue'
 <template>
   <v-app class="app-container">
     <TopNavBar />
-    <FlashBoundary/>
+    <FlashBoundary :flashes="flashes"/>
         <v-main>
             <RouterView />
         </v-main>
@@ -17,7 +17,45 @@ import FlashBoundary from './domains/shared/FlashBoundary.vue'
   export default {
     components: {
       TopNavBar,
-      FlashBoundary
+      FlashBoundary,
+    },
+    data() {
+      return {
+        flashes: []
+      }
+    },
+    provide(){
+      return {
+        flash: {
+          $success: this.$success,
+          $error: this.$error,
+          $info: this.$info,
+          $warning: this.$warning,
+        }
+      }
+    },
+    methods:{
+        $success(message){
+            this.flashes.push({message: message, type: 'success'})
+            this.removeFlash()
+        },
+        $error(message){
+            this.flashes.push({message: message, type: 'error'})
+            this.removeFlash()
+        },
+        $info(message){
+            this.flashes.push({message: message, type: 'info'})
+            this.removeFlash()
+        },
+        $warning(message){
+            this.flashes.push({message: message, type: 'warning'})
+            this.removeFlash()
+        },
+        removeFlash(){
+          setTimeout(() => {
+                this.flashes.pop()
+            }, 3500)
+        }
     }
   }
 </script>
