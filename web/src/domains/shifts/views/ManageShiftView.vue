@@ -76,6 +76,7 @@ export default {
             try {
                 await client.shifts.deleteShift(this.shiftId)
                 this.$router.push({path: `/teams/${this.shift.team}/manage`})
+                this.flash.$success('Shift deleted')
             } catch (err) {
                 this.flash.$error(`${err.data.message}`)
             }

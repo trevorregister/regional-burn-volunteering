@@ -103,6 +103,7 @@ export default {
                     userId: this.userStore.userId
                 })
                 this.isLoading = false
+                this.flash.$success('You have successfully unsigned up for this shift')
             } catch (err) {
                 this.flash.$error(`${err.data.message}`)
             }

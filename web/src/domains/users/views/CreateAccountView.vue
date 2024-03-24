@@ -88,7 +88,7 @@ export default {
             password: this.password
           })
           this.userStore.setId(login.data.user.id)
-  
+          this.flash.$success(`Welcome, ${newUser.name}`)
           this.$router.push({path: '/dashboard'})
       } catch (err) {
         this.flash.$error(`${err.data.message}`)}

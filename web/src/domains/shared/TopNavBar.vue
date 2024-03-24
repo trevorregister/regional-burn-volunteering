@@ -35,6 +35,7 @@ export default {
             this.userStore.clearUser()
             await client.users.logout()
             this.$router.push({path: '/login'})
+            this.flash.$success('Logged out')
         }
     },
     computed: {

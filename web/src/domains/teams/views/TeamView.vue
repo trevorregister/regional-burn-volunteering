@@ -80,6 +80,7 @@ export default {
                     id: shiftId, 
                     userId: this.userStore.userId
                 })
+                this.flash.$success('Successfully signed up for shift')
                 this.isLoading = false
             } catch (err) {
                 this.flash.$warning(`${err.data.message}`)
@@ -92,6 +93,7 @@ export default {
                     id: shiftId, 
                     userId: this.userStore.userId
                 })
+                this.flash.$success('Successfully unsigned up for shift')
                 this.isLoading = false
             } catch (err) {
                 this.flash.$warning(`${err.data.message}`)

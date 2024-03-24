@@ -110,6 +110,7 @@ export default {
                     id: shiftId, 
                     userId: this.userIdToManage
                 })
+                this.flash.$success('Successfully removed user from shift')
             } catch (err) {
                 this.flash.$warning(`${err.data.message}`)
             }
