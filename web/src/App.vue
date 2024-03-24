@@ -6,10 +6,10 @@ import FlashBoundary from './domains/shared/FlashBoundary.vue'
 
 <template>
   <v-app class="app-container">
-    <TopNavBar />
-    <FlashBoundary :flashes="flashes"/>
+    <top-nav-bar/>
+    <flash-boundary :flashes="flashes"/>
         <v-main>
-            <RouterView />
+            <router-view/>
         </v-main>
   </v-app>
 </template>
@@ -35,27 +35,34 @@ import FlashBoundary from './domains/shared/FlashBoundary.vue'
       }
     },
     methods:{
-        $success(message){
-            this.flashes.push({message: message, type: 'success'})
-            this.removeFlash()
-        },
-        $error(message){
-            this.flashes.push({message: message, type: 'error'})
-            this.removeFlash()
-        },
-        $info(message){
-            this.flashes.push({message: message, type: 'info'})
-            this.removeFlash()
-        },
-        $warning(message){
-            this.flashes.push({message: message, type: 'warning'})
-            this.removeFlash()
-        },
-        removeFlash(){
-          setTimeout(() => {
-                this.flashes.pop()
-            }, 3500)
-        }
+      generateId(){
+        return Math.floor(Math.random() * 1000)
+      },
+      $success(message){
+        const flash = {message: message, type: 'success', id: this.generateId()}
+        this.flashes.push(flash)
+        this.removeFlash(flash.id)
+      },
+      $error(message){
+        const flash = {message: message, type: 'error', id: this.generateId()}
+        this.flashes.push(flash)
+        this.removeFlash(flash.id)
+      },
+      $info(message){
+        const flash = {message: message, type: 'info', id: this.generateId()}
+        this.flashes.push(flash)
+        this.removeFlash(flash.id)
+      },
+      $warning(message){
+        const flash = {message: message, type: 'warning', id: this.generateId()}
+        this.flashes.push(flash)
+        this.removeFlash(flash.id)
+      },
+      removeFlash(id){
+        setTimeout(() => {
+          this.flashes = this.flashes.filter(flash => flash.id !== id)
+          }, 3500)
+      }
     }
   }
 </script>
