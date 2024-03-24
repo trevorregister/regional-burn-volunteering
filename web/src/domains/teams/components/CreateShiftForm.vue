@@ -117,7 +117,6 @@
 import { client } from '../../../../api-client/client'
 import ActionButton from '@/domains/shared/components/ActionButton.vue'
 import WarningButton from '@/domains/shared/components/WarningButton.vue'
-import { createShiftValidation } from '@/utils/validations'
 import useVuelidate from '@vuelidate/core'
 
 export default {
@@ -126,6 +125,7 @@ export default {
         ActionButton,
         WarningButton
     },
+    inject: ['flash'],
     emits: ['cancel', 'shifts-created'],
     setup(){
         return { v$: useVuelidate()}
@@ -143,11 +143,6 @@ export default {
             },
             shifts: [],
             showModal: false
-        }
-    },
-    validation() {
-        return {
-            ...createShiftValidation
         }
     },
     methods: {
@@ -206,20 +201,17 @@ export default {
         },
         async create(){
             try {
-                const validated = await this.v$.$validate()
-                if (!validated) {
-                    throw new Error('Validation failed')
+                this.showModal = false
+                const shifts = this.buildShifts()
+                for await (const shift of shifts){
+                    await client.shifts.addShift(shift)
                 }
-                else {
-                    this.showModal = false
-                    const shifts = this.buildShifts()
-                    for await (const shift of shifts){
-                        await client.shifts.addShift(shift)
-                    }
-                    this.$emit('shifts-created')
-                }
+                this.$emit('shifts-created')
+                this.flash.$success('Shifts created')
+                Object.keys(this.shift).forEach(key => this.shift[key] = '')
             } catch (err) {
-                throw new Error(`${err.message}`)
+                this.toggleModal()
+                this.flash.$warning(`${err.data.message}`)
             }
         }
     },

@@ -19,8 +19,8 @@ import ShiftTable from '../../shifts/components/ShiftTable.vue'
 export default {
     components: {
         ShiftTable
-    }
-        ,
+    },
+    inject: ['flash'],
     data() {
         return {
             teamId: this.$route.params.teamId,
@@ -32,20 +32,32 @@ export default {
     },
     methods: {
         async getTeamShifts(teamId){
-            let shifts = await client.teams.getShifts(teamId)
-            this.shifts = shifts.data
-            this.shifts = this.shifts.map(shift => {
-                shift.button = this.buildButton(shift)
-                return shift
-            })
+            try {
+                let shifts = await client.teams.getShifts(teamId)
+                this.shifts = shifts.data
+                this.shifts = this.shifts.map(shift => {
+                    shift.button = this.buildButton(shift)
+                    return shift
+                })
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         },
         async getUserShifts(){
-            const shifts = await client.users.getShifts(this.userStore.userId)
-            this.userShifts = shifts.data
+            try {
+                const shifts = await client.users.getShifts(this.userStore.userId)
+                this.userShifts = shifts.data
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         }, 
         async getTeam(){
-            const team = await client.teams.getTeamById(this.teamId)
-            this.team = team.data
+            try {
+                const team = await client.teams.getTeamById(this.teamId)
+                this.team = team.data
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         },
 
         async shiftAction(action, shiftId){
@@ -62,20 +74,30 @@ export default {
             await this.load()
         },
         async signup(shiftId){
-            this.isLoading = true
-            await client.shifts.signup({
-                id: shiftId, 
-                userId: this.userStore.userId
-            })
-            this.isLoading = false
+            try {
+                this.isLoading = true
+                await client.shifts.signup({
+                    id: shiftId, 
+                    userId: this.userStore.userId
+                })
+                this.flash.$success('Successfully signed up for shift')
+                this.isLoading = false
+            } catch (err) {
+                this.flash.$warning(`${err.data.message}`)
+            }
         },
         async unsignup(shiftId){
-            this.isLoading = true
-            await client.shifts.unsignup({
-                id: shiftId, 
-                userId: this.userStore.userId
-            })
-            this.isLoading = false
+            try {
+                this.isLoading = true
+                await client.shifts.unsignup({
+                    id: shiftId, 
+                    userId: this.userStore.userId
+                })
+                this.flash.$success('Successfully unsigned up for shift')
+                this.isLoading = false
+            } catch (err) {
+                this.flash.$warning(`${err.data.message}`)
+            }
 
         },
         buildButton(shift){

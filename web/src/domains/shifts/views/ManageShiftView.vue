@@ -42,6 +42,7 @@ export default {
         WarningButton,
         ConfirmModal
     },
+    inject: ['flash'],
     data(){
         return {
             shiftId: this.$route.params.shiftId,
@@ -52,20 +53,33 @@ export default {
     },
     methods: {
         async getShift(){
-            const shift = await client.shifts.getShiftById(this.shiftId)
-            this.shift = shift.data
+            try {
+                const shift = await client.shifts.getShiftById(this.shiftId)
+                this.shift = shift.data
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         },
         async getMembers(){
-            const members = await client.shifts.getMembers(this.shiftId)
-            this.members = members.data
+            try {
+                const members = await client.shifts.getMembers(this.shiftId)
+                this.members = members.data
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         },
         async load(){
             await this.getShift()
             await this.getMembers()
         },
         async deleteShift(){
-            await client.shifts.deleteShift(this.shiftId)
-            this.$router.push({path: `/teams/${this.shift.team}/manage`})
+            try {
+                await client.shifts.deleteShift(this.shiftId)
+                this.$router.push({path: `/teams/${this.shift.team}/manage`})
+                this.flash.$success('Shift deleted')
+            } catch (err) {
+                this.flash.$error(`${err.data.message}`)
+            }
         },
         toggleModal(){
             this.showModal = !this.showModal   
