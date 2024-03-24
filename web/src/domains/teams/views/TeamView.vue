@@ -4,13 +4,23 @@
       <h1>{{ team.name }}</h1>
       <p>{{ team.description }}</p>
     </div>
-    <shift-table @shift-action="shiftAction" :shifts="shifts"> </shift-table>
+    <v-expansion-panels>
+      <v-expansion-panel v-for="day in days" 
+        :title="panelTitle(day)" 
+        :key="day"
+      >
+        <v-expansion-panel-text>
+          <shift-table @shift-action="shiftAction" :shifts="filterShiftsByDay(day)"/> 
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </v-container>
 </template>
 <script>
 import { useUserStore } from '@/stores/user'
 import { client } from '../../../../api-client/client'
 import ShiftTable from '../../shifts/components/ShiftTable.vue'
+import { formatDate } from '@/utils/formatDate'
 
 export default {
   components: {
@@ -23,15 +33,29 @@ export default {
       team: {},
       shifts: [],
       userShifts: [],
+      days: [],
       userStore: useUserStore()
     }
   },
   methods: {
+    filterShiftsByDay(day){
+      return this.shifts.filter(shift => shift.day === day)
+    },
+    panelTitle(day){
+      const { dayName, monthName, dayOfMonth} = formatDate(day)
+      return `${dayName}, ${monthName} ${dayOfMonth}`
+    },
+    getDayName(day){
+      return formatDate(day).dayName
+    },
     async getTeamShifts(teamId) {
       try {
         let shifts = await client.teams.getShifts(teamId)
         this.shifts = shifts.data
         this.shifts = this.shifts.map((shift) => {
+          if(!this.days.some(day => day === shift.day)) {
+            this.days.push(shift.day)
+          }
           shift.button = this.buildButton(shift)
           return shift
         })
@@ -129,3 +153,4 @@ export default {
 }
 </script>
 <style></style>
+@/utils/formatDate
