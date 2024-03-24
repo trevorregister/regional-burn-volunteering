@@ -26,8 +26,8 @@ Volunteer sign up app for regional burning man events.
 
 #### Features
 * sideways scrolling for shift table
-* error messages
 * add teams
+* export schedule
 * unsignup user from manage shift view
 
 #### Refactors
@@ -37,5 +37,6 @@ Volunteer sign up app for regional burning man events.
 
 ### Refactors
 * convert to typescript
+* Teams view
 * return `.data` so that you don't have to do it for every call within web. Example: `users = client.users.getUsers()` requires to then to `users.data`. 
 * after refactoring shift conflict in api, only give warning when conflict occurs.
