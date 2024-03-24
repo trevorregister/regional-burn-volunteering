@@ -211,7 +211,7 @@ export default {
                 Object.keys(this.shift).forEach(key => this.shift[key] = '')
             } catch (err) {
                 this.toggleModal()
-                this.flash.$warning(`${err}`)
+                this.flash.$warning(`${err.data.message}`)
             }
         }
     },
