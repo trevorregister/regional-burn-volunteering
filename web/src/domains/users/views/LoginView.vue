@@ -40,7 +40,7 @@ export default {
           email: this.email,
           password: this.password
         })
-        this.userStore.setId(login.data.user.id)
+        this.userStore.setId(login.data.user.id, login.data.user.role)
         this.userStore.authenticate()
         this.$router.push({ path: '/dashboard' })
       } catch (err) {

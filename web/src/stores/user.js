@@ -3,12 +3,15 @@ import { defineStore } from 'pinia'
 export const useUserStore = defineStore('user', {
   state: () => ({
     isAuthenticated: localStorage.getItem('isAuthenticated') ?? false,
-    userId: localStorage.getItem('userId') ?? null
+    userId: localStorage.getItem('userId') ?? null,
+    role: localStorage.getItem('role') ?? null
   }),
   actions: {
-    setId(userId) {
+    setId(userId, role) {
       this.userId = userId
+      this.role  = role
       localStorage.setItem('userId', userId)
+      localStorage.setItem('role', role)
     },
     authenticate() {
       this.isAuthenticated = true

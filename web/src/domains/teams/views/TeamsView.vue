@@ -49,7 +49,7 @@ export default {
       this.isLoading = false
     },
     isLeadingThisTeam(team) {
-      return team.leads.includes(this.userId)
+      return (team.leads.includes(this.userId) || this.userStore.role === 'event-lead')
     }
   },
   computed: {

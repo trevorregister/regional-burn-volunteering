@@ -97,7 +97,7 @@ export default {
     canRemoveUserFromShift(shift) {
       const team = this.teams.find((team) => team.id === shift.team)
       if (team) {
-        return team.leads.includes(this.userStore.userId)
+        return (team.leads.includes(this.userStore.userId) || this.userStore.role === 'event-lead')
       } else {
         return false
       }
