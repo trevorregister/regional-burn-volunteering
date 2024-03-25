@@ -4,7 +4,7 @@
       <h1>{{ team.name }}</h1>
       <p>{{ team.description }}</p>
     </div>
-    <v-expansion-panels>
+    <v-expansion-panels variant="popout" multiple>
       <v-expansion-panel v-for="day in days" 
         :title="panelTitle(day)" 
         :key="day"
@@ -152,5 +152,5 @@ export default {
   }
 }
 </script>
-<style></style>
-@/utils/formatDate
+<style>
+</style>
