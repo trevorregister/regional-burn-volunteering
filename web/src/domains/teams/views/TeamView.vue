@@ -5,10 +5,10 @@
       <p>{{ team.description }}</p>
     </div>
     <v-expansion-panels variant="popout" multiple>
-      <v-expansion-panel v-for="day in days" 
-        :title="panelTitle(day)" 
-        :key="day"
-      >
+      <v-expansion-panel v-for="day in days" :key="day" class="ma-2">
+        <v-expansion-panel-title color="primary-lighten-1">
+          <h4>{{panelTitle(day)}}</h4>
+        </v-expansion-panel-title>
         <v-expansion-panel-text>
           <shift-table @shift-action="shiftAction" :shifts="filterShiftsByDay(day)"/> 
         </v-expansion-panel-text>
