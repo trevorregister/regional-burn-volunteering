@@ -21,7 +21,10 @@
         </v-expansion-panels>
       </v-col>
       <v-col v-if="shiftPanelCard" cols="4">
-        <shift-card :shift="shiftPanelCard"/>
+        <v-container style="position: fixed; width: auto;">
+          <shift-card :shift="shiftPanelCard"/>
+          <action-button @click="clearShift" label="Close"/>
+        </v-container>
       </v-col>
     </v-row>
   </v-container>
@@ -32,11 +35,13 @@ import { client } from '../../../../api-client/client'
 import { formatDate } from '@/utils/formatDate'
 import ShiftTable from '../../shifts/components/ShiftTable.vue'
 import ShiftCard from '../../shifts/components/ShiftCard.vue'
+import ActionButton from '@/domains/shared/components/ActionButton.vue'
 
 export default {
   components: {
     ShiftTable,
-    ShiftCard
+    ShiftCard,
+    ActionButton
   },
   inject: ['flash'],
   data() {
@@ -59,7 +64,14 @@ export default {
       return `${dayName}, ${monthName} ${dayOfMonth}`
     },
     loadShift(shiftId){
+      if (this.shiftPanelCard && this.shiftPanelCard.id === shiftId) {
+        this.clearShift()
+      } else {
       this.shiftPanelCard = this.shifts.find(shift => shift.id === shiftId)
+      }
+    },
+    clearShift(){
+      this.shiftPanelCard = null
     },
     async getTeamShifts(teamId) {
       try {

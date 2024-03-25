@@ -1,6 +1,7 @@
 <template>
     <v-card>
-        {{ shift }}
+        <v-card-title>{{ shift.name }}</v-card-title>
+        <v-card-text>{{ shift.description }}</v-card-text>
     </v-card>
 </template>
 <script>
