@@ -10,6 +10,8 @@ export const lightTheme = {
     'surface-variant': '#424242',
     'on-surface-variant': '#EEEEEE',
     primary: colors.blue.base,
+    'primary-lighten-1': colors.blue.lighten1,
+    'primary-lighten-2': colors.blue.lighten2,
     'primary-darken-1': colors.blue.darken1,
     secondary: colors.orange.base,
     'secondary-darken-1': colors.orange.darken1,
