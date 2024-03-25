@@ -45,9 +45,6 @@ export default {
       const { dayName, monthName, dayOfMonth} = formatDate(day)
       return `${dayName}, ${monthName} ${dayOfMonth}`
     },
-    getDayName(day){
-      return formatDate(day).dayName
-    },
     async getTeamShifts(teamId) {
       try {
         let shifts = await client.teams.getShifts(teamId)
