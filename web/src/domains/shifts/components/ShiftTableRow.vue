@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr @click="showShiftCard(shiftId)">
     <td>{{ name }}</td>
     <td>{{ day }}</td>
     <td>{{ start }} - {{ end }}</td>
@@ -16,7 +16,7 @@ import ShiftActionButton from './ShiftActionButton.vue'
 
 export default {
   name: 'ShiftTableRow',
-  emits: ['shift-action'],
+  emits: ['shift-action', 'show-shift-card'],
   components: {
     ShiftActionButton
   },
@@ -72,6 +72,9 @@ export default {
   methods: {
     handleShiftAction(action, shiftId) {
       this.$emit('shift-action', action, shiftId)
+    },
+    showShiftCard(shiftId) {
+      this.$emit('show-shift-card', shiftId)
     }
   }
 }

@@ -15,6 +15,7 @@
         v-for="shift in shifts"
         :key="shift"
         @shift-action="handleShiftAction"
+        @show-shift-card="showShiftCard"
         :name="shift.name"
         :start="shift.start"
         :end="shift.end"
@@ -35,7 +36,7 @@ import { useUserStore } from '@/stores/user'
 
 export default {
   name: 'ShiftTable',
-  emits: ['shift-action'],
+  emits: ['shift-action', 'show-shift-card'],
   props: {
     shifts: {
       type: Array,
@@ -44,7 +45,6 @@ export default {
   },
   components: {
     ShiftTableRow
-    //LoadingContainer
   },
   data() {
     return {
@@ -55,6 +55,9 @@ export default {
   methods: {
     handleShiftAction(action, shiftId) {
       this.$emit('shift-action', action, shiftId)
+    },
+    showShiftCard(shiftId) {
+      this.$emit('show-shift-card', shiftId)
     }
   }
 }
