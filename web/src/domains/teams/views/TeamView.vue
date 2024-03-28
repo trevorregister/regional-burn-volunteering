@@ -21,7 +21,7 @@
         </v-expansion-panels>
       </v-col>
       <v-col v-if="shiftPanelCard" cols="4">
-        <v-container style="position: fixed; width: auto;">
+        <v-container style="position: fixed; width: 300px;">
           <shift-card :shift="shiftPanelCard"/>
           <action-button @click="clearShift" label="Close"/>
         </v-container>
