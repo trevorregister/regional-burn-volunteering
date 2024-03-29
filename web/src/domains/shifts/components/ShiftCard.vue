@@ -24,7 +24,7 @@ export default {
     computed: {
         getPicture(){
             const n = Math.floor(Math.random() * 1000)
-            return `https://picsum.photos/id/${n}/100`
+            return `https://picsum.photos/id/${n}/400/200`
         }
     }
 }
