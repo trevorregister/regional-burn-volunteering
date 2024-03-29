@@ -4,27 +4,44 @@
       <h1>{{ team.name }}</h1>
       <p>{{ team.description }}</p>
     </div>
-    <v-expansion-panels variant="popout" multiple>
-      <v-expansion-panel v-for="day in days" :key="day" class="ma-2">
-        <v-expansion-panel-title color="primary-lighten-1">
-          <h4>{{panelTitle(day)}}</h4>
-        </v-expansion-panel-title>
-        <v-expansion-panel-text>
-          <shift-table @shift-action="shiftAction" :shifts="filterShiftsByDay(day)"/> 
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-    </v-expansion-panels>
+    <v-row>
+      <v-col>
+        <v-expansion-panels variant="popout" multiple>
+          <v-expansion-panel v-for="day in days" :key="day" class="ma-2">
+            <v-expansion-panel-title color="primary-lighten-1">
+              <h4>{{panelTitle(day)}}</h4>
+            </v-expansion-panel-title>
+            <v-expansion-panel-text>
+              <shift-table 
+                @show-shift-card="loadShift" 
+                @shift-action="shiftAction" 
+                :shifts="filterShiftsByDay(day)"/> 
+            </v-expansion-panel-text>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-col>
+      <v-col v-if="shiftPanelCard" cols="4">
+        <v-container style="position: fixed; width: 300px;">
+          <shift-card :shift="shiftPanelCard"/>
+          <action-button @click="clearShift" label="Close"/>
+        </v-container>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 <script>
 import { useUserStore } from '@/stores/user'
 import { client } from '../../../../api-client/client'
-import ShiftTable from '../../shifts/components/ShiftTable.vue'
 import { formatDate } from '@/utils/formatDate'
+import ShiftTable from '../../shifts/components/ShiftTable.vue'
+import ShiftCard from '../../shifts/components/ShiftCard.vue'
+import ActionButton from '@/domains/shared/components/ActionButton.vue'
 
 export default {
   components: {
-    ShiftTable
+    ShiftTable,
+    ShiftCard,
+    ActionButton
   },
   inject: ['flash'],
   data() {
@@ -34,6 +51,7 @@ export default {
       shifts: [],
       userShifts: [],
       days: [],
+      shiftPanelCard: null,
       userStore: useUserStore()
     }
   },
@@ -44,6 +62,16 @@ export default {
     panelTitle(day){
       const { dayName, monthName, dayOfMonth} = formatDate(day)
       return `${dayName}, ${monthName} ${dayOfMonth}`
+    },
+    loadShift(shiftId){
+      if (this.shiftPanelCard && this.shiftPanelCard.id === shiftId) {
+        this.clearShift()
+      } else {
+      this.shiftPanelCard = this.shifts.find(shift => shift.id === shiftId)
+      }
+    },
+    clearShift(){
+      this.shiftPanelCard = null
     },
     async getTeamShifts(teamId) {
       try {
@@ -146,6 +174,9 @@ export default {
   },
   async created() {
     await this.load()
+  },
+  computed:{
+
   }
 }
 </script>
