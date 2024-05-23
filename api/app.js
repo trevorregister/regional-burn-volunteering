@@ -24,8 +24,5 @@ app.use(express.urlencoded({extended: false}))
 app.use(morgan('dev'))
 app.use('/api', Routes())
 app.use(errorHandler)
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'web/index.html'));
-})
 
 module.exports = app 
