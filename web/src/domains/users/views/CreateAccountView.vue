@@ -1,5 +1,12 @@
 <template>
   <v-container>
+    <v-row>
+      <v-col>
+        <v-banner>
+              The API for this project is hosted on a free service. It may take 1-2 minutes to wake up. If nothing happens, refresh and try again.
+        </v-banner>
+      </v-col>
+    </v-row>
     <v-row align="center" justify="center">
       <v-sheet width="300" border="md" class="pa-4">
         <v-form>
