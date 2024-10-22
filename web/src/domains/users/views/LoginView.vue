@@ -4,6 +4,10 @@
       <v-col>
         <v-banner>
           The API for this project is hosted on a free service. It may take 1-2 minutes to wake up. If nothing happens, refresh and try again.
+          <br>
+          Create an account to see this from the view of a participant. 
+          <br>
+          Login using email: elead@email.com and password: password to see the perspective of an event leader.
         </v-banner>
       </v-col>
     </v-row>
