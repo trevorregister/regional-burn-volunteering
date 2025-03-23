@@ -1,42 +1,25 @@
 ## About
-Volunteer sign up app for regional burning man events.
+Monorepo for volunteer sign up app for regional burning man events. See a demo version here: https://www.volunteer-app.trevorregister.com/login
 
-## Setup
-0. Get an .env file from me
-1. Run `npm i` in a terminal from /api and /web.
-2. `npm start` in one terminal from /api
-3. `npm run dev` in another terminal from /web
+## Using this with your event
+Contact me! I'd be delighted to help.
 
-## To-do
+## Features
 
-### API
+### Event leadership can create teams that house volunteer shifts.
+Shifts can be fully customized by type, duration, and number of slots.
 
-#### Features
-* build out events module using tdd
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/2558e573-bb41-4b55-8fe5-f0ad59174e6a" />
 
-#### Refactors
-* new collection: shift-types. Contains name, description, and team. shifts ref this. 
-* mongoose transactions to preserve atomicity with signups/unsignups
-* controller -> use-case -> repo object destructuring to be consistent across the app. Look at AddLead use case as example.
-* update use-cases to patch only text fields (name, description, etc)
-* remove shift conflict from preventing signup. move function to individual route?
-* non-leadership account signup borked due to leadershipKey issues, fixed via duct-tape. 
+### Participant dashboards
+Track each participants shifts and hours throughout the event. 
 
-### Web
+<img width="1063" alt="image" src="https://github.com/user-attachments/assets/4158e423-1954-48b4-92d9-9d82c080629b" />
 
-#### Features
-* sideways scrolling for shift table
-* add teams
-* export schedule
-* unsignup user from manage shift view
 
-#### Refactors
-* display shifts in tables by day
+### Shift signups
+Participants can create an account to browse each team's shifts and sign up for shifts in no time.
 
-### API-Client
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/c405dd73-51d3-4e4c-97c0-05f084a8ea29" />
 
-### Refactors
-* convert to typescript
-* Teams view
-* return `.data` so that you don't have to do it for every call within web. Example: `users = client.users.getUsers()` requires to then to `users.data`. 
-* after refactoring shift conflict in api, only give warning when conflict occurs.
+
